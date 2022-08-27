@@ -1,0 +1,11 @@
+/* This file is reserved for overriding and extending the template styles. */
+
+.logo-container {
+    border: 5px solid red;
+    width: 100%;
+    margin-bottom: 15em;
+}
+
+.logo img {
+    width: 100%;
+}

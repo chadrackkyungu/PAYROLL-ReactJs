@@ -1,0 +1,31 @@
+import { createSlice } from '@reduxjs/toolkit';
+import { IS_DEMO } from 'config.js';
+
+const userInfo = {
+  id: 1,
+  name: 'Lisa Jackson',
+  thumb: '/img/profile/profile-9.webp',
+  role: 'editor',
+  email: 'lisajackson@gmail.com',
+};
+
+const initialState = {
+  isLogin: true,
+  currentUser: {},
+};
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    setCurrentUser(state, action) {
+      state.currentUser = action.payload;
+      state.isLogin = false;
+    },
+  },
+});
+
+export const { setCurrentUser } = authSlice.actions;
+const authReducer = authSlice.reducer;
+
+export default authReducer;

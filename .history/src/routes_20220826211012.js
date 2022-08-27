@@ -1,0 +1,47 @@
+import { lazy } from 'react';
+import { DEFAULT_PATHS } from 'config.js';
+// import HorizontalPage from 'views/Horizontal';
+// import horizontal from 'views/horizontal';
+
+//* Pages
+const dashboard = lazy(() => import('views/dashboard/Index'));
+
+const employee = {
+  notifications: lazy(() => import('views/dashboard/notifications/index')),
+  payslip: lazy(() => import('views/dashboard/payslip/index')),
+  leave: lazy(() => import('views/dashboard/leave/index')),
+  history: lazy(() => import('views/dashboard/history/index')),
+  calendar: lazy(() => import('views/dashboard/calendar/index')),
+  profile: lazy(() => import('views/dashboard/Profile/index')),
+};
+
+const appRoot = DEFAULT_PATHS.APP.endsWith('/') ? DEFAULT_PATHS.APP.slice(1, DEFAULT_PATHS.APP.length) : DEFAULT_PATHS.APP;
+
+const routesAndMenuItems = {
+  mainMenuItems: [
+    /
+    // {
+    //   path: `${appRoot}/horizontal`,
+    //   component: HorizontalPage,
+    //   label: 'menu.horizontal',
+    //   icon: 'grid-2',
+    // },
+    {
+      path: `${appRoot}/dashboard/`,
+      component: dashboard,
+      label: 'menu.dashboard',
+      icon: 'grid-3',
+      subs: [
+        { path: '', label: 'menu.home' },
+        { path: 'notifications', label: 'notifications', component: employee.notifications },
+        { path: 'payslip', label: 'payslip', component: employee.payslip },
+        { path: 'leave', label: 'leave', component: employee.leave },
+        { path: 'history', label: 'history', component: employee.history },
+        { path: 'calendar', label: 'menu.calendar', component: employee.calendar },
+        { path: 'profile', label: 'menu.profile', component: employee.profile },
+      ],
+    },
+  ],
+  sidebarItems: [],
+};
+export default routesAndMenuItems;
