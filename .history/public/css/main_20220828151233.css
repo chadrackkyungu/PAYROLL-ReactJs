@@ -1,0 +1,6 @@
+/* This file is reserved for overriding and extending the template styles. */
+
+.page-link {
+    display: flex !important;
+    margin-right: 1em;
+}

@@ -1,0 +1,10 @@
+/* This file is reserved for overriding and extending the template styles. */
+
+.page-link {
+    display: flex !important;
+    padding-right: 2em;
+}
+
+.page-item {
+    padding-right: 2em !important;
+}
