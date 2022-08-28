@@ -10,10 +10,11 @@ import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 import { MdNotificationsActive } from 'react-icons/md';
 import { MDBDataTable } from "mdbreact"
+import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import Cards from "./components/Cards"
 
 
-const Approved = () => {
+const MyLeaves = () => {
 
     const title = 'My Leaves';
     const description = 'This is a History page';
@@ -25,7 +26,7 @@ const Approved = () => {
             type: 'Break',
             start_date: "2022-07-14",
             end_date: "2022-07-14",
-            status: <Badge bg="success">  Approved   </Badge>,
+            status: <Badge bg="warning">  Pending   </Badge>,
         },
     ]);
 
@@ -50,7 +51,7 @@ const Approved = () => {
                     <section className="scroll-section" id="title">
                         <div className="page-title-container d-flex justify-content-between">
                             <BreadcrumbList items={breadcrumbs} />
-                            <Link to="/employee/private" variant="primary">
+                            <Link to="/employee/pending" variant="primary">
                                 Private Notification <Badge bg="primary"> <MdNotificationsActive size={18} /> 3</Badge>
                                 <span className="visually-hidden">unread messages</span>
                             </Link>
@@ -69,7 +70,7 @@ const Approved = () => {
     );
 };
 
-export default Approved;
+export default MyLeaves;
 
 
 

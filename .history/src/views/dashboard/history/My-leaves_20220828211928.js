@@ -3,7 +3,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import { Row, Col, Badge, Card, Modal } from 'react-bootstrap';
+import { Row, Col, Badge, Card, Modal, Button } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
@@ -17,7 +17,6 @@ import UpdateLeave from "./components/UpdateLeave";
 
 
 const MyLeaves = () => {
-
     const title = 'My Leaves';
     const description = 'This is a History page';
     const breadcrumbs = [{ to: '', text: 'My Leaves' }];
@@ -108,11 +107,10 @@ const MyLeaves = () => {
                         <UpdateLeave />
                     </Modal.Body>
 
-                    {/* <Modal.Footer>
+                    <Modal.Footer>
                         <Button variant="danger" onClick={() => setRightModalExample(false)}>Close</Button>
-                        <Button onClick={() => setRightModalExample(false)}>Update</Button>
-                    </Modal.Footer> */}
-
+                        {/* <Button onClick={() => setRightModalExample(false)}>Update</Button> */}
+                    </Modal.Footer>
                 </Modal>
             </section>
 

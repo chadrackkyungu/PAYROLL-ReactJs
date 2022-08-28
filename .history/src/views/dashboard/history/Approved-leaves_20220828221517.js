@@ -50,7 +50,7 @@ const Approved = () => {
                     <section className="scroll-section" id="title">
                         <div className="page-title-container d-flex justify-content-between">
                             <BreadcrumbList items={breadcrumbs} />
-                            <Link to="/employee/private" variant="primary">
+                            <Link to="/employee/approved" variant="primary">
                                 Private Notification <Badge bg="primary"> <MdNotificationsActive size={18} /> 3</Badge>
                                 <span className="visually-hidden">unread messages</span>
                             </Link>

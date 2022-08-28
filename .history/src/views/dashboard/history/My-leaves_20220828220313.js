@@ -17,7 +17,6 @@ import UpdateLeave from "./components/UpdateLeave";
 
 
 const MyLeaves = () => {
-
     const title = 'My Leaves';
     const description = 'This is a History page';
     const breadcrumbs = [{ to: '', text: 'My Leaves' }];
@@ -88,9 +87,9 @@ const MyLeaves = () => {
                         <Cards />
 
                         <Card className="mt-5 px-5">
-                            <div className="d-flex justify-content-between">
+                            <button className="d-flex justify-content-between">
                                 <CSVLink data={dataDb} separator={";"} className="text-white"> Download in Excel </CSVLink>
-                            </div>
+                            </bu>
                             <MDBDataTable entries={5} entriesOptions={[5, 10, 50]} responsive bordered striped hover data={data} fullPagination />
                         </Card>
 
@@ -112,7 +111,6 @@ const MyLeaves = () => {
                         <Button variant="danger" onClick={() => setRightModalExample(false)}>Close</Button>
                         <Button onClick={() => setRightModalExample(false)}>Update</Button>
                     </Modal.Footer> */}
-
                 </Modal>
             </section>
 

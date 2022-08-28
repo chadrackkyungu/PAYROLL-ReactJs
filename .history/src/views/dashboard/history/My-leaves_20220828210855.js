@@ -3,7 +3,9 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import { Row, Col, Badge, Card, Modal } from 'react-bootstrap';
+import { Row, Col, Badge, Card, Modal, Button } from 'react-bootstrap';
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
+import Scrollspy from 'components/scrollspy/Scrollspy';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
@@ -13,17 +15,17 @@ import { MDBDataTable } from "mdbreact"
 import { CSVLink, CSVDownload } from "react-csv";
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import Cards from "./components/Cards"
-import UpdateLeave from "./components/UpdateLeave";
 
 
 const MyLeaves = () => {
-
     const title = 'My Leaves';
     const description = 'This is a History page';
     const breadcrumbs = [{ to: '', text: 'My Leaves' }];
     useCustomLayout({ placement: MENU_PLACEMENT.Vertical, layout: LAYOUT.Fluid });
 
     const [rightModalExample, setRightModalExample] = useState(false);
+    const [largeRightModalExample, setLargeRightModalExample] = useState(false);
+    const [rightModalScrollExample, setRightModalScrollExample] = useState(false);
 
     const [dataDb, setData] = useState([
         {
@@ -99,21 +101,20 @@ const MyLeaves = () => {
             </Row>
 
             <section className="scroll-section" id="rightModal">
-                <Modal className="modal-right" show={rightModalExample} onHide={() => setRightModalExample(false)}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Update Leave</Modal.Title>
-                    </Modal.Header>
-
-                    <Modal.Body>
-                        <UpdateLeave />
-                    </Modal.Body>
-
-                    {/* <Modal.Footer>
-                        <Button variant="danger" onClick={() => setRightModalExample(false)}>Close</Button>
-                        <Button onClick={() => setRightModalExample(false)}>Update</Button>
-                    </Modal.Footer> */}
-
-                </Modal>
+                <Card body className="mb-5">
+                    <Modal className="modal-right" show={rightModalExample} onHide={() => setRightModalExample(false)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Modal title</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>...</Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={() => setRightModalExample(false)}>
+                                Close
+                            </Button>
+                            <Button onClick={() => setRightModalExample(false)}>Save changes</Button>
+                        </Modal.Footer>
+                    </Modal>
+                </Card>
             </section>
 
         </>

@@ -17,7 +17,6 @@ import UpdateLeave from "./components/UpdateLeave";
 
 
 const MyLeaves = () => {
-
     const title = 'My Leaves';
     const description = 'This is a History page';
     const breadcrumbs = [{ to: '', text: 'My Leaves' }];
@@ -112,7 +111,6 @@ const MyLeaves = () => {
                         <Button variant="danger" onClick={() => setRightModalExample(false)}>Close</Button>
                         <Button onClick={() => setRightModalExample(false)}>Update</Button>
                     </Modal.Footer> */}
-
                 </Modal>
             </section>
 

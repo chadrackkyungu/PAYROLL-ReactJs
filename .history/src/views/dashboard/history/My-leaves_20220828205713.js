@@ -10,11 +10,12 @@ import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 import { MdNotificationsActive } from 'react-icons/md';
 import { MDBDataTable } from "mdbreact"
+import { CSVLink, CSVDownload } from "react-csv";
+import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import Cards from "./components/Cards"
 
 
-const Approved = () => {
-
+const MyLeaves = () => {
     const title = 'My Leaves';
     const description = 'This is a History page';
     const breadcrumbs = [{ to: '', text: 'My Leaves' }];
@@ -22,10 +23,30 @@ const Approved = () => {
 
     const [dataDb, setData] = useState([
         {
-            type: 'Break',
+            type: 'Sick',
             start_date: "2022-07-14",
             end_date: "2022-07-14",
+            view: <Badge bg="success"> <Link to="#/" className="text-white"> <CsLineIcons icon="eye" size={10} className="text-white" /> view </Link>  </Badge>,
             status: <Badge bg="success">  Approved   </Badge>,
+            edit: <Badge pill bg="primary">  <Link to="#/" className="text-white"> <CsLineIcons icon="pen" size={10} className="text-white" /> Edit </Link> </Badge>,
+        },
+        {
+            type: 'Vacation',
+            start_date: "2022-07-14",
+            end_date: "2022-07-14",
+            view: <Badge bg="success"> <Link to="#/" className="text-white"> <CsLineIcons icon="eye" size={10} className="text-white" /> view </Link>  </Badge>,
+            status: <Badge bg="danger">  Decline   </Badge>,
+            edit: <Badge pill bg="primary">  <Link to="#/" className="text-white"> <CsLineIcons icon="pen" size={10} className="text-white" /> Edit </Link> </Badge>,
+
+        },
+        {
+            type: 'Sick',
+            start_date: "2022-07-14",
+            end_date: "2022-07-14",
+            view: <Badge bg="success"> <Link to="#/" className="text-white"> <CsLineIcons icon="eye" size={10} className="text-white" /> view </Link>  </Badge>,
+            status: <Badge bg="warning">  Pending   </Badge>,
+            edit: <Badge pill bg="primary">  <Link to="#/" className="text-white"> <CsLineIcons icon="pen" size={10} className="text-white" /> Edit </Link> </Badge>,
+
         },
     ]);
 
@@ -35,6 +56,8 @@ const Approved = () => {
         { label: "Leave Start Date", field: "start_date", sort: "asc", width: 150 },
         { label: "Leave End Date", field: "end_date", sort: "asc", width: 150 },
         { label: "Status", field: "status", sort: "asc", width: 150 },
+        { label: "Actions", field: "view", sort: "asc", width: 150 },
+        { label: "Actions", field: "edit", sort: "asc", width: 150 }
     ];
 
     const data = {
@@ -59,6 +82,9 @@ const Approved = () => {
                         <Cards />
 
                         <Card className="mt-5 px-5">
+                            <div className="d-flex justify-content-between">
+                                <CSVLink data={dataDb} separator={";"} className="text-white"> Download in Excel </CSVLink>
+                            </div>
                             <MDBDataTable entries={5} entriesOptions={[5, 10, 50]} responsive bordered striped hover data={data} fullPagination />
                         </Card>
 
@@ -69,7 +95,7 @@ const Approved = () => {
     );
 };
 
-export default Approved;
+export default MyLeaves;
 
 
 
