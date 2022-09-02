@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable prefer-template */
 /* eslint-disable prefer-destructuring */
@@ -11,13 +9,13 @@ import React, { useState, useEffect } from 'react';
 import "./pending.css";
 import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
-import { Row, Col, Badge } from 'react-bootstrap';
+import { Row, Col, Badge, Card, Button } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 import { MdNotificationsActive } from 'react-icons/md';
-// import { MDBDataTable } from "mdbreact"
+import { MDBDataTable } from "mdbreact"
 import Cards from "./components/Cards"
 import PendingTable from "./components/Pending-table"
 
@@ -25,9 +23,11 @@ import PendingTable from "./components/Pending-table"
 const Pending = () => {
     const { currentUser } = useSelector((state) => state.auth);
 
-    const id = currentUser?.data.user._id;
-    const token = currentUser?.token;
-    if (id === undefined || token === undefined) return
+    const id = currentUser.data.user._id;
+    const token = currentUser.token;
+
+    console.log("User ID : ", id);
+    console.log("User Token", token);
 
     const title = 'My Leaves';
     const description = 'This is a History page';
@@ -57,6 +57,7 @@ const Pending = () => {
     // const newArray = pendingLeave?.filter(obj => {
     //     return delete obj.message
     // });
+
 
     return (
         <>

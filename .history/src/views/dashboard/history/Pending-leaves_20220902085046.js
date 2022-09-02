@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable prefer-template */
 /* eslint-disable prefer-destructuring */
@@ -25,9 +23,11 @@ import PendingTable from "./components/Pending-table"
 const Pending = () => {
     const { currentUser } = useSelector((state) => state.auth);
 
-    const id = currentUser?.data.user._id;
-    const token = currentUser?.token;
-    if (id === undefined || token === undefined) return
+    const id = currentUser.data.user._id;
+    const token = currentUser.token;
+
+    console.log("User ID : ", id);
+    console.log("User Token", token);
 
     const title = 'My Leaves';
     const description = 'This is a History page';
@@ -57,6 +57,7 @@ const Pending = () => {
     // const newArray = pendingLeave?.filter(obj => {
     //     return delete obj.message
     // });
+
 
     return (
         <>

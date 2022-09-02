@@ -25,8 +25,8 @@ import PendingTable from "./components/Pending-table"
 const Pending = () => {
     const { currentUser } = useSelector((state) => state.auth);
 
-    const id = currentUser?.data.user._id;
-    const token = currentUser?.token;
+    const id = currentUser.data.user._id;
+    const token = currentUser.token;
     if (id === undefined || token === undefined) return
 
     const title = 'My Leaves';
@@ -57,6 +57,7 @@ const Pending = () => {
     // const newArray = pendingLeave?.filter(obj => {
     //     return delete obj.message
     // });
+
 
     return (
         <>

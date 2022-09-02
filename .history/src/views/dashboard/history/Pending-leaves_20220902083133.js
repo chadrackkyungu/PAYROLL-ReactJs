@@ -1,0 +1,190 @@
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable prefer-template */
+/* eslint-disable prefer-destructuring */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/button-has-type */
+/* eslint-disable react/jsx-curly-brace-presence */
+/* eslint-disable prettier/prettier */
+import React, { useState, useEffect } from 'react';
+import "./pending.css";
+import { useSelector } from 'react-redux';
+import { Link } from "react-router-dom";
+import { Row, Col, Badge, Card, Button } from 'react-bootstrap';
+import HtmlHead from 'components/html-head/HtmlHead';
+import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
+import useCustomLayout from 'hooks/useCustomLayout';
+import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
+import { MdNotificationsActive } from 'react-icons/md';
+import { MDBDataTable } from "mdbreact"
+import Cards from "./components/Cards"
+
+
+const Pending = () => {
+    const { currentUser } = useSelector((state) => state.auth);
+
+    const id = currentUser.data.user._id;
+    const token = currentUser.token;
+
+    console.log("User ID : ", id);
+    console.log("User Token", token);
+
+    const title = 'My Leaves';
+    const description = 'This is a History page';
+    const breadcrumbs = [{ to: '', text: 'My Leaves' }];
+    useCustomLayout({ placement: MENU_PLACEMENT.Vertical, layout: LAYOUT.Fluid });
+    const [pendingLeave, setPendingLeave] = useState()
+
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    useEffect(() => {
+        const pending = () => {
+            fetch(`http://localhost:5000/api/v1/leaves/${id}/status/pending`, requestOptions)
+                .then(response => response.json())
+                .then(result => setPendingLeave(result.data.leaves))
+                .catch(error => console.log('error', error));
+        }
+        pending();
+    }, []);
+
+    const newArray = pendingLeave?.filter(obj => {
+        return delete obj.message
+    });
+
+    // const column = [
+    //     { label: "ID", field: "id", sort: "asc", width: 150 },
+    //     { label: "Leave start date", field: "leaveStartDate", sort: "asc", width: 150 },
+    //     { label: "Leave End date", field: "leaveEndDate", sort: "asc", width: 150 },
+    //     { label: "Leave type", field: "leaveType", sort: "asc", width: 150 },
+    //     { label: "Status", field: "status", sort: "asc", width: 150 },
+    // ];
+
+    // const data = {
+    //     columns: column,
+    //     rows: newArray,
+    // }
+
+    return (
+        <>
+            <HtmlHead title={title} description={description} />
+            <Row>
+                <Col>
+                    <section className="scroll-section" id="title">
+                        <div className="page-title-container d-flex justify-content-between">
+                            <BreadcrumbList items={breadcrumbs} />
+                            <Link to="/employee/pending-leave" variant="primary">
+                                Private Notification <Badge bg="primary"> <MdNotificationsActive size={18} /> 3</Badge>
+                                <span className="visually-hidden">unread messages</span>
+                            </Link>
+                        </div>
+
+                        <Cards />
+
+                        <Card>
+                            <div>
+                                <p className="mb-4">Latest Transaction</p>
+                                <div className="table-responsive">
+                                    <table className="table align-middle table-nowrap mb-0">
+                                        <thead className="table-light">
+                                            <tr>
+                                                <th style={{ width: "20px" }}>
+                                                    <div className="form-check font-size-16 align-middle">
+                                                        <input
+                                                            type="checkbox"
+                                                            className="form-check-input"
+                                                            id="customCheck1"
+                                                        />
+                                                        <label
+                                                            className="form-check-label"
+                                                            htmlFor="customCheck1"
+                                                        >
+                                                            &nbsp;
+                                                        </label>
+                                                    </div>
+                                                </th>
+                                                <th className="align-middle">Leave ID</th>
+                                                <th className="align-middle">Starting dat</th>
+                                                <th className="align-middle">Ending date</th>
+                                                <th className="align-middle">Type</th>
+                                                <th className="align-middle">Status</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {newArray.map((transaction, key) => (
+                                                <tr key={"_tr_" + key}>
+                                                    <td>
+                                                        <div className="form-check font-size-16">
+                                                            <input
+                                                                type="checkbox"
+                                                                className="form-check-input"
+                                                                id={transaction.id}
+                                                            />
+                                                            <label
+                                                                className="form-check-label"
+                                                                htmlFor={transaction.id}
+                                                            >
+                                                                &nbsp;
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <Link to="#/" className="text-body fw-bold">
+                                                            {" "}
+                                                            {transaction.orderId}{" "}
+                                                        </Link>{" "}
+                                                    </td>
+                                                    <td>{transaction.billingName}</td>
+                                                    <td>{transaction.Date}</td>
+                                                    <td>{transaction.total}</td>
+                                                    <td>
+                                                        <Badge
+                                                            className={
+                                                                "font-size-11 badge-soft-" + transaction.badgeClass
+                                                            }
+                                                            color={transaction.badgeClass}
+                                                            pill
+                                                        >
+                                                            {transaction.paymentStatus}
+                                                        </Badge>
+                                                    </td>
+                                                    <td>
+                                                        <i className={"fab " + transaction.methodIcon + " me-1"}></i>
+                                                        {transaction.paymentMethod}
+                                                    </td>
+                                                    <td>
+                                                        <Button
+                                                            type="button"
+                                                            color="primary"
+                                                            size="sm"
+                                                            className="btn-rounded waves-effect waves-light"
+                                                        >
+                                                            View Details
+                                                        </Button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </Card>
+
+                    </section>
+                </Col>
+            </Row>
+        </>
+    );
+};
+
+export default Pending;
+
+
+
+
