@@ -37,7 +37,7 @@ function DeclineTable(props) {
                                 <td>{leave.leaveStartDate}</td>
                                 <td>{leave.leaveEndDate}</td>
                                 <td>{leave.leaveType}</td>
-                                <td><Badge className={"bg-danger font-size-11 badge-soft-" + leave.badgeClass} color={leave.badgeClass} pill>{leave.status}</Badge> </td>
+                                <td><Badge className={"font-size-11 badge-soft-" + leave.badgeClass} color={leave.badgeClass} pill>{leave.status}</Badge> </td>
                             </tr>
                         ))}
                     </tbody>

@@ -15,8 +15,6 @@ import { warningMessage, successMessage } from "../../../../components/Notificat
 
 function UpdateLeave(props) {
     const { currentUser } = useSelector((state) => state.auth);
-    const token = currentUser?.token;
-
     const { leaves, id } = props;
     const leave = leaves.filter(lv => { return lv.id === id })
     const leaveObj = Object.assign(...leave);
@@ -31,10 +29,13 @@ function UpdateLeave(props) {
     const initialValues = { message: leaveObj.message, select: leaveObj.leaveType, leaveStartDate: new Date(leaveObj.leaveStartDate), leaveEndDate: new Date(leaveObj.leaveEndDate) };
 
 
+
     const onSubmit = async (values) => {
+
         const myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${token}`);
+        myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMDI4YzgwNjFmZmE5MTY4OTAwMjdiYyIsImlhdCI6MTY2MjExODc3MywiZXhwIjoxNjY5ODk0NzczfQ.NFrIeE0uLRQRC2OSyPwSNXp8OhiZ83EFOLE25qyuCQg");
         myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Cookie", "jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMDI4YzgwNjFmZmE5MTY4OTAwMjdiYyIsImlhdCI6MTY2MjExODg0NSwiZXhwIjoxNjY5ODk0ODQ1fQ.U6esPNbq9of_U1BLGYMTxZhnxeJKydmEyC6HAlm-8qU");
 
         const { leaveStartDate, leaveEndDate, select, message } = values;
         try {
@@ -45,10 +46,9 @@ function UpdateLeave(props) {
                 data: { leaveStartDate, leaveEndDate, select, message },
                 redirect: 'follow'
             });
-            console.log(res);
-            // if (res.data.status === 'success') {
-            //     successMessage(`Successfully updated`)
-            // }
+            if (res.data.status === 'success') {
+                successMessage(`Successfully updated`)
+            }
         } catch (err) {
             warningMessage(` 🤒 ${err.response.data.message}`);
         }

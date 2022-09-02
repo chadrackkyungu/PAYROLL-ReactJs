@@ -1,29 +1,25 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable consistent-return */
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/jsx-curly-brace-presence */
 /* eslint-disable prettier/prettier */
 /* eslint-disable prefer-template */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect } from 'react';
-import "./my-leaves.css";
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import { useSelector } from 'react-redux';
 import { Row, Col, Badge, Card, Modal } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 import { MdNotificationsActive } from 'react-icons/md';
+import { MDBDataTable } from "mdbreact"
+import { CSVLink, CSVDownload } from "react-csv";
+import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import Cards from "./components/Cards"
 import UpdateLeave from "./components/UpdateLeave";
 
 
 const MyLeaves = () => {
-    const { currentUser } = useSelector((state) => state.auth);
 
     const title = 'My Leaves';
     const description = 'This is a History page';
@@ -31,28 +27,6 @@ const MyLeaves = () => {
     useCustomLayout({ placement: MENU_PLACEMENT.Vertical, layout: LAYOUT.Fluid });
 
     const [rightModalExample, setRightModalExample] = useState(false);
-    const [leaveId, setLeaveId] = useState();
-    const token = currentUser?.token;
-    const [myLeaves, setMyLeave] = useState()
-
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
-
-    const requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        redirect: 'follow'
-    };
-
-    useEffect(() => {
-        const approved = () => {
-            fetch(`http://localhost:5000/api/v1/leaves/me`, requestOptions)
-                .then(response => response.json())
-                .then(result => setMyLeave(result.data.leaves))
-                .catch(error => console.log('error', error));
-        }
-        approved();
-    }, []);
 
 
     return (
@@ -87,11 +61,10 @@ const MyLeaves = () => {
                                             <th className="align-middle">Ending date</th>
                                             <th className="align-middle">Type</th>
                                             <th className="align-middle">Status</th>
-                                            <th className="align-middle">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {myLeaves?.map((leave, key) => (
+                                        {props.data?.map((leave, key) => (
                                             <tr key={"_tr_" + key}>
                                                 <td>
                                                     <div className="form-check font-size-16">
@@ -103,19 +76,7 @@ const MyLeaves = () => {
                                                 <td>{leave.leaveStartDate}</td>
                                                 <td>{leave.leaveEndDate}</td>
                                                 <td>{leave.leaveType}</td>
-                                                <td><Badge className={
-                                                    leave.status === "pending" ? "bg-warning" : leave.status === "decline" ? "bg-danger" : "bg-primary"
-                                                } pill>{leave.status}</Badge>
-                                                </td>
-
-                                                <td>
-                                                    <Badge className="px-3 pe-auto cursor-pointer"
-                                                        onClick={() => {
-                                                            setRightModalExample(true)
-                                                            setLeaveId(leave.id);
-                                                        }}
-                                                    >Edit</Badge>
-                                                </td>
+                                                <td><Badge className={"bg-danger font-size-11 badge-soft-" + leave.badgeClass} color={leave.badgeClass} pill>{leave.status}</Badge> </td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -134,7 +95,7 @@ const MyLeaves = () => {
                     </Modal.Header>
 
                     <Modal.Body>
-                        <UpdateLeave leaves={myLeaves} id={leaveId} />
+                        <UpdateLeave />
                     </Modal.Body>
 
                 </Modal>

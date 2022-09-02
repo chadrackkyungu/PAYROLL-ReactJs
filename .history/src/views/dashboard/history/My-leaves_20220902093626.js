@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 /* eslint-disable consistent-return */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-underscore-dangle */
@@ -18,6 +17,9 @@ import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 import { MdNotificationsActive } from 'react-icons/md';
+import { MDBDataTable } from "mdbreact"
+import { CSVLink, CSVDownload } from "react-csv";
+import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import Cards from "./components/Cards"
 import UpdateLeave from "./components/UpdateLeave";
 
@@ -31,8 +33,11 @@ const MyLeaves = () => {
     useCustomLayout({ placement: MENU_PLACEMENT.Vertical, layout: LAYOUT.Fluid });
 
     const [rightModalExample, setRightModalExample] = useState(false);
-    const [leaveId, setLeaveId] = useState();
+
+    const id = currentUser?.data.user._id;
     const token = currentUser?.token;
+    if (id === undefined || token === undefined) return
+
     const [myLeaves, setMyLeave] = useState()
 
     const myHeaders = new Headers();
@@ -53,6 +58,8 @@ const MyLeaves = () => {
         }
         approved();
     }, []);
+
+    // const statusStyle;
 
 
     return (
@@ -87,7 +94,6 @@ const MyLeaves = () => {
                                             <th className="align-middle">Ending date</th>
                                             <th className="align-middle">Type</th>
                                             <th className="align-middle">Status</th>
-                                            <th className="align-middle">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -104,18 +110,8 @@ const MyLeaves = () => {
                                                 <td>{leave.leaveEndDate}</td>
                                                 <td>{leave.leaveType}</td>
                                                 <td><Badge className={
-                                                    leave.status === "pending" ? "bg-warning" : leave.status === "decline" ? "bg-danger" : "bg-primary"
-                                                } pill>{leave.status}</Badge>
-                                                </td>
-
-                                                <td>
-                                                    <Badge className="px-3 pe-auto cursor-pointer"
-                                                        onClick={() => {
-                                                            setRightModalExample(true)
-                                                            setLeaveId(leave.id);
-                                                        }}
-                                                    >Edit</Badge>
-                                                </td>
+                                                    leave.status === "pending" ? "bg-warning" : "bg-success"
+                                                } pill>{leave.status}</Badge> </td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -134,7 +130,7 @@ const MyLeaves = () => {
                     </Modal.Header>
 
                     <Modal.Body>
-                        <UpdateLeave leaves={myLeaves} id={leaveId} />
+                        <UpdateLeave />
                     </Modal.Body>
 
                 </Modal>

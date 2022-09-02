@@ -5,7 +5,7 @@ import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import { Link } from "react-router-dom"
 import { cardData } from "./data";
 
-const StatsPercentages = () => {
+const StatsPercentages = (props) => {
     return (
         <div>
             <Row className="g-2">

@@ -26,6 +26,7 @@ const Pending = () => {
 
     const id = currentUser.data?.user._id;
     const token = currentUser?.token;
+    if (id === undefined || token === undefined) return
 
     const title = 'My Leaves';
     const description = 'This is a History page';

@@ -3,7 +3,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -14,8 +13,6 @@ import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import { warningMessage, successMessage } from "../../../../components/Notifications/Notifications";
 
 function UpdateLeave(props) {
-    const { currentUser } = useSelector((state) => state.auth);
-    const token = currentUser?.token;
 
     const { leaves, id } = props;
     const leave = leaves.filter(lv => { return lv.id === id })
@@ -29,26 +26,17 @@ function UpdateLeave(props) {
     });
 
     const initialValues = { message: leaveObj.message, select: leaveObj.leaveType, leaveStartDate: new Date(leaveObj.leaveStartDate), leaveEndDate: new Date(leaveObj.leaveEndDate) };
-
-
     const onSubmit = async (values) => {
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${token}`);
-        myHeaders.append("Content-Type", "application/json");
-
         const { leaveStartDate, leaveEndDate, select, message } = values;
         try {
             const res = await axios({
                 method: 'PATCH',
-                headers: myHeaders,
                 url: `http://localhost:5000/api/v1/leaves/${id}`,
                 data: { leaveStartDate, leaveEndDate, select, message },
-                redirect: 'follow'
             });
-            console.log(res);
-            // if (res.data.status === 'success') {
-            //     successMessage(`Successfully updated`)
-            // }
+            if (res.data.status === 'success') {
+                successMessage(`Successfully updated`)
+            }
         } catch (err) {
             warningMessage(` 🤒 ${err.response.data.message}`);
         }

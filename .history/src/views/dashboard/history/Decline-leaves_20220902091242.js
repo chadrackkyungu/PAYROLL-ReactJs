@@ -1,3 +1,4 @@
+/* eslint-disable no-unneeded-ternary */
 /* eslint-disable consistent-return */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/self-closing-comp */
@@ -7,31 +8,32 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/jsx-curly-brace-presence */
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect } from 'react';
-import "./pending.css";
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import { Row, Col, Badge } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { Row, Col, Badge, Card } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 import { MdNotificationsActive } from 'react-icons/md';
+import { MDBDataTable } from "mdbreact"
 import Cards from "./components/Cards"
-import PendingTable from "./components/Pending-table"
 
 
-const Pending = () => {
+const Declined = () => {
     const { currentUser } = useSelector((state) => state.auth);
-
-    const id = currentUser.data?.user._id;
-    const token = currentUser?.token;
 
     const title = 'My Leaves';
     const description = 'This is a History page';
     const breadcrumbs = [{ to: '', text: 'My Leaves' }];
     useCustomLayout({ placement: MENU_PLACEMENT.Vertical, layout: LAYOUT.Fluid });
-    const [pendingLeave, setPendingLeave] = useState()
+
+    const id = currentUser?.data.user._id;
+    const token = currentUser?.token;
+    if (id === undefined || token === undefined) return
+
+    const [approvedLeave, setApprovedLeave] = useState()
 
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -43,18 +45,14 @@ const Pending = () => {
     };
 
     useEffect(() => {
-        const pending = () => {
-            fetch(`http://localhost:5000/api/v1/leaves/${id}/status/pending`, requestOptions)
+        const approved = () => {
+            fetch(`http://localhost:5000/api/v1/leaves/${id}/status/approve`, requestOptions)
                 .then(response => response.json())
-                .then(result => setPendingLeave(result.data.leaves))
+                .then(result => setApprovedLeave(result.data.leaves))
                 .catch(error => console.log('error', error));
         }
-        pending();
+        approved();
     }, []);
-
-    // const newArray = pendingLeave?.filter(obj => {
-    //     return delete obj.message
-    // });
 
     return (
         <>
@@ -71,7 +69,10 @@ const Pending = () => {
                         </div>
 
                         <Cards />
-                        <PendingTable data={pendingLeave} />
+
+                        <Card className="mt-5 px-5">
+                            <MDBDataTable entries={5} entriesOptions={[5, 10, 50]} responsive bordered striped hover data={data} fullPagination />
+                        </Card>
 
                     </section>
                 </Col>
@@ -80,7 +81,7 @@ const Pending = () => {
     );
 };
 
-export default Pending;
+export default Declined;
 
 
 

@@ -10,7 +10,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import "./my-leaves.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { Row, Col, Badge, Card, Modal } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
@@ -23,6 +23,7 @@ import UpdateLeave from "./components/UpdateLeave";
 
 
 const MyLeaves = () => {
+    const history = useHistory();
     const { currentUser } = useSelector((state) => state.auth);
 
     const title = 'My Leaves';
@@ -31,7 +32,6 @@ const MyLeaves = () => {
     useCustomLayout({ placement: MENU_PLACEMENT.Vertical, layout: LAYOUT.Fluid });
 
     const [rightModalExample, setRightModalExample] = useState(false);
-    const [leaveId, setLeaveId] = useState();
     const token = currentUser?.token;
     const [myLeaves, setMyLeave] = useState()
 
@@ -54,6 +54,7 @@ const MyLeaves = () => {
         approved();
     }, []);
 
+    console.log(rightModalExample);
 
     return (
         <>
@@ -112,7 +113,6 @@ const MyLeaves = () => {
                                                     <Badge className="px-3 pe-auto cursor-pointer"
                                                         onClick={() => {
                                                             setRightModalExample(true)
-                                                            setLeaveId(leave.id);
                                                         }}
                                                     >Edit</Badge>
                                                 </td>
@@ -134,7 +134,7 @@ const MyLeaves = () => {
                     </Modal.Header>
 
                     <Modal.Body>
-                        <UpdateLeave leaves={myLeaves} id={leaveId} />
+                        <UpdateLeave />
                     </Modal.Body>
 
                 </Modal>

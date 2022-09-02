@@ -5,7 +5,7 @@ import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import { Link } from "react-router-dom"
 import { cardData } from "./data";
 
-const StatsPercentages = () => {
+const StatsPercentages = (props) => {
     return (
         <div>
             <Row className="g-2">
@@ -23,11 +23,11 @@ const StatsPercentages = () => {
                                         <Col className="sh-6 ps-3 d-flex flex-column justify-content-center">
                                             <div className={`heading mb-0 d-flex align-items-center lh-1-25 text-${card.color}`}>{card.name}</div>
 
-                                            {/* <Row className="g-0">
+                                            <Row className="g-0">
                                                 <Col xs="auto">
                                                     <div className={`cta-2 text-${card.color}`}>{props.leaveLength}</div>
                                                 </Col>
-                                            </Row> */}
+                                            </Row>
                                         </Col>
                                     </Row>
                                 </Card.Body>

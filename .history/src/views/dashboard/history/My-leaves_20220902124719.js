@@ -10,7 +10,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import "./my-leaves.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { Row, Col, Badge, Card, Modal } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
@@ -23,6 +23,7 @@ import UpdateLeave from "./components/UpdateLeave";
 
 
 const MyLeaves = () => {
+    const history = useHistory();
     const { currentUser } = useSelector((state) => state.auth);
 
     const title = 'My Leaves';
@@ -134,7 +135,7 @@ const MyLeaves = () => {
                     </Modal.Header>
 
                     <Modal.Body>
-                        <UpdateLeave leaves={myLeaves} id={leaveId} />
+                        <UpdateLeave />
                     </Modal.Body>
 
                 </Modal>

@@ -45,10 +45,9 @@ function UpdateLeave(props) {
                 data: { leaveStartDate, leaveEndDate, select, message },
                 redirect: 'follow'
             });
-            console.log(res);
-            // if (res.data.status === 'success') {
-            //     successMessage(`Successfully updated`)
-            // }
+            if (res.data.status === 'success') {
+                successMessage(`Successfully updated`)
+            }
         } catch (err) {
             warningMessage(` 🤒 ${err.response.data.message}`);
         }

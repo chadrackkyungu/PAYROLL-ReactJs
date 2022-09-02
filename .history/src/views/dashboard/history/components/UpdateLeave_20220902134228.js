@@ -31,7 +31,9 @@ function UpdateLeave(props) {
     const initialValues = { message: leaveObj.message, select: leaveObj.leaveType, leaveStartDate: new Date(leaveObj.leaveStartDate), leaveEndDate: new Date(leaveObj.leaveEndDate) };
 
 
+
     const onSubmit = async (values) => {
+
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
@@ -45,10 +47,9 @@ function UpdateLeave(props) {
                 data: { leaveStartDate, leaveEndDate, select, message },
                 redirect: 'follow'
             });
-            console.log(res);
-            // if (res.data.status === 'success') {
-            //     successMessage(`Successfully updated`)
-            // }
+            if (res.data.status === 'success') {
+                successMessage(`Successfully updated`)
+            }
         } catch (err) {
             warningMessage(` 🤒 ${err.response.data.message}`);
         }

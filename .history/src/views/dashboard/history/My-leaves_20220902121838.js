@@ -10,7 +10,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import "./my-leaves.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { Row, Col, Badge, Card, Modal } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
@@ -23,6 +23,7 @@ import UpdateLeave from "./components/UpdateLeave";
 
 
 const MyLeaves = () => {
+    const history = useHistory();
     const { currentUser } = useSelector((state) => state.auth);
 
     const title = 'My Leaves';
@@ -31,8 +32,13 @@ const MyLeaves = () => {
     useCustomLayout({ placement: MENU_PLACEMENT.Vertical, layout: LAYOUT.Fluid });
 
     const [rightModalExample, setRightModalExample] = useState(false);
-    const [leaveId, setLeaveId] = useState();
+
+    const id = currentUser.data?.user._id;
     const token = currentUser?.token;
+    if (id === undefined || token === undefined) {
+        history.push('/login')
+    }
+
     const [myLeaves, setMyLeave] = useState()
 
     const myHeaders = new Headers();
@@ -54,7 +60,6 @@ const MyLeaves = () => {
         approved();
     }, []);
 
-
     return (
         <>
             <HtmlHead title={title} description={description} />
@@ -69,7 +74,7 @@ const MyLeaves = () => {
                             </Link>
                         </div>
 
-                        <Cards />
+                        <Cards leaveLength={myLeaves?.length} />
 
                         <Card className="mt-5">
                             <div className="table-responsive p-4">
@@ -87,7 +92,6 @@ const MyLeaves = () => {
                                             <th className="align-middle">Ending date</th>
                                             <th className="align-middle">Type</th>
                                             <th className="align-middle">Status</th>
-                                            <th className="align-middle">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -105,17 +109,7 @@ const MyLeaves = () => {
                                                 <td>{leave.leaveType}</td>
                                                 <td><Badge className={
                                                     leave.status === "pending" ? "bg-warning" : leave.status === "decline" ? "bg-danger" : "bg-primary"
-                                                } pill>{leave.status}</Badge>
-                                                </td>
-
-                                                <td>
-                                                    <Badge className="px-3 pe-auto cursor-pointer"
-                                                        onClick={() => {
-                                                            setRightModalExample(true)
-                                                            setLeaveId(leave.id);
-                                                        }}
-                                                    >Edit</Badge>
-                                                </td>
+                                                } pill>{leave.status}</Badge> </td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -134,7 +128,7 @@ const MyLeaves = () => {
                     </Modal.Header>
 
                     <Modal.Body>
-                        <UpdateLeave leaves={myLeaves} id={leaveId} />
+                        <UpdateLeave />
                     </Modal.Body>
 
                 </Modal>
