@@ -20,7 +20,6 @@ import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 import { MdNotificationsActive } from 'react-icons/md';
 import Cards from "./components/Cards"
 import UpdateLeave from "./components/UpdateLeave";
-import LeaveModalDetails from "./components/Leave-modal-details";
 
 
 const MyLeaves = () => {
@@ -156,9 +155,7 @@ const MyLeaves = () => {
             </section>
 
             <Modal show={nExample} onHide={() => setNExample(false)}>
-                <Modal.Body>
-                    <LeaveModalDetails leaves={myLeaves} id={ViewLeave} />
-                </Modal.Body>
+                <Modal.Body>...</Modal.Body>
                 <Modal.Footer>
                     <Button variant="danger" onClick={() => setNExample(false)}>Close</Button>
                 </Modal.Footer>

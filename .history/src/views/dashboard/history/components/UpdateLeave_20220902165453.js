@@ -2,6 +2,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
@@ -10,7 +11,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
-import { warningMessage, successUpdate } from "../../../../components/Notifications/Notifications";
+import { warningMessage, successMessage } from "../../../../components/Notifications/Notifications";
 
 function UpdateLeave(props) {
 
@@ -36,10 +37,10 @@ function UpdateLeave(props) {
         myHeaders.append("Content-Type", "application/json");
 
         const data = JSON.stringify({
-            "leaveStartDate": values?.leaveStartDate,
-            "leaveEndDate": values?.leaveEndDate,
-            "leaveType": values?.select,
-            "message": values?.message
+            "leaveStartDate": values.leaveStartDate,
+            "leaveEndDate": values.leaveEndDate,
+            "leaveType": values.select,
+            "message": values.message
         });
 
         const requestOptions = {
@@ -53,7 +54,7 @@ function UpdateLeave(props) {
             .then(response => response.json())
             .then(res => {
                 if (res.status === 'success') {
-                    successUpdate(` Successfully updated 🍺👏`)
+                    successMessage(`Successfully updated`)
                 }
             })
             .catch(err => warningMessage(` 🤒 ${err.response.data.message}`))

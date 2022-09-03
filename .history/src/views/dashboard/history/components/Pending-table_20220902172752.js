@@ -1,10 +1,16 @@
 /* eslint-disable prefer-template */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable prettier/prettier */
-import React from 'react'
-import { Badge, Card } from 'react-bootstrap';
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
+import { Badge, Card, Modal } from 'react-bootstrap';
+import UpdateLeave from './UpdateLeave';
 
 function PendingTable(props) {
+    const { currentUser } = useSelector((state) => state.auth);
+    const [rightModalExample, setRightModalExample] = useState(false);
+    const [leaveId, setLeaveId] = useState();
+    const [myLeaves, setMyLeave] = useState()
 
     return (
         <Card className="mt-5">
@@ -39,11 +45,35 @@ function PendingTable(props) {
                                 <td>{leave.leaveEndDate}</td>
                                 <td>{leave.leaveType}</td>
                                 <td><Badge className={"bg-warning font-size-11 badge-soft-" + leave.badgeClass} color={leave.badgeClass} pill>{leave.status}</Badge> </td>
+                                <td>
+                                    <Badge className={`px-3 pe-auto cursor-pointer ${leave.status === "pending" ? "bg-primary" : "bg-light text-danger"}`}
+                                        onClick={() => {
+                                            if (leave.status === "pending") {
+                                                setRightModalExample(true)
+                                                setLeaveId(leave.id);
+                                            }
+                                        }}
+                                    > {leave.status === "pending" ? "Edit" : "no action"} </Badge>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
+
+
+            <section className="scroll-section" id="rightModal">
+                <Modal className="modal-right" show={rightModalExample} onHide={() => setRightModalExample(false)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Update Leave</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <UpdateLeave leaves={myLeaves} id={leaveId} />
+                    </Modal.Body>
+                </Modal>
+            </section>
+
 
         </Card>
     )

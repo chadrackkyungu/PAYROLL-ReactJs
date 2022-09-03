@@ -12,7 +12,7 @@ import React, { useState, useEffect } from 'react';
 import "./my-leaves.css";
 import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
-import { Row, Col, Badge, Card, Modal, Button } from 'react-bootstrap';
+import { Row, Col, Badge, Card, Modal } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
@@ -20,7 +20,6 @@ import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 import { MdNotificationsActive } from 'react-icons/md';
 import Cards from "./components/Cards"
 import UpdateLeave from "./components/UpdateLeave";
-import LeaveModalDetails from "./components/Leave-modal-details";
 
 
 const MyLeaves = () => {
@@ -32,10 +31,7 @@ const MyLeaves = () => {
     useCustomLayout({ placement: MENU_PLACEMENT.Vertical, layout: LAYOUT.Fluid });
 
     const [rightModalExample, setRightModalExample] = useState(false);
-    const [nExample, setNExample] = useState(false);
-
     const [leaveId, setLeaveId] = useState();
-    const [ViewLeave, setViewLeave] = useState(false);
     const token = currentUser?.token;
     const [myLeaves, setMyLeave] = useState()
 
@@ -92,7 +88,6 @@ const MyLeaves = () => {
                                             <th className="align-middle">Type</th>
                                             <th className="align-middle">Status</th>
                                             <th className="align-middle">Actions</th>
-                                            <th className="align-middle">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -108,22 +103,13 @@ const MyLeaves = () => {
                                                 <td>{leave.leaveStartDate}</td>
                                                 <td>{leave.leaveEndDate}</td>
                                                 <td>{leave.leaveType}</td>
-
                                                 <td><Badge className={
-                                                    leave.status === "pending" ? "bg-warning" : leave.status === "decline" ? "bg-danger" : "bg-success"
+                                                    leave.status === "pending" ? "bg-warning" : leave.status === "decline" ? "bg-danger" : "bg-primary"
                                                 } pill>{leave.status}</Badge>
                                                 </td>
 
-                                                <td className="cursor-pointer"
-                                                    onClick={() => {
-                                                        setNExample(true)
-                                                        setViewLeave(leave?.id)
-                                                    }}>
-                                                    <Badge> View </Badge>
-                                                </td>
-
                                                 <td>
-                                                    <Badge className={`px-3 pe-auto cursor-pointer ${leave.status === "pending" ? "bg-primary" : "bg-light text-danger"}`}
+                                                    <Badge className={`px-3 pe-auto cursor-pointer ${leave.status === "pending" ? "bg-primary" : "bg-Separator"}`}
                                                         onClick={() => {
                                                             if (leave.status === "pending") {
                                                                 setRightModalExample(true)
@@ -154,15 +140,6 @@ const MyLeaves = () => {
                     </Modal.Body>
                 </Modal>
             </section>
-
-            <Modal show={nExample} onHide={() => setNExample(false)}>
-                <Modal.Body>
-                    <LeaveModalDetails leaves={myLeaves} id={ViewLeave} />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="danger" onClick={() => setNExample(false)}>Close</Button>
-                </Modal.Footer>
-            </Modal>
 
         </>
     );

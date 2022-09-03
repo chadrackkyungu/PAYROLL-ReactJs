@@ -20,7 +20,6 @@ import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 import { MdNotificationsActive } from 'react-icons/md';
 import Cards from "./components/Cards"
 import UpdateLeave from "./components/UpdateLeave";
-import LeaveModalDetails from "./components/Leave-modal-details";
 
 
 const MyLeaves = () => {
@@ -35,7 +34,6 @@ const MyLeaves = () => {
     const [nExample, setNExample] = useState(false);
 
     const [leaveId, setLeaveId] = useState();
-    const [ViewLeave, setViewLeave] = useState(false);
     const token = currentUser?.token;
     const [myLeaves, setMyLeave] = useState()
 
@@ -92,7 +90,6 @@ const MyLeaves = () => {
                                             <th className="align-middle">Type</th>
                                             <th className="align-middle">Status</th>
                                             <th className="align-middle">Actions</th>
-                                            <th className="align-middle">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -108,18 +105,11 @@ const MyLeaves = () => {
                                                 <td>{leave.leaveStartDate}</td>
                                                 <td>{leave.leaveEndDate}</td>
                                                 <td>{leave.leaveType}</td>
+                                                <td> <Badge> View </Badge> </td>
 
                                                 <td><Badge className={
                                                     leave.status === "pending" ? "bg-warning" : leave.status === "decline" ? "bg-danger" : "bg-success"
                                                 } pill>{leave.status}</Badge>
-                                                </td>
-
-                                                <td className="cursor-pointer"
-                                                    onClick={() => {
-                                                        setNExample(true)
-                                                        setViewLeave(leave?.id)
-                                                    }}>
-                                                    <Badge> View </Badge>
                                                 </td>
 
                                                 <td>
@@ -156,11 +146,15 @@ const MyLeaves = () => {
             </section>
 
             <Modal show={nExample} onHide={() => setNExample(false)}>
-                <Modal.Body>
-                    <LeaveModalDetails leaves={myLeaves} id={ViewLeave} />
-                </Modal.Body>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal title</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>...</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="danger" onClick={() => setNExample(false)}>Close</Button>
+                    <Button variant="secondary" onClick={() => setNExample(false)}>
+                        Close
+                    </Button>
+                    <Button onClick={() => setNExample(false)}>Understood</Button>
                 </Modal.Footer>
             </Modal>
 

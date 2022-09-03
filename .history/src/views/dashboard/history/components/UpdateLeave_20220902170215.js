@@ -1,7 +1,7 @@
 /* eslint-disable prefer-object-spread */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
@@ -30,34 +30,37 @@ function UpdateLeave(props) {
 
     const initialValues = { message: leaveObj.message, select: leaveObj.leaveType, leaveStartDate: new Date(leaveObj.leaveStartDate), leaveEndDate: new Date(leaveObj.leaveEndDate) };
 
-    const onSubmit = async (values) => {
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${token}`);
-        myHeaders.append("Content-Type", "application/json");
+    useEffect(() => {
+        const onSubmit = async (values) => {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Bearer ${token}`);
+            myHeaders.append("Content-Type", "application/json");
 
-        const data = JSON.stringify({
-            "leaveStartDate": values?.leaveStartDate,
-            "leaveEndDate": values?.leaveEndDate,
-            "leaveType": values?.select,
-            "message": values?.message
-        });
+            const data = JSON.stringify({
+                "leaveStartDate": values.leaveStartDate,
+                "leaveEndDate": values.leaveEndDate,
+                "leaveType": values.select,
+                "message": values.message
+            });
 
-        const requestOptions = {
-            method: 'PATCH',
-            headers: myHeaders,
-            body: data,
-            redirect: 'follow'
-        };
+            const requestOptions = {
+                method: 'PATCH',
+                headers: myHeaders,
+                body: data,
+                redirect: 'follow'
+            };
 
-        fetch(`http://localhost:5000/api/v1/leaves/${id}`, requestOptions)
-            .then(response => response.json())
-            .then(res => {
-                if (res.status === 'success') {
-                    successUpdate(` Successfully updated 🍺👏`)
-                }
-            })
-            .catch(err => warningMessage(` 🤒 ${err.response.data.message}`))
-    }
+            fetch(`http://localhost:5000/api/v1/leaves/${id}`, requestOptions)
+                .then(response => response.json())
+                .then(res => {
+                    if (res.status === 'success') {
+                        successUpdate(` Successfully updated 🍺👏`)
+                    }
+                })
+                .catch(err => warningMessage(` 🤒 ${err.response.data.message}`))
+        }
+    }, []);
+
 
     const formik = useFormik({ initialValues, validationSchema, onSubmit });
     const { handleSubmit, handleChange, values, touched, errors, setFieldValue } = formik;

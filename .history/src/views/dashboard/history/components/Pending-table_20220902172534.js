@@ -5,7 +5,6 @@ import React from 'react'
 import { Badge, Card } from 'react-bootstrap';
 
 function PendingTable(props) {
-
     return (
         <Card className="mt-5">
             <div className="table-responsive p-4">
@@ -39,12 +38,21 @@ function PendingTable(props) {
                                 <td>{leave.leaveEndDate}</td>
                                 <td>{leave.leaveType}</td>
                                 <td><Badge className={"bg-warning font-size-11 badge-soft-" + leave.badgeClass} color={leave.badgeClass} pill>{leave.status}</Badge> </td>
+                                <td>
+                                    <Badge className={`px-3 pe-auto cursor-pointer ${leave.status === "pending" ? "bg-primary" : "bg-light text-danger"}`}
+                                        onClick={() => {
+                                            if (leave.status === "pending") {
+                                                setRightModalExample(true)
+                                                setLeaveId(leave.id);
+                                            }
+                                        }}
+                                    > {leave.status === "pending" ? "Edit" : "no action"} </Badge>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
-
         </Card>
     )
 }

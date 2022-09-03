@@ -2,6 +2,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
@@ -10,16 +11,18 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
-import { warningMessage, successUpdate } from "../../../../components/Notifications/Notifications";
+import { warningMessage, successMessage } from "../../../../components/Notifications/Notifications";
 
 function UpdateLeave(props) {
-
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
+    console.log(token);
 
     const { leaves, id } = props;
     const leave = leaves.filter(lv => { return lv.id === id })
     const leaveObj = Object.assign(...leave);
+
+    console.log("Result is : ", id)
 
     const validationSchema = Yup.object().shape({
         leaveStartDate: Yup.date().nullable().required('Leave Start Date is required'),
@@ -30,33 +33,37 @@ function UpdateLeave(props) {
 
     const initialValues = { message: leaveObj.message, select: leaveObj.leaveType, leaveStartDate: new Date(leaveObj.leaveStartDate), leaveEndDate: new Date(leaveObj.leaveEndDate) };
 
+
     const onSubmit = async (values) => {
+
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
 
         const data = JSON.stringify({
-            "leaveStartDate": values?.leaveStartDate,
-            "leaveEndDate": values?.leaveEndDate,
-            "leaveType": values?.select,
-            "message": values?.message
+            "leaveStartDate": values.leaveStartDate,
+            "leaveEndDate": values.leaveEndDate,
+            "leaveType": values.select,
+            "message": values.message
         });
 
-        const requestOptions = {
-            method: 'PATCH',
-            headers: myHeaders,
-            body: data,
-            redirect: 'follow'
-        };
 
-        fetch(`http://localhost:5000/api/v1/leaves/${id}`, requestOptions)
-            .then(response => response.json())
-            .then(res => {
-                if (res.status === 'success') {
-                    successUpdate(` Successfully updated 🍺👏`)
-                }
-            })
-            .catch(err => warningMessage(` 🤒 ${err.response.data.message}`))
+        // const { leaveStartDate, leaveEndDate, select, message } = values;
+        // try {
+        //     const res = await axios({
+        //         method: 'PATCH',
+        //         headers: myHeaders,
+        //         url: `http://localhost:5000/api/v1/leaves/${id}`,
+        //         data: { leaveStartDate, leaveEndDate, select, message },
+        //         redirect: 'follow'
+        //     });
+        //     console.log(res);
+        // if (res.data.status === 'success') {
+        //     successMessage(`Successfully updated`)
+        // }
+        // } catch (err) {
+        //     warningMessage(` 🤒 ${err.response.data.message}`);
+        // }
     }
 
     const formik = useFormik({ initialValues, validationSchema, onSubmit });

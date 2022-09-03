@@ -20,7 +20,6 @@ import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 import { MdNotificationsActive } from 'react-icons/md';
 import Cards from "./components/Cards"
 import UpdateLeave from "./components/UpdateLeave";
-import LeaveModalDetails from "./components/Leave-modal-details";
 
 
 const MyLeaves = () => {
@@ -35,7 +34,7 @@ const MyLeaves = () => {
     const [nExample, setNExample] = useState(false);
 
     const [leaveId, setLeaveId] = useState();
-    const [ViewLeave, setViewLeave] = useState(false);
+    const [ViewLeave, setViewLeave] = useState();
     const token = currentUser?.token;
     const [myLeaves, setMyLeave] = useState()
 
@@ -116,9 +115,9 @@ const MyLeaves = () => {
 
                                                 <td className="cursor-pointer"
                                                     onClick={() => {
-                                                        setNExample(true)
-                                                        setViewLeave(leave?.id)
-                                                    }}>
+                                                        setViewLeave(leave.id)
+                                                    }
+                                                    }>
                                                     <Badge> View </Badge>
                                                 </td>
 
@@ -156,11 +155,15 @@ const MyLeaves = () => {
             </section>
 
             <Modal show={nExample} onHide={() => setNExample(false)}>
-                <Modal.Body>
-                    <LeaveModalDetails leaves={myLeaves} id={ViewLeave} />
-                </Modal.Body>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal title</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>...</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="danger" onClick={() => setNExample(false)}>Close</Button>
+                    <Button variant="secondary" onClick={() => setNExample(false)}>
+                        Close
+                    </Button>
+                    <Button onClick={() => setNExample(false)}>Understood</Button>
                 </Modal.Footer>
             </Modal>
 
