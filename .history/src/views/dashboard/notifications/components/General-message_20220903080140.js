@@ -2,7 +2,10 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { Row, Col, Card } from 'react-bootstrap';
-// import { IoIosArrowDroprightCircle } from 'react-icons/io';
+import { IoIosArrowDroprightCircle } from 'react-icons/io';
+import { Link } from "react-router-dom";
+import { Person } from "../../../APIs/Notifications";
+
 
 function GeneralMessage() {
     const { currentUser } = useSelector((state) => state.auth);
@@ -28,12 +31,7 @@ function GeneralMessage() {
         getNotification();
     }, []);
 
-    if (message === undefined) {
-        return <Card >
-            <h4 className="text-danger p-5"> No Message for you yet </h4>
-        </Card>
-    }
-
+    console.log(" Display notificationsLoaded : ", message);
 
     return (
         <div>

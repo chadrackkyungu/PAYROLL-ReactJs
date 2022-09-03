@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { Row, Col, Badge } from 'react-bootstrap';
+import { Link } from "react-router-dom";
+import { Row, Col, Button, Badge } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';

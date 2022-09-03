@@ -2,7 +2,10 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { Row, Col, Card } from 'react-bootstrap';
-// import { IoIosArrowDroprightCircle } from 'react-icons/io';
+import { IoIosArrowDroprightCircle } from 'react-icons/io';
+import { Link } from "react-router-dom";
+import { Person } from "../../../APIs/Notifications";
+
 
 function GeneralMessage() {
     const { currentUser } = useSelector((state) => state.auth);
@@ -28,19 +31,14 @@ function GeneralMessage() {
         getNotification();
     }, []);
 
-    if (message === undefined) {
-        return <Card >
-            <h4 className="text-danger p-5"> No Message for you yet </h4>
-        </Card>
-    }
-
+    console.log(" Display notificationsLoaded : ", message);
 
     return (
         <div>
             {
                 message?.map((details, i) => {
                     return (
-                        <Card className="mb-3 p-4" key={i}>
+                        <Card className="mb-3 p-3" key={i}>
                             <Row>
                                 <Col md={10}>
                                     <Row>
@@ -53,7 +51,7 @@ function GeneralMessage() {
                                         </Col>
                                         <Col md={10}>
                                             <h5>  <b className="text-primary"> Category : </b> {details.category}    </h5>
-                                            <h6> <span className="text-danger"> Author : </span>  {details.admin.firstName}     </h6>
+                                            <h6> <span> Author : </span>  {details.admin.firstName}     </h6>
                                             <div className="notifications">
                                                 <p>  {details.message} </p>
                                             </div>
@@ -64,7 +62,7 @@ function GeneralMessage() {
 
                                 <Col md={2}>
                                     <b> {details.date} </b>
-                                    {/* <p className="mt-4"> <Link to="#/"> <IoIosArrowDroprightCircle size={24} />  </Link> </p> */}
+                                    <p className="mt-4"> <Link to="#/"> <IoIosArrowDroprightCircle size={24} />  </Link> </p>
                                 </Col>
                             </Row>
                         </Card>

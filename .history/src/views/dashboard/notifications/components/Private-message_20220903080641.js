@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Row, Col, Card } from 'react-bootstrap';
 // import { IoIosArrowDroprightCircle } from 'react-icons/io';
 
-function GeneralMessage() {
+function PrivateMessage() {
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
     const [message, setMessage] = useState();
@@ -19,7 +19,7 @@ function GeneralMessage() {
             redirect: 'follow'
         };
 
-        fetch("http://localhost:5000/api/v1/announcements/me/general", requestOptions)
+        fetch("http://localhost:5000/api/v1/announcements/me", requestOptions)
             .then(response => response.json())
             .then(result => setMessage(result.data.announce))
             .catch(error => console.log('error', error));
@@ -27,13 +27,6 @@ function GeneralMessage() {
     useEffect(() => {
         getNotification();
     }, []);
-
-    if (message === undefined) {
-        return <Card >
-            <h4 className="text-danger p-5"> No Message for you yet </h4>
-        </Card>
-    }
-
 
     return (
         <div>
@@ -64,7 +57,6 @@ function GeneralMessage() {
 
                                 <Col md={2}>
                                     <b> {details.date} </b>
-                                    {/* <p className="mt-4"> <Link to="#/"> <IoIosArrowDroprightCircle size={24} />  </Link> </p> */}
                                 </Col>
                             </Row>
                         </Card>
@@ -77,4 +69,4 @@ function GeneralMessage() {
     )
 }
 
-export default GeneralMessage
+export default PrivateMessage

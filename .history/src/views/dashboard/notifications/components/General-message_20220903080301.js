@@ -28,13 +28,6 @@ function GeneralMessage() {
         getNotification();
     }, []);
 
-    if (message === undefined) {
-        return <Card >
-            <h4 className="text-danger p-5"> No Message for you yet </h4>
-        </Card>
-    }
-
-
     return (
         <div>
             {

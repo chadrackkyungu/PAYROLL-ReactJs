@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { Row, Col, Card } from 'react-bootstrap';
 // import { IoIosArrowDroprightCircle } from 'react-icons/io';
 
+
+
 function GeneralMessage() {
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
@@ -27,13 +29,6 @@ function GeneralMessage() {
     useEffect(() => {
         getNotification();
     }, []);
-
-    if (message === undefined) {
-        return <Card >
-            <h4 className="text-danger p-5"> No Message for you yet </h4>
-        </Card>
-    }
-
 
     return (
         <div>
