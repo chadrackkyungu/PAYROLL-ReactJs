@@ -73,7 +73,7 @@ const PayslipDetails = (props) => {
                                             <td>R {payslip.overTimeAmount}.00 </td>
                                             <td>xx</td>
                                             <td>Vat</td>
-                                            <td>R {vat}.00 </td>
+                                            <td>R {vat}</td>
                                         </tr>
                                         <tr className="border-top">
                                             <th scope="row">Total Earning</th>

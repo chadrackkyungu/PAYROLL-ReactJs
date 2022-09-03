@@ -2,7 +2,7 @@
 import * as Yup from 'yup';
 
 export const validationSchema = Yup.object().shape({
-    IdNumber: Yup.string().nullable().required('ID Number is required'),
+    IdNumber: Yup.number().nullable().required('ID Number is required'),
     gender: Yup.string().nullable().required('Gender is required'),
     dateOfBirth: Yup.date().nullable().required('Date of birth is required'),
     language: Yup.string().nullable().required('Language is required'),
@@ -18,7 +18,6 @@ export const validationSchema = Yup.object().shape({
     accountType: Yup.string().nullable().required('Account Type is required'),
     branchName: Yup.string().nullable().required('Branch Name is required'),
     accountNumber: Yup.number().nullable().required('Account Number is required'),
-    photo: Yup.string().nullable(),
 });
 
 export const initialValues = {

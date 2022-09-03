@@ -7,7 +7,7 @@ import CompanyLogo from "../../../../components/Logo/company-logo";
 
 const PayslipDetails = (props) => {
     const { paySlipDetail } = props
-    const vat = 1000, pf = 0;
+    const vat = 1000, pf = 0.00;
 
     return (
         <div>
@@ -17,7 +17,7 @@ const PayslipDetails = (props) => {
                     return (
                         <div key={i}>
                             <CompanyLogo />
-                            <h4 className="text-center"> <b> Paid Date {payslip.paymentDate}  </b> </h4>
+                            <h4 className="text-center"> Payment Date {payslip.paymentDate} </h4>
 
                             <Row className="p-5 align-items-center">
                                 <Col md={6}>
@@ -56,10 +56,10 @@ const PayslipDetails = (props) => {
                                     <tbody>
                                         <tr>
                                             <th scope="row">Salary</th>
-                                            <td>R {payslip.salaryAmount}.00 </td>
+                                            <td>R {payslip.salaryAmount} </td>
                                             <td>xx</td>
                                             <td>PF</td>
-                                            <td>R {pf}.00 </td>
+                                            <td>R {pf} </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">No. of over time worked</th>
@@ -70,23 +70,23 @@ const PayslipDetails = (props) => {
                                         </tr>
                                         <tr>
                                             <th scope="row">Over Time</th>
-                                            <td>R {payslip.overTimeAmount}.00 </td>
+                                            <td>R {payslip.overTimeAmount} </td>
                                             <td>xx</td>
                                             <td>Vat</td>
-                                            <td>R {vat}.00 </td>
+                                            <td>R {vat}</td>
                                         </tr>
                                         <tr className="border-top">
                                             <th scope="row">Total Earning</th>
-                                            <td>{payslip.salaryAmount + payslip.overTimeAmount}.00</td>
+                                            <td>{payslip.salaryAmount + payslip.overTimeAmount}</td>
                                             <td>xx</td>
                                             <td>Total Deductions</td>
-                                            <td>R {vat - pf}.00 </td>
+                                            <td>R {vat - pf} </td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <Row>
                                     <Col md={4}>
-                                        <b>Net Pay : R {payslip.salaryAmount + payslip.overTimeAmount - vat}.00 </b>
+                                        <b>Net Pay : R {payslip.salaryAmount + payslip.overTimeAmount - vat} </b>
                                     </Col>
                                     <Col md={4}>
                                         <b> For {payslip.user.firstName} {payslip.user.lastName} </b>
@@ -97,7 +97,7 @@ const PayslipDetails = (props) => {
                                 </Row>
 
                             </div>
-                            <hr className="mt-5 text-danger " />
+                            <hr className="mt-5 text-danger" />
                         </div>
                     )
                 })

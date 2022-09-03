@@ -2,13 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
-import { Row, Col, Badge } from 'react-bootstrap';
+import { Row, Col, Badge, Card } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 import { MdNotificationsActive } from 'react-icons/md';
 import PayslipDetails from './components/Payslip-details';
+import PayslipTable from './components/Payslip-table';
 
 const Payslip = () => {
     const title = 'Payslip';
@@ -39,6 +40,13 @@ const Payslip = () => {
         getPayslip();
     }, []);
 
+    if (paySlip === undefined) {
+        return <Card >
+            <h4 className="text-danger p-5"> No Message for you yet </h4>
+        </Card>
+    }
+
+
     return (
         <>
             <HtmlHead title={title} description={description} />
@@ -53,7 +61,9 @@ const Payslip = () => {
                             </Link>
                         </div>
                         <div className="align-items-center m-5">
-                            <PayslipDetails paySlipDetail={paySlip} />
+                            <PayslipDetails />
+                            <PayslipTable />
+                            <hr className="mt-5" />
                         </div>
                     </section>
                 </Col>

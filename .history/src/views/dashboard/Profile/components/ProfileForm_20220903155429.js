@@ -85,6 +85,10 @@ const AccountSettings = () => {
         setFieldValue('dateOfBirth', new Date(date));
     }; //* End
 
+    if (!currentUser.data.user === undefined) {
+        return
+    }
+
     //* Selection
     // Gender
     const genderOptions = [
@@ -142,7 +146,7 @@ const AccountSettings = () => {
             <Form onSubmit={handleSubmit} className="d-flex flex-column tooltip-end-top">
 
                 <div className="m-3 mx-auto position-relative" id="imageUpload">
-                    <img src={currentUser.data.user?.photo ? currentUser.data.user?.photo : thumb} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
+                    <img src={currentUser.data.user.photo ? currentUser.data.user?.photo : thumb} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
                     <Button size="sm" variant="separator-light" className="btn-icon btn-icon-only position-absolute rounded-xl s-0 b-0"
                         onClick={onThumbChangeClick}
                     >

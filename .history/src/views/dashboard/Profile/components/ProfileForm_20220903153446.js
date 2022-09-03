@@ -15,7 +15,14 @@ const AccountSettings = () => {
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
     const [image, setImage] = useState()
-    const initialValues = currentUser.data?.user;
+    console.log("User Details : ", currentUser.data?.user);
+    console.log("Images : ", image);
+
+    const initialValues = currentUser.data.user;
+
+    console.log('====================================');
+    console.log(initialValues);
+    console.log('====================================');
 
     const onSubmit = async (values) => {
         console.log("Output : ", values);
@@ -88,7 +95,7 @@ const AccountSettings = () => {
     //* Selection
     // Gender
     const genderOptions = [
-        { value: currentUser.data.user?.gender, label: currentUser.data.user?.gender },
+        { value: currentUser.data.user.gender, label: currentUser.data.user.gender },
         { value: 'Male', label: 'Male' },
         { value: 'Female', label: 'Female' },
         { value: 'Other', label: 'Other' },
@@ -102,7 +109,7 @@ const AccountSettings = () => {
 
     // Material Status
     const materialOptions = [
-        { value: currentUser.data.user?.materialStatus, label: currentUser.data.user?.materialStatus },
+        { value: currentUser.data.user.materialStatus, label: currentUser.data.user.materialStatus },
         { value: 'married', label: 'married' },
         { value: 'un married', label: 'un married' },
     ];
@@ -114,7 +121,7 @@ const AccountSettings = () => {
 
     // Account type
     const typeOptions = [
-        { value: currentUser.data.user?.accountType, label: currentUser.data.user?.accountType },
+        { value: currentUser.data.user.accountType, label: currentUser.data.user.accountType },
         { value: 'Savings', label: 'Savings' },
         { value: 'Other', label: 'Other' },
     ];
@@ -126,7 +133,7 @@ const AccountSettings = () => {
 
     // Language
     const languageOptions = [
-        { value: currentUser.data.user?.language, label: currentUser.data.user?.language },
+        { value: currentUser.data.user.language, label: currentUser.data.user.language },
         { value: 'English', label: 'English' },
         { value: 'Français', label: 'Français' },
     ];
@@ -142,7 +149,7 @@ const AccountSettings = () => {
             <Form onSubmit={handleSubmit} className="d-flex flex-column tooltip-end-top">
 
                 <div className="m-3 mx-auto position-relative" id="imageUpload">
-                    <img src={currentUser.data.user?.photo ? currentUser.data.user?.photo : thumb} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
+                    <img src={currentUser.data.user.photo ? currentUser.data.user.photo : thumb} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
                     <Button size="sm" variant="separator-light" className="btn-icon btn-icon-only position-absolute rounded-xl s-0 b-0"
                         onClick={onThumbChangeClick}
                     >

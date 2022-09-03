@@ -56,7 +56,7 @@ const PayslipDetails = (props) => {
                                     <tbody>
                                         <tr>
                                             <th scope="row">Salary</th>
-                                            <td>R {payslip.salaryAmount}.00 </td>
+                                            <td>R {payslip.salaryAmount} </td>
                                             <td>xx</td>
                                             <td>PF</td>
                                             <td>R {pf}.00 </td>
@@ -70,10 +70,10 @@ const PayslipDetails = (props) => {
                                         </tr>
                                         <tr>
                                             <th scope="row">Over Time</th>
-                                            <td>R {payslip.overTimeAmount}.00 </td>
+                                            <td>R {payslip.overTimeAmount} </td>
                                             <td>xx</td>
                                             <td>Vat</td>
-                                            <td>R {vat}.00 </td>
+                                            <td>R {vat}</td>
                                         </tr>
                                         <tr className="border-top">
                                             <th scope="row">Total Earning</th>
@@ -86,7 +86,7 @@ const PayslipDetails = (props) => {
                                 </table>
                                 <Row>
                                     <Col md={4}>
-                                        <b>Net Pay : R {payslip.salaryAmount + payslip.overTimeAmount - vat}.00 </b>
+                                        <b>Net Pay : R {payslip.salaryAmount + payslip.overTimeAmount - vat} </b>
                                     </Col>
                                     <Col md={4}>
                                         <b> For {payslip.user.firstName} {payslip.user.lastName} </b>

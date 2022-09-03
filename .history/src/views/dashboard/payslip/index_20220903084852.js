@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
-import { Row, Col, Badge } from 'react-bootstrap';
+import { Row, Col, Badge, Card } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';

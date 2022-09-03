@@ -7,54 +7,14 @@ import DatePicker from 'react-datepicker'; // Date picker
 import 'react-datepicker/dist/react-datepicker.css'; // Date Style
 import Select from 'react-select';
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
-// import { validationSchema, initialValues } from './Validation';
-import { validationSchema } from './Validation';
+import { validationSchema, initialValues } from './Validation';
 
 const AccountSettings = () => {
 
     const { currentUser } = useSelector((state) => state.auth);
-    const token = currentUser?.token;
-    const [image, setImage] = useState()
-    const initialValues = currentUser.data?.user;
+    console.log("User Details : ", currentUser.data.user);
 
-    const onSubmit = async (values) => {
-        console.log("Output : ", values);
-
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer Bearer ${token}`);
-
-        const userProfile = JSON.stringify({
-            "IdNumber": values.IdNumber,
-            "gender": values.gender,
-            "dateOfBirth": values.dateOfBirth,
-            "language": values.language,
-            "phoneNumber": values.phoneNumber,
-            "materialStatus": values.materialStatus,
-            "streetAddress": values.streetAddress,
-            "city": values.city,
-            "country": values.country,
-            "houseNumber": values.houseNumber,
-            "stateProvince": values.stateProvince,
-            "accountName": values.accountName,
-            "accountType": values.accountType,
-            "branchName": values.branchName,
-            "accountNumber": values.accountNumber,
-            "photo": image,
-        });
-
-        const requestOptions = {
-            method: 'PATCH',
-            headers: myHeaders,
-            body: userProfile,
-            redirect: 'follow'
-        };
-
-        fetch("http://localhost:5000/api/v1/users/updateMe", requestOptions)
-            .then(response => response.json())
-            .then(result => console.log("Result is : ", result))
-            .catch(error => console.log('error', error));
-    };
-
+    const onSubmit = (values) => console.log('submit form', values);
     const formik = useFormik({ initialValues, validationSchema, onSubmit });
     const { handleSubmit, handleChange, values, touched, errors, setFieldValue } = formik;
 
@@ -71,7 +31,6 @@ const AccountSettings = () => {
     const changeThumb = (event) => {
         if (event.target.files && event.target.files[0]) {
             console.log(event.target.files[0])
-            setImage(event.target.files[0])
             const reader = new FileReader();
             reader.onload = (loadEvent) => {
                 setThumb(loadEvent.target.result);
@@ -88,7 +47,6 @@ const AccountSettings = () => {
     //* Selection
     // Gender
     const genderOptions = [
-        { value: currentUser.data.user?.gender, label: currentUser.data.user?.gender },
         { value: 'Male', label: 'Male' },
         { value: 'Female', label: 'Female' },
         { value: 'Other', label: 'Other' },
@@ -102,7 +60,6 @@ const AccountSettings = () => {
 
     // Material Status
     const materialOptions = [
-        { value: currentUser.data.user?.materialStatus, label: currentUser.data.user?.materialStatus },
         { value: 'married', label: 'married' },
         { value: 'un married', label: 'un married' },
     ];
@@ -114,7 +71,6 @@ const AccountSettings = () => {
 
     // Account type
     const typeOptions = [
-        { value: currentUser.data.user?.accountType, label: currentUser.data.user?.accountType },
         { value: 'Savings', label: 'Savings' },
         { value: 'Other', label: 'Other' },
     ];
@@ -126,7 +82,6 @@ const AccountSettings = () => {
 
     // Language
     const languageOptions = [
-        { value: currentUser.data.user?.language, label: currentUser.data.user?.language },
         { value: 'English', label: 'English' },
         { value: 'Français', label: 'Français' },
     ];
@@ -142,7 +97,7 @@ const AccountSettings = () => {
             <Form onSubmit={handleSubmit} className="d-flex flex-column tooltip-end-top">
 
                 <div className="m-3 mx-auto position-relative" id="imageUpload">
-                    <img src={currentUser.data.user?.photo ? currentUser.data.user?.photo : thumb} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
+                    <img src={thumb} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
                     <Button size="sm" variant="separator-light" className="btn-icon btn-icon-only position-absolute rounded-xl s-0 b-0"
                         onClick={onThumbChangeClick}
                     >
@@ -160,7 +115,7 @@ const AccountSettings = () => {
                                 <label htmlFor="">ID Number</label>
                                 <div className="mb-3 filled">
                                     <CsLineIcons icon="user" />
-                                    <Form.Control type="text" placeholder="ID Number" name="IdNumber" value={values.IdNumber} onChange={handleChange} />
+                                    <Form.Control type="text" placeholder="ID Number" defaultValue="Blanch" name="IdNumber" value={values.IdNumber} onChange={handleChange} />
                                     {errors.IdNumber && touched.IdNumber && <div className="error">{errors.IdNumber}</div>}
                                 </div>
 
@@ -182,7 +137,7 @@ const AccountSettings = () => {
                                 <label htmlFor="">Date of birth</label>
                                 <div className="mb-3 filled">
                                     <CsLineIcons icon="calendar" />
-                                    <DatePicker className="form-control" name="dateOfBirth" selected={new Date(values.dateOfBirth)} onChange={birthDateOnChange} placeholderText="Date of birth" />
+                                    <DatePicker className="form-control" name="dateOfBirth" selected={values.dateOfBirth} onChange={birthDateOnChange} placeholderText="Date of birth" />
                                     {errors.dateOfBirth && touched.dateOfBirth && <div className="error">{errors.dateOfBirth}</div>}
                                 </div>
 
@@ -299,6 +254,32 @@ const AccountSettings = () => {
                         </Row>
                     </Card.Body>
                 </Card>
+
+                <h5 className="mb-2 mt-3 mb-3 text-primary"> Upload image File Documents  </h5>
+                <Card className="d-flex">
+                    <div>
+                        <img src={thumb} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
+                        <Button size="sm" variant="separator-light" className="btn-icon btn-icon-only position-absolute rounded-xl s-0 b-0" onClick={onThumbChangeClick}>
+                            <CsLineIcons icon="upload" className="text-alternate" />
+                        </Button>
+                        <Form.Control type="file" ref={refFileUpload} className="file-upload d-none" accept="image/*" onChange={changeThumb} />
+                    </div>
+                    <div>
+                        <img src={thumb} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
+                        <Button size="sm" variant="separator-light" className="btn-icon btn-icon-only position-absolute rounded-xl s-0 b-0" onClick={onThumbChangeClick}>
+                            <CsLineIcons icon="upload" className="text-alternate" />
+                        </Button>
+                        <Form.Control type="file" ref={refFileUpload} className="file-upload d-none" accept="image/*" onChange={changeThumb} />
+                    </div>
+                    <div>
+                        <img src={thumb} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
+                        <Button size="sm" variant="separator-light" className="btn-icon btn-icon-only position-absolute rounded-xl s-0 b-0" onClick={onThumbChangeClick}>
+                            <CsLineIcons icon="upload" className="text-alternate" />
+                        </Button>
+                        <Form.Control type="file" ref={refFileUpload} className="file-upload d-none" accept="image/*" onChange={changeThumb} />
+                    </div>
+                </Card>
+
                 <Button type="submit" variant="primary mt-4 w-25">Update</Button>
             </Form>
         </>

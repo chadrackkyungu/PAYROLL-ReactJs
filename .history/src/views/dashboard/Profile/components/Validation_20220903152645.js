@@ -18,7 +18,6 @@ export const validationSchema = Yup.object().shape({
     accountType: Yup.string().nullable().required('Account Type is required'),
     branchName: Yup.string().nullable().required('Branch Name is required'),
     accountNumber: Yup.number().nullable().required('Account Number is required'),
-    photo: Yup.string().nullable(),
 });
 
 export const initialValues = {

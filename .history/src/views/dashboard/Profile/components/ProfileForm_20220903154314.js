@@ -88,7 +88,7 @@ const AccountSettings = () => {
     //* Selection
     // Gender
     const genderOptions = [
-        { value: currentUser.data.user?.gender, label: currentUser.data.user?.gender },
+        { value: currentUser.data.user.gender, label: currentUser.data.user?.gender },
         { value: 'Male', label: 'Male' },
         { value: 'Female', label: 'Female' },
         { value: 'Other', label: 'Other' },
@@ -142,7 +142,7 @@ const AccountSettings = () => {
             <Form onSubmit={handleSubmit} className="d-flex flex-column tooltip-end-top">
 
                 <div className="m-3 mx-auto position-relative" id="imageUpload">
-                    <img src={currentUser.data.user?.photo ? currentUser.data.user?.photo : thumb} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
+                    <img src={currentUser.data.user.photo ? currentUser.data.user?.photo : thumb} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
                     <Button size="sm" variant="separator-light" className="btn-icon btn-icon-only position-absolute rounded-xl s-0 b-0"
                         onClick={onThumbChangeClick}
                     >
