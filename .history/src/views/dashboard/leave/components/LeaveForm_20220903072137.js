@@ -9,7 +9,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
-import { warningMessage, successSubmitLeave } from "../../../../components/Notifications/Notifications";
+import { warningMessage, success_submitLeave } from "../../../../components/Notifications/Notifications";
 
 function LeaveForm() {
 
@@ -20,12 +20,13 @@ function LeaveForm() {
         leaveStartDate: Yup.date().nullable().required('Leave Start Date is required'),
         leaveEndDate: Yup.date().nullable().required('Leave End Date is required'),
         select: Yup.string().required('The type is required'),
-        message: Yup.string().required('Message is required').min(100).max(1000),
+        message: Yup.string().required('Message is required').min(100).max(500),
     });
 
     const initialValues = { message: '', select: '', leaveStartDate: null, leaveEndDate: null };
 
     const onSubmit = async (values) => {
+
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
@@ -48,7 +49,7 @@ function LeaveForm() {
             .then(response => response.json())
             .then(res => {
                 if (res.status === 'success') {
-                    successSubmitLeave(` Successfully submit a leave 🍺👏`)
+                    success_submitLeave(` Successfully submit a leave 🍺👏`)
                 }
             })
             .catch(err => warningMessage(` 🤒 ${err.response.data.message}`))

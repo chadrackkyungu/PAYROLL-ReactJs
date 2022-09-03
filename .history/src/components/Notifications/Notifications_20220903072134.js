@@ -10,8 +10,8 @@ export const successMessage = (message) => {
     toast.success(message, { position: toast.POSITION.TOP_LEFT });
 }
 
-export const successSubmitLeave = (message) => {
-    toast.success(message, { position: toast.POSITION.TOP_UP_CENTER });
+export const success_submitLeave = (message) => {
+    toast.success(message, { position: toast.POSITION.TOP_UP });
 }
 
 export const successUpdate = (message) => {

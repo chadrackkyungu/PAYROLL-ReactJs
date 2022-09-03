@@ -20,12 +20,13 @@ function LeaveForm() {
         leaveStartDate: Yup.date().nullable().required('Leave Start Date is required'),
         leaveEndDate: Yup.date().nullable().required('Leave End Date is required'),
         select: Yup.string().required('The type is required'),
-        message: Yup.string().required('Message is required').min(100).max(1000),
+        message: Yup.string().required('Message is required').min(100).max(500),
     });
 
     const initialValues = { message: '', select: '', leaveStartDate: null, leaveEndDate: null };
 
     const onSubmit = async (values) => {
+
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");

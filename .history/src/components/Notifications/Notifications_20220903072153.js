@@ -11,7 +11,7 @@ export const successMessage = (message) => {
 }
 
 export const successSubmitLeave = (message) => {
-    toast.success(message, { position: toast.POSITION.TOP_UP_CENTER });
+    toast.success(message, { position: toast.POSITION.TOP_UP });
 }
 
 export const successUpdate = (message) => {

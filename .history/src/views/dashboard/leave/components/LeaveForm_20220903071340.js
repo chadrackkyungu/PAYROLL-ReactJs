@@ -9,7 +9,6 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
-import { warningMessage, successSubmitLeave } from "../../../../components/Notifications/Notifications";
 
 function LeaveForm() {
 
@@ -19,13 +18,15 @@ function LeaveForm() {
     const validationSchema = Yup.object().shape({
         leaveStartDate: Yup.date().nullable().required('Leave Start Date is required'),
         leaveEndDate: Yup.date().nullable().required('Leave End Date is required'),
-        select: Yup.string().required('The type is required'),
-        message: Yup.string().required('Message is required').min(100).max(1000),
+        leaveType: Yup.string().required('The type is required'),
+        message: Yup.string().required('Message is required').min(100).max(500),
     });
 
-    const initialValues = { message: '', select: '', leaveStartDate: null, leaveEndDate: null };
+    const initialValues = { message: '', leaveType: '', leaveStartDate: null, leaveEndDate: null };
 
     const onSubmit = async (values) => {
+        console.log(values);
+
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
@@ -33,7 +34,7 @@ function LeaveForm() {
         const userInputDetails = JSON.stringify({
             "leaveStartDate": values.leaveStartDate,
             "leaveEndDate": values.leaveEndDate,
-            "leaveType": values.select,
+            "leaveType": values.leaveType,
             "message": values.message
         });
 
@@ -46,12 +47,8 @@ function LeaveForm() {
 
         fetch("http://localhost:5000/api/v1/leaves", requestOptions)
             .then(response => response.json())
-            .then(res => {
-                if (res.status === 'success') {
-                    successSubmitLeave(` Successfully submit a leave 🍺👏`)
-                }
-            })
-            .catch(err => warningMessage(` 🤒 ${err.response.data.message}`))
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     }
 
     const formik = useFormik({ initialValues, validationSchema, onSubmit });
@@ -66,7 +63,7 @@ function LeaveForm() {
     const [selectValue, setSelectValue] = useState(options[0]);
 
     const selectOnChange = (selectedOption) => {
-        setFieldValue('select', selectedOption.value);
+        setFieldValue('leaveType', selectedOption.value);
         setSelectValue(selectedOption);
     };
 
@@ -100,7 +97,7 @@ function LeaveForm() {
 
             <div className="mb-3 filled">
                 <CsLineIcons icon="loaf" />
-                <Select classNamePrefix="react-select" name="select" options={options} value={selectValue} onChange={selectOnChange} placeholder="Select leave type" />
+                <Select classNamePrefix="react-select" name="leaveType" options={options} value={selectValue} onChange={selectOnChange} placeholder="Select leave type" />
                 {errors.select && touched.select && <div className="error">{errors.select}</div>}
             </div>
 
