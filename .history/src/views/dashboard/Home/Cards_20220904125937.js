@@ -63,7 +63,7 @@ const Cards = ({ total, monthlySalary, overTimePrevMonth }) => {
                                 </div>
                             </Col>
                             <Col>
-                                <div className="heading mb-0 sh-8 d-flex align-items-center lh-1-25 ps-3">Total Overtime Earning for this month </div>
+                                <div className="heading mb-0 sh-8 d-flex align-items-center lh-1-25 ps-3">Total Overtime Earning </div>
                             </Col>
                             <Col xs="auto" className="ps-3">
                                 <div className="display-5 text-primary">R {overTimePrevMonth} </div>

@@ -46,8 +46,11 @@ const Dashboard = () => {
     const addSalary = salary?.reduce((a, b) => a + b);
     const addOvertime = overtimeSalary?.reduce((a, b) => a + b);
     const totalPayment = addSalary + addOvertime;
-    const prevSalary = salary === undefined ? null : salary[salary?.length - 1];
-    const prevSalaryOvertime = salary === undefined ? null : overtimeSalary[overtimeSalary?.length - 1];
+
+    if (!salary || !overtimeSalary) {
+        const prevSalary = salary[salary?.length - 1];
+        const prevSalaryOvertime = overtimeSalary[overtimeSalary?.length - 1];
+    }
 
     return (
         <>

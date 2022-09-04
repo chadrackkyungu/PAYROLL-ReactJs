@@ -77,13 +77,11 @@ const Areachart = ({ salary, overTime }) => {
     const Amount = [
         {
             name: 'Salary Amount',
-            // data: [14000, 12000, 13000, 14000, 13500, 14000, 11000, 10000]
-            data: salary
+            data: [14000, 12000, 13000, 14000, 13500, 14000, 11000, 10000]
         },
         {
-            name: 'Over Time Amount',
-            // data: [1000, 3000, 2000, 1000, 500, 1000, 5000, 2000]
-            data: overTime
+            name: 'Over Time',
+            data: [1000, 3000, 2000, 1000, 500, 1000, 5000, 2000]
         },
     ]
 

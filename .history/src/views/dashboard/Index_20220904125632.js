@@ -46,8 +46,7 @@ const Dashboard = () => {
     const addSalary = salary?.reduce((a, b) => a + b);
     const addOvertime = overtimeSalary?.reduce((a, b) => a + b);
     const totalPayment = addSalary + addOvertime;
-    const prevSalary = salary === undefined ? null : salary[salary?.length - 1];
-    const prevSalaryOvertime = salary === undefined ? null : overtimeSalary[overtimeSalary?.length - 1];
+    const prevSalary = salary[salary.length - 1];
 
     return (
         <>
@@ -58,7 +57,7 @@ const Dashboard = () => {
                         <div className="page-title-container">
                             <BreadcrumbList items={breadcrumbs} />
                         </div>
-                        <Cards total={totalPayment} monthlySalary={prevSalary} overTimePrevMonth={prevSalaryOvertime} />
+                        <Cards total={totalPayment} monthlySalary={prevSalary} overTimePrevMonth={overtimeSalary} />
                         <Chart salary={salary} overTime={overtimeSalary} />
                     </section>
                 </Col>
