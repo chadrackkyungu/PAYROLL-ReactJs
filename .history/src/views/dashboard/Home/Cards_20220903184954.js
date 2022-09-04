@@ -1,45 +1,19 @@
+/* eslint-disable consistent-return */
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
 
-const Cards = () => {
+const Cards = ({ Amount }) => {
 
-    const { currentUser } = useSelector((state) => state.auth);
-    const token = currentUser?.token;
-    const listItems = [];
+    if (!Amount) return
 
-    const getPayslip = async () => {
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${token}`);
-
-        const requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-
-        fetch("http://localhost:5000/api/v1/payments/me", requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                console.log(result.data.leaves);
-                listItems.push(result.data.leaves)
-            })
-            .catch(error => console.log('error', error));
-    }
-    useEffect(() => {
-        getPayslip();
-    }, []);
-
-    const newArr = []
-    listItems.map(pay => newArr.push(pay.salaryAmount));
-    // const overtimeSalary = listItems.map(pay => pay.overTimeAmount)
-    console.log(newArr);
-
-    // const addSalary = salary.reduce((a, b) => a + b);
-    // const addOvertime = overtimeSalary.reduce((a, b) => a + b);
-    // const totalPayment = addSalary + addOvertime;
+    const salary = Amount?.map(pay => pay.salaryAmount);
+    const overtimeSalary = Amount?.map(pay => pay.overTimeAmount)
+    const addSalary = salary.reduce((a, b) => a + b);
+    const addOvertime = overtimeSalary.reduce((a, b) => a + b);
+    const totalPayment = addSalary + addOvertime;
 
     return (
         <Row className="g-2">
@@ -57,7 +31,7 @@ const Cards = () => {
                                 <div className="heading mb-0 sh-8 d-flex align-items-center lh-1-25 ps-3">Total Earning for this year</div>
                             </Col>
                             <Col xs="auto" className="ps-3">
-                                {/* <div className="display-5 text-primary"> R {totalPayment}</div> */}
+                                <div className="display-5 text-primary"> R {totalPayment}</div>
                             </Col>
                         </Row>
                     </Card.Body>

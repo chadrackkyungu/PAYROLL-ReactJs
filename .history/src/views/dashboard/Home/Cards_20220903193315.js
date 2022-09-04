@@ -32,10 +32,10 @@ const Cards = () => {
         getPayslip();
     }, []);
 
-    const newArr = []
-    listItems.map(pay => newArr.push(pay.salaryAmount));
-    // const overtimeSalary = listItems.map(pay => pay.overTimeAmount)
-    console.log(newArr);
+
+    const salary = listItems.map(pay => pay.salaryAmount);
+    const overtimeSalary = listItems.map(pay => pay.overTimeAmount)
+    console.log(salary);
 
     // const addSalary = salary.reduce((a, b) => a + b);
     // const addOvertime = overtimeSalary.reduce((a, b) => a + b);

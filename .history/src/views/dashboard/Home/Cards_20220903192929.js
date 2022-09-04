@@ -8,6 +8,7 @@ const Cards = () => {
 
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
+    const [paySlip, setPayslip] = useState();
     const listItems = [];
 
     const getPayslip = async () => {
@@ -24,6 +25,7 @@ const Cards = () => {
             .then(response => response.json())
             .then(result => {
                 console.log(result.data.leaves);
+                setPayslip(result.data.leaves)
                 listItems.push(result.data.leaves)
             })
             .catch(error => console.log('error', error));
@@ -32,14 +34,11 @@ const Cards = () => {
         getPayslip();
     }, []);
 
-    const newArr = []
-    listItems.map(pay => newArr.push(pay.salaryAmount));
-    // const overtimeSalary = listItems.map(pay => pay.overTimeAmount)
-    console.log(newArr);
-
-    // const addSalary = salary.reduce((a, b) => a + b);
-    // const addOvertime = overtimeSalary.reduce((a, b) => a + b);
-    // const totalPayment = addSalary + addOvertime;
+    const salary = listItems.map(pay => pay.salaryAmount); console.log(salary);
+    const overtimeSalary = listItems.map(pay => pay?.overTimeAmount)
+    const addSalary = salary.reduce((a, b) => a + b);
+    const addOvertime = overtimeSalary.reduce((a, b) => a + b);
+    const totalPayment = addSalary + addOvertime;
 
     return (
         <Row className="g-2">
@@ -57,7 +56,7 @@ const Cards = () => {
                                 <div className="heading mb-0 sh-8 d-flex align-items-center lh-1-25 ps-3">Total Earning for this year</div>
                             </Col>
                             <Col xs="auto" className="ps-3">
-                                {/* <div className="display-5 text-primary"> R {totalPayment}</div> */}
+                                <div className="display-5 text-primary"> R {totalPayment}</div>
                             </Col>
                         </Row>
                     </Card.Body>

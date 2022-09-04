@@ -36,6 +36,7 @@ const Login = () => {
         url: 'http://localhost:5000/api/v1/users/login',
         data: { email, password },
       });
+      console.log(res.data)
       if (res.data.status === 'success') {
         dispatch(setCurrentUser(res.data))
         successMessage(`Successfully logged in`)
