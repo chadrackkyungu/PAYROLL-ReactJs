@@ -1,25 +1,43 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Col, Card, Button, Form, Row } from 'react-bootstrap';
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import DatePicker from 'react-datepicker'; // Date picker
 import 'react-datepicker/dist/react-datepicker.css'; // Date Style
 import Select from 'react-select';
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
-import { validationSchema } from './Validation';
-import { warningMessage, successMessage } from "../../../../components/Notifications/Notifications";
-import { Logout } from "../../../../auth/authSlice"
+// import { validationSchema, initialValues } from './Validation';
+// import { validationSchema } from './Validation';
 
 const AccountSettings = () => {
-    const dispatch = useDispatch();
-    const history = useHistory()
+
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
     const [thumb, setThumb] = useState('/img/profile/profile-1.webp');
     const [image, setImage] = useState()
     const initialstate = currentUser?.data?.user;
+
+    const validationSchema = Yup.object().shape({
+        IdNumber: Yup.string().nullable().required('ID Number is required'),
+        gender: Yup.string().nullable().required('Gender is required'),
+        dateOfBirth: Yup.date().nullable().required('Date of birth is required'),
+        language: Yup.string().nullable().required('Language is required'),
+        phoneNumber: Yup.number().nullable().required('Phone Number is required'),
+        materialStatus: Yup.string().nullable().required('Material Status is required'),
+        streetAddress: Yup.string().nullable().required('Street Address is required'),
+        city: Yup.string().nullable().required('City is required'),
+        country: Yup.string().nullable().required('country is required'),
+        houseNumber: Yup.number().nullable().required('House number is required'),
+        zipCode: Yup.number().nullable().required('Zip Code is required'),
+        stateProvince: Yup.string().nullable().required('State or province is required'),
+        accountName: Yup.string().nullable().required('Account Name is required'),
+        accountType: Yup.string().nullable().required('Account Type is required'),
+        branchName: Yup.string().nullable().required('Branch Name is required'),
+        accountNumber: Yup.number().nullable().required('Account Number is required'),
+        // photo: Yup.string().nullable(),
+    });
 
     const initialValues = {
         IdNumber: initialstate?.IdNumber,
@@ -38,12 +56,14 @@ const AccountSettings = () => {
         accountType: initialstate?.accountType,
         branchName: initialstate?.branchName,
         accountNumber: initialstate?.accountNumber,
-        photo: image === undefined ? image : thumb,
+        // photo: image === undefined ? thumb : image,
     };
 
     const onSubmit = async (values) => {
+        console.log("Output Output : ", values);
+
         const myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${token}`);
+        myHeaders.append("Authorization", `Bearer Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
 
         const userProfile = JSON.stringify({
@@ -63,7 +83,7 @@ const AccountSettings = () => {
             "accountType": values.accountType,
             "branchName": values.branchName,
             "accountNumber": values.accountNumber,
-            "photo": image.type,
+            // "photo": image,
         });
 
         const requestOptions = {
@@ -75,24 +95,8 @@ const AccountSettings = () => {
 
         fetch("http://localhost:5000/api/v1/users/updateMe", requestOptions)
             .then(response => response.json())
-            .then(result => {
-                if (result.status === "success") {
-
-                    window.setTimeout(() => {
-                        dispatch(Logout({
-                            thumb: '/img/profile/profile-9.webp',
-                            role: 'admin',
-                        }))
-                    }, 3000);
-
-                    successMessage(`Successfully updated the account`)
-
-                    window.setTimeout(() => {
-                        history.push('/login');
-                    }, 3000);
-                }
-            })
-            .catch(err => warningMessage(` 🤒 ${err.response.data.message}`));
+            .then(result => console.log("Result is : ", result))
+            .catch(error => console.log('error', error));
     };
 
     const formik = useFormik({ initialValues, validationSchema, onSubmit });
@@ -127,7 +131,7 @@ const AccountSettings = () => {
     //* Selection
     // Gender
     const genderOptions = [
-        { value: initialstate?.gender, label: initialstate?.gender },
+        { value: currentUser?.data?.user?.gender, label: currentUser?.data?.user?.gender },
         { value: 'Male', label: 'Male' },
         { value: 'Female', label: 'Female' },
         { value: 'Other', label: 'Other' },
@@ -141,11 +145,11 @@ const AccountSettings = () => {
 
     // Material Status
     const materialOptions = [
-        { value: initialstate?.materialStatus, label: initialstate?.materialStatus },
+        { value: currentUser?.data?.user?.materialStatus, label: currentUser?.data?.user?.materialStatus },
         { value: 'married', label: 'married' },
         { value: 'un married', label: 'un married' },
     ];
-    const [materialStatusValue, setMaterialStatusValue] = useState(materialOptions[0]);
+    const [materialStatusValue, setMaterialStatusValue] = useState(materialOptions[1]);
     const selectMaterialStatusOnChange = (selectedOption) => {
         setFieldValue('materialStatus', selectedOption.value);
         setMaterialStatusValue(selectedOption);
@@ -153,11 +157,11 @@ const AccountSettings = () => {
 
     // Account type
     const typeOptions = [
-        { value: initialstate?.accountType, label: initialstate?.accountType },
+        { value: currentUser?.data?.user?.accountType, label: currentUser?.data?.user?.accountType },
         { value: 'Savings', label: 'Savings' },
         { value: 'Other', label: 'Other' },
     ];
-    const [typeValue, setTypeValue] = useState(typeOptions[0]);
+    const [typeValue, setTypeValue] = useState(typeOptions[1]);
     const selectTypeOnChange = (selectedOption) => {
         setFieldValue('accountType', selectedOption.value);
         setTypeValue(selectedOption);
@@ -165,11 +169,11 @@ const AccountSettings = () => {
 
     // Language
     const languageOptions = [
-        { value: initialstate?.language, label: initialstate?.language },
+        { value: currentUser?.data?.user?.language, label: currentUser?.data?.user?.language },
         { value: 'English', label: 'English' },
         { value: 'Français', label: 'Français' },
     ];
-    const [languageValue, setLanguageValue] = useState(languageOptions[0]);
+    const [languageValue, setLanguageValue] = useState(languageOptions[1]);
     const selectLanguageOnChange = (selectedOption) => {
         setFieldValue('language', selectedOption.value);
         setLanguageValue(selectedOption);
@@ -251,10 +255,10 @@ const AccountSettings = () => {
                     <Card.Body>
                         <Row>
                             <Col md={6}>
-                                <label htmlFor="">Street Address</label>
+                                <label htmlFor="">streetAddress</label>
                                 <div className="mb-3 filled">
                                     <CsLineIcons icon="pin" />
-                                    <Form.Control type="text" placeholder="21 Doris Street" name="streetAddress" value={values.streetAddress} onChange={handleChange} />
+                                    <Form.Control type="text" placeholder="21 Doris Street" defaultValue="21 Doris Street" name="streetAddress" value={values.streetAddress} onChange={handleChange} />
                                     {errors.streetAddress && touched.streetAddress && <div className="error">{errors.streetAddress}</div>}
                                 </div>
 

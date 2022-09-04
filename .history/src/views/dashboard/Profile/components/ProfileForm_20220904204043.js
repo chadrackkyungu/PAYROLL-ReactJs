@@ -38,7 +38,7 @@ const AccountSettings = () => {
         accountType: initialstate?.accountType,
         branchName: initialstate?.branchName,
         accountNumber: initialstate?.accountNumber,
-        photo: image === undefined ? image : thumb,
+        photo: image === undefined ? thumb : image,
     };
 
     const onSubmit = async (values) => {
@@ -63,7 +63,7 @@ const AccountSettings = () => {
             "accountType": values.accountType,
             "branchName": values.branchName,
             "accountNumber": values.accountNumber,
-            "photo": image.type,
+            "photo": image,
         });
 
         const requestOptions = {
@@ -77,13 +77,10 @@ const AccountSettings = () => {
             .then(response => response.json())
             .then(result => {
                 if (result.status === "success") {
-
-                    window.setTimeout(() => {
-                        dispatch(Logout({
-                            thumb: '/img/profile/profile-9.webp',
-                            role: 'admin',
-                        }))
-                    }, 3000);
+                    dispatch(Logout({
+                        thumb: '/img/profile/profile-9.webp',
+                        role: 'admin',
+                    }))
 
                     successMessage(`Successfully updated the account`)
 
@@ -127,7 +124,7 @@ const AccountSettings = () => {
     //* Selection
     // Gender
     const genderOptions = [
-        { value: initialstate?.gender, label: initialstate?.gender },
+        { value: currentUser?.data?.user?.gender, label: currentUser?.data?.user?.gender },
         { value: 'Male', label: 'Male' },
         { value: 'Female', label: 'Female' },
         { value: 'Other', label: 'Other' },
@@ -141,11 +138,11 @@ const AccountSettings = () => {
 
     // Material Status
     const materialOptions = [
-        { value: initialstate?.materialStatus, label: initialstate?.materialStatus },
+        { value: currentUser?.data?.user?.materialStatus, label: currentUser?.data?.user?.materialStatus },
         { value: 'married', label: 'married' },
         { value: 'un married', label: 'un married' },
     ];
-    const [materialStatusValue, setMaterialStatusValue] = useState(materialOptions[0]);
+    const [materialStatusValue, setMaterialStatusValue] = useState(materialOptions[1]);
     const selectMaterialStatusOnChange = (selectedOption) => {
         setFieldValue('materialStatus', selectedOption.value);
         setMaterialStatusValue(selectedOption);
@@ -153,11 +150,11 @@ const AccountSettings = () => {
 
     // Account type
     const typeOptions = [
-        { value: initialstate?.accountType, label: initialstate?.accountType },
+        { value: currentUser?.data?.user?.accountType, label: currentUser?.data?.user?.accountType },
         { value: 'Savings', label: 'Savings' },
         { value: 'Other', label: 'Other' },
     ];
-    const [typeValue, setTypeValue] = useState(typeOptions[0]);
+    const [typeValue, setTypeValue] = useState(typeOptions[1]);
     const selectTypeOnChange = (selectedOption) => {
         setFieldValue('accountType', selectedOption.value);
         setTypeValue(selectedOption);
@@ -165,11 +162,11 @@ const AccountSettings = () => {
 
     // Language
     const languageOptions = [
-        { value: initialstate?.language, label: initialstate?.language },
+        { value: currentUser?.data?.user?.language, label: currentUser?.data?.user?.language },
         { value: 'English', label: 'English' },
         { value: 'Français', label: 'Français' },
     ];
-    const [languageValue, setLanguageValue] = useState(languageOptions[0]);
+    const [languageValue, setLanguageValue] = useState(languageOptions[1]);
     const selectLanguageOnChange = (selectedOption) => {
         setFieldValue('language', selectedOption.value);
         setLanguageValue(selectedOption);
@@ -251,10 +248,10 @@ const AccountSettings = () => {
                     <Card.Body>
                         <Row>
                             <Col md={6}>
-                                <label htmlFor="">Street Address</label>
+                                <label htmlFor="">streetAddress</label>
                                 <div className="mb-3 filled">
                                     <CsLineIcons icon="pin" />
-                                    <Form.Control type="text" placeholder="21 Doris Street" name="streetAddress" value={values.streetAddress} onChange={handleChange} />
+                                    <Form.Control type="text" placeholder="21 Doris Street" defaultValue="21 Doris Street" name="streetAddress" value={values.streetAddress} onChange={handleChange} />
                                     {errors.streetAddress && touched.streetAddress && <div className="error">{errors.streetAddress}</div>}
                                 </div>
 

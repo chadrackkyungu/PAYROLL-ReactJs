@@ -38,7 +38,7 @@ const AccountSettings = () => {
         accountType: initialstate?.accountType,
         branchName: initialstate?.branchName,
         accountNumber: initialstate?.accountNumber,
-        photo: image === undefined ? image : thumb,
+        photo: image === undefined ? thumb : image,
     };
 
     const onSubmit = async (values) => {
@@ -63,7 +63,7 @@ const AccountSettings = () => {
             "accountType": values.accountType,
             "branchName": values.branchName,
             "accountNumber": values.accountNumber,
-            "photo": image.type,
+            "photo": image,
         });
 
         const requestOptions = {
@@ -77,13 +77,10 @@ const AccountSettings = () => {
             .then(response => response.json())
             .then(result => {
                 if (result.status === "success") {
-
-                    window.setTimeout(() => {
-                        dispatch(Logout({
-                            thumb: '/img/profile/profile-9.webp',
-                            role: 'admin',
-                        }))
-                    }, 3000);
+                    dispatch(Logout({
+                        thumb: '/img/profile/profile-9.webp',
+                        role: 'admin',
+                    }))
 
                     successMessage(`Successfully updated the account`)
 
@@ -254,7 +251,7 @@ const AccountSettings = () => {
                                 <label htmlFor="">Street Address</label>
                                 <div className="mb-3 filled">
                                     <CsLineIcons icon="pin" />
-                                    <Form.Control type="text" placeholder="21 Doris Street" name="streetAddress" value={values.streetAddress} onChange={handleChange} />
+                                    <Form.Control type="text" placeholder="21 Doris Street" defaultValue="21 Doris Street" name="streetAddress" value={values.streetAddress} onChange={handleChange} />
                                     {errors.streetAddress && touched.streetAddress && <div className="error">{errors.streetAddress}</div>}
                                 </div>
 

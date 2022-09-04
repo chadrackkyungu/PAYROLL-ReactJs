@@ -63,7 +63,7 @@ const AccountSettings = () => {
             "accountType": values.accountType,
             "branchName": values.branchName,
             "accountNumber": values.accountNumber,
-            "photo": image.type,
+            "photo": image,
         });
 
         const requestOptions = {

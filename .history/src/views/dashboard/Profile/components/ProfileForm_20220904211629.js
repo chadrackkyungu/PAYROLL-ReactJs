@@ -38,7 +38,7 @@ const AccountSettings = () => {
         accountType: initialstate?.accountType,
         branchName: initialstate?.branchName,
         accountNumber: initialstate?.accountNumber,
-        photo: image === undefined ? image : thumb,
+        photo: image === undefined ? thumb : image,
     };
 
     const onSubmit = async (values) => {
@@ -63,7 +63,7 @@ const AccountSettings = () => {
             "accountType": values.accountType,
             "branchName": values.branchName,
             "accountNumber": values.accountNumber,
-            "photo": image.type,
+            "photo": image,
         });
 
         const requestOptions = {
