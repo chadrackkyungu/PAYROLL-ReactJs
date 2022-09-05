@@ -145,7 +145,7 @@ const Dashboard = () => {
                                         <Col md={4}>
                                             <Card>
                                                 <h4 className="mt-0 header-title mb-4">Pie Chart</h4>
-                                                {/* <PieChart /> */}
+                                                <PieChart />
                                             </Card>
                                         </Col>
                                     </Row>
