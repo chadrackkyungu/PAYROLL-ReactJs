@@ -42,6 +42,7 @@
         "react-apexcharts": "^1.4.0",
         "react-autosuggest": "^10.1.0",
         "react-bootstrap": "^2.0.0-rc.0",
+        "react-chartjs-2": "^4.3.1",
         "react-circular-progressbar": "^2.0.4",
         "react-contexify": "^5.0.0",
         "react-countdown": "^2.3.2",

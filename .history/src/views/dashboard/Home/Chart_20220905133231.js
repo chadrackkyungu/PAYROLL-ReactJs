@@ -88,7 +88,7 @@ const Areachart = ({ salary, overTime }) => {
     return (
         <React.Fragment>
             <Card className="mt-5">
-                <ReactApexChart options={Months === undefined ? null : Months} series={Amount === undefined ? null : Amount} type="bar" height="290" />
+                <ReactApexChart options={Months === undefined ? null : } series={Amount === undefined ? null : Amount} type="bar" height="290" />
             </Card>
         </React.Fragment>
     );

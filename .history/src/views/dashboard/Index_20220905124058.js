@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
@@ -10,8 +10,7 @@ import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 import Chart from "./Home/Chart";
 import Cards from './Home/Cards';
 import AdminCard from './Home/Admin-card';
-import { getCurrentMonth, getJanuary, getFebuary, getMarch, getMay } from './Home/AllTotalMonthlySal';
-// import PieChart from "./Home/AllCahrt";
+import { getCurrentMonth, getJanuary, getFebuary, getMarch, getMay, getJuin } from './Home/AllTotalMonthlySal';
 
 const Dashboard = () => {
 
@@ -24,7 +23,7 @@ const Dashboard = () => {
     const token = currentUser?.token;
     const userRole = currentUser?.data?.user?.role;
     const [payment, setPayment] = useState();
-    // const todayDate = new Date().getMonth() + 1;
+    const todayDate = new Date().getMonth() + 1;
     const userAPI = "http://localhost:5000/api/v1/payments/me";
     const adminAPI = "http://localhost:5000/api/v1/payments";
 
@@ -67,6 +66,7 @@ const Dashboard = () => {
     const febuary = getFebuary(payment)
     const march = getMarch(payment)
     const may = getMay(payment)
+    const juin = getJuin(payment)
 
     const salaryForThisMonth = currentMonth?.map(pay => pay?.salaryAmount)
     const overTimeForThisMonth = currentMonth?.map(pay => pay?.overTimeAmount)
@@ -93,23 +93,12 @@ const Dashboard = () => {
     const totalSalaryMay = mayMonth?.reduce((a, b) => a + b);
     const totalOverTimeMay = mayOverMonth?.reduce((a, b) => a + b);
 
+    const juinMonth = juin?.map(pay => pay?.salaryAmount);
+    const juinOverMonth = juin?.map(pay => pay?.overTimeAmount);
+    const totalSalaryJuin = juinMonth?.reduce((a, b) => a + b); console.log(totalSalaryJuin);
+    const totalOverTimeJuin = juinOverMonth?.reduce((a, b) => a + b);
+
     const totalSalaryOverTimeForThisMonth = totalSalaryForThisMonth + totalOverTimeForThisMonth;
-
-    const Months = Object.values({
-        totalSalaryForThisMonth,
-        totalSalaryJanuary,
-        totalSalaryFeb,
-        totalSalaryMarch,
-        totalSalaryMay
-    });
-
-    const MonthOvertime = Object.values({
-        totalOverTimeForThisMonth,
-        totalOverTimeJanuary,
-        totalOverTimeFeb,
-        totalOverTimeMarch,
-        totalOverTimeMay
-    });
 
     return (
         <>
@@ -137,18 +126,7 @@ const Dashboard = () => {
                                         total_Monthly_Salary={totalSalaryForThisMonth}
                                         total_Monthly_Overtime={totalOverTimeForThisMonth}
                                     />
-
-                                    <Row>
-                                        <Col md={8}>
-                                            <Chart salary={Months} overTime={MonthOvertime} />
-                                        </Col>
-                                        <Col md={4}>
-                                            <Card>
-                                                <h4 className="mt-0 header-title mb-4">Pie Chart</h4>
-                                                {/* <PieChart /> */}
-                                            </Card>
-                                        </Col>
-                                    </Row>
+                                    {/* <Chart salary={salaryForThisMonth} overTime={overTimeForThisMonth} /> */}
                                 </>
                             )
                         }

@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
@@ -11,7 +11,6 @@ import Chart from "./Home/Chart";
 import Cards from './Home/Cards';
 import AdminCard from './Home/Admin-card';
 import { getCurrentMonth, getJanuary, getFebuary, getMarch, getMay } from './Home/AllTotalMonthlySal';
-// import PieChart from "./Home/AllCahrt";
 
 const Dashboard = () => {
 
@@ -95,6 +94,8 @@ const Dashboard = () => {
 
     const totalSalaryOverTimeForThisMonth = totalSalaryForThisMonth + totalOverTimeForThisMonth;
 
+    console.log(totalSalaryForThisMonth);
+
     const Months = Object.values({
         totalSalaryForThisMonth,
         totalSalaryJanuary,
@@ -102,14 +103,7 @@ const Dashboard = () => {
         totalSalaryMarch,
         totalSalaryMay
     });
-
-    const MonthOvertime = Object.values({
-        totalOverTimeForThisMonth,
-        totalOverTimeJanuary,
-        totalOverTimeFeb,
-        totalOverTimeMarch,
-        totalOverTimeMay
-    });
+    console.log(Months);
 
     return (
         <>
@@ -137,18 +131,7 @@ const Dashboard = () => {
                                         total_Monthly_Salary={totalSalaryForThisMonth}
                                         total_Monthly_Overtime={totalOverTimeForThisMonth}
                                     />
-
-                                    <Row>
-                                        <Col md={8}>
-                                            <Chart salary={Months} overTime={MonthOvertime} />
-                                        </Col>
-                                        <Col md={4}>
-                                            <Card>
-                                                <h4 className="mt-0 header-title mb-4">Pie Chart</h4>
-                                                {/* <PieChart /> */}
-                                            </Card>
-                                        </Col>
-                                    </Row>
+                                    {/* <Chart salary={salaryForThisMonth} overTime={overTimeForThisMonth} /> */}
                                 </>
                             )
                         }
