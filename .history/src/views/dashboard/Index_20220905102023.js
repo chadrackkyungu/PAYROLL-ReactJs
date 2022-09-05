@@ -60,15 +60,10 @@ const Dashboard = () => {
         return todayDate === +month;
     });
 
-
     const salaryForThisMonth = getAllSalariesByMonth?.map(pay => pay?.salaryAmount)
     const overTimeForThisMonth = getAllSalariesByMonth?.map(pay => pay?.overTimeAmount)
     const totalSalaryForThisMonth = salaryForThisMonth?.reduce((a, b) => a + b);
     const totalOverTimeForThisMonth = overTimeForThisMonth?.reduce((a, b) => a + b);
-    const totalSalaryOverTimeForThisMonth = totalSalaryForThisMonth + totalOverTimeForThisMonth;
-
-    console.log("result", salaryForThisMonth)
-    console.log("result", overTimeForThisMonth)
 
     return (
         <>
@@ -87,16 +82,8 @@ const Dashboard = () => {
                                 </>
                             ) : (
                                 <>
-                                    <AdminCard
-                                        total={totalPayment}
-                                        totalYearSal={addSalary}
-                                        totalYearOver={addOvertime}
-
-                                        total_Monthly_Salary_Overtime={totalSalaryOverTimeForThisMonth}
-                                        total_Monthly_Salary={totalSalaryForThisMonth}
-                                        total_Monthly_Overtime={totalOverTimeForThisMonth}
-                                    />
-                                    {/* <Chart salary={salaryForThisMonth} overTime={overTimeForThisMonth} /> */}
+                                    <AdminCard total={totalPayment} totalYearSal={addSalary} totalYearOver={addOvertime} />
+                                    {/* <Chart salary={salary} overTime={overtimeSalary} />  */}
                                 </>
                             )
                         }

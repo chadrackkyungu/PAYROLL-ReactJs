@@ -9,10 +9,6 @@ const Cards = ({ total, monthlySalary, overTimePrevMonth }) => {
 
     const totalPay = Math.abs(total) > 999 ? Math.sign(total) * ((Math.abs(total) / 1000).toFixed(1)) + 'k' : Math.sign(total) * Math.abs(total)
 
-    const totalMonthPay = Math.abs(monthlySalary) > 999 ? Math.sign(monthlySalary) * ((Math.abs(monthlySalary) / 1000).toFixed(1)) + 'k' : Math.sign(monthlySalary) * Math.abs(monthlySalary)
-
-    const totalMonthOvertimePay = Math.abs(overTimePrevMonth) > 999 ? Math.sign(overTimePrevMonth) * ((Math.abs(overTimePrevMonth) / 1000).toFixed(1)) + 'k' : Math.sign(overTimePrevMonth) * Math.abs(overTimePrevMonth)
-
     return (
         <Row className="g-2">
 
@@ -51,7 +47,7 @@ const Cards = ({ total, monthlySalary, overTimePrevMonth }) => {
                                 <div className="heading mb-0 sh-8 d-flex align-items-center lh-1-25 ps-3">Total Earning for this Month</div>
                             </Col>
                             <Col xs="auto" className="ps-3">
-                                <div className="display-5 text-primary">R {totalMonthPay} </div>
+                                <div className="display-5 text-primary">R {monthlySalary} </div>
                             </Col>
                         </Row>
                     </Card.Body>
@@ -72,7 +68,7 @@ const Cards = ({ total, monthlySalary, overTimePrevMonth }) => {
                                 <div className="heading mb-0 sh-8 d-flex align-items-center lh-1-25 ps-3">Total Overtime Earning for this month </div>
                             </Col>
                             <Col xs="auto" className="ps-3">
-                                <div className="display-5 text-primary">R {totalMonthOvertimePay} </div>
+                                <div className="display-5 text-primary">R {overTimePrevMonth} </div>
                             </Col>
                         </Row>
                     </Card.Body>

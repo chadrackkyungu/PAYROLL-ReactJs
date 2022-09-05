@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -9,7 +8,6 @@ import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 import Chart from "./Home/Chart";
 import Cards from './Home/Cards';
-import AdminCard from './Home/Admin-card';
 
 const Dashboard = () => {
 
@@ -20,11 +18,7 @@ const Dashboard = () => {
 
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
-    const userRole = currentUser?.data?.user?.role;
     const [payment, setPayment] = useState();
-    const todayDate = new Date().getMonth() + 1;
-    const userAPI = "http://localhost:5000/api/v1/payments/me";
-    const adminAPI = "http://localhost:5000/api/v1/payments";
 
     const getPayslip = async () => {
         const myHeaders = new Headers();
@@ -36,10 +30,10 @@ const Dashboard = () => {
             redirect: 'follow'
         };
 
-        fetch(userRole === "admin" ? adminAPI : userAPI, requestOptions)
+        fetch("http://localhost:5000/api/v1/payments/me", requestOptions)
             .then(response => response.json())
             .then(result => {
-                setPayment(userRole === "admin" ? result.data.data : result.data.leaves)
+                setPayment(result.data.leaves)
             })
             .catch(error => console.log('error', error));
     }
@@ -55,21 +49,6 @@ const Dashboard = () => {
     const prevSalary = salary === undefined ? null : salary[salary?.length - 1];
     const prevSalaryOvertime = salary === undefined ? null : overtimeSalary[overtimeSalary?.length - 1];
 
-    const getAllSalariesByMonth = payment?.filter(e => {
-        const [_, month] = e.paymentDate.split('-');
-        return todayDate === +month;
-    });
-
-
-    const salaryForThisMonth = getAllSalariesByMonth?.map(pay => pay?.salaryAmount)
-    const overTimeForThisMonth = getAllSalariesByMonth?.map(pay => pay?.overTimeAmount)
-    const totalSalaryForThisMonth = salaryForThisMonth?.reduce((a, b) => a + b);
-    const totalOverTimeForThisMonth = overTimeForThisMonth?.reduce((a, b) => a + b);
-    const totalSalaryOverTimeForThisMonth = totalSalaryForThisMonth + totalOverTimeForThisMonth;
-
-    console.log("result", salaryForThisMonth)
-    console.log("result", overTimeForThisMonth)
-
     return (
         <>
             <HtmlHead title={title} description={description} />
@@ -80,23 +59,15 @@ const Dashboard = () => {
                             <BreadcrumbList items={breadcrumbs} />
                         </div>
                         {
-                            userRole === 'user' ? (
+                            currentUser.data.user.role === 'user' ? (
                                 <>
                                     <Cards total={totalPayment} monthlySalary={prevSalary} overTimePrevMonth={prevSalaryOvertime} />
                                     <Chart salary={salary} overTime={overtimeSalary} />
                                 </>
                             ) : (
                                 <>
-                                    <AdminCard
-                                        total={totalPayment}
-                                        totalYearSal={addSalary}
-                                        totalYearOver={addOvertime}
-
-                                        total_Monthly_Salary_Overtime={totalSalaryOverTimeForThisMonth}
-                                        total_Monthly_Salary={totalSalaryForThisMonth}
-                                        total_Monthly_Overtime={totalOverTimeForThisMonth}
-                                    />
-                                    {/* <Chart salary={salaryForThisMonth} overTime={overTimeForThisMonth} /> */}
+                                    <Cards total={totalPayment} monthlySalary={prevSalary} overTimePrevMonth={prevSalaryOvertime} />
+                                    <Chart salary={salary} overTime={overtimeSalary} />
                                 </>
                             )
                         }

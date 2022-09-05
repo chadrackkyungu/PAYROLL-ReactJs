@@ -27,7 +27,7 @@ const MainMenu = () => {
   const scrolled = useWindowScroll();
   const { width } = useWindowSize();
 
-  console.log(currentUser?.data?.user?.role);
+  console.log(currentUser.data.user.role);
 
   const menuItemsMemo = useMemo(
     () =>
@@ -139,7 +139,11 @@ const MainMenu = () => {
         className="menu-container flex-grow-1"
       >
         <ul id="menu" className={classNames('menu show')}>
+
+
           <MainMenuItems menuItems={menuItemsMemo} menuPlacement={placementStatus.view} />
+
+
         </ul>
       </OverlayScrollbarsComponent>
     );

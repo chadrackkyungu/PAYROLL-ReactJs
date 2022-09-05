@@ -27,8 +27,6 @@ const MainMenu = () => {
   const scrolled = useWindowScroll();
   const { width } = useWindowSize();
 
-  console.log(currentUser?.data?.user?.role);
-
   const menuItemsMemo = useMemo(
     () =>
       getMenuItems({

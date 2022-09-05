@@ -96,7 +96,7 @@ const Dashboard = () => {
                                         total_Monthly_Salary={totalSalaryForThisMonth}
                                         total_Monthly_Overtime={totalOverTimeForThisMonth}
                                     />
-                                    {/* <Chart salary={salaryForThisMonth} overTime={overTimeForThisMonth} /> */}
+                                    <Chart salary={salaryForThisMonth} overTime={overTimeForThisMonth} />
                                 </>
                             )
                         }

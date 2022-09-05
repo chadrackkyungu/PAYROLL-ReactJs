@@ -68,7 +68,6 @@ const Dashboard = () => {
     const totalSalaryOverTimeForThisMonth = totalSalaryForThisMonth + totalOverTimeForThisMonth;
 
     console.log("result", salaryForThisMonth)
-    console.log("result", overTimeForThisMonth)
 
     return (
         <>
@@ -96,7 +95,7 @@ const Dashboard = () => {
                                         total_Monthly_Salary={totalSalaryForThisMonth}
                                         total_Monthly_Overtime={totalOverTimeForThisMonth}
                                     />
-                                    {/* <Chart salary={salaryForThisMonth} overTime={overTimeForThisMonth} /> */}
+                                    {/* <Chart salary={salary} overTime={overtimeSalary} />  */}
                                 </>
                             )
                         }

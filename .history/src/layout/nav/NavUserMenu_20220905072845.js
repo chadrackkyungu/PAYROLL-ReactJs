@@ -86,7 +86,7 @@ const NavUserMenuDropdownToggle = React.memo(
           onClick(e);
         }}
       >
-        <img className="profile" alt={currentUser.data.user.firstName} src={`http://localhost:5000/img/users/${currentUser.data.user.photo}`} />
+        <img className="profile" alt={currentUser.data.user.firstName} src={`http://localhost:3000/img/users/${currentUser.data.user.photo}`} />
         <div className="name">{currentUser.data.user.firstName} <CsLineIcons icon="chevron-bottom" size="18" />  </div>
         <small className="name"> {currentUser.data.user.role} </small>
       </a>

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -47,6 +46,9 @@ const Dashboard = () => {
         getPayslip();
     }, []);
 
+    console.log("Admin payment ", payment);
+    console.log(todayDate);
+
     const salary = payment?.map(pay => pay?.salaryAmount)
     const overtimeSalary = payment?.map(pay => pay?.overTimeAmount)
     const addSalary = salary?.reduce((a, b) => a + b);
@@ -55,20 +57,13 @@ const Dashboard = () => {
     const prevSalary = salary === undefined ? null : salary[salary?.length - 1];
     const prevSalaryOvertime = salary === undefined ? null : overtimeSalary[overtimeSalary?.length - 1];
 
-    const getAllSalariesByMonth = payment?.filter(e => {
-        const [_, month] = e.paymentDate.split('-');
-        return todayDate === +month;
+    const getAllSalariesByMonth = todayDate.filter(e => {
+        var [_, month] = e.paymentDate.split('-'); // Or, var month = e.date.split('-')[1];
+        return currentMonth === +month;
     });
 
+    console.log(getAllSalariesByMonth);
 
-    const salaryForThisMonth = getAllSalariesByMonth?.map(pay => pay?.salaryAmount)
-    const overTimeForThisMonth = getAllSalariesByMonth?.map(pay => pay?.overTimeAmount)
-    const totalSalaryForThisMonth = salaryForThisMonth?.reduce((a, b) => a + b);
-    const totalOverTimeForThisMonth = overTimeForThisMonth?.reduce((a, b) => a + b);
-    const totalSalaryOverTimeForThisMonth = totalSalaryForThisMonth + totalOverTimeForThisMonth;
-
-    console.log("result", salaryForThisMonth)
-    console.log("result", overTimeForThisMonth)
 
     return (
         <>
@@ -87,16 +82,8 @@ const Dashboard = () => {
                                 </>
                             ) : (
                                 <>
-                                    <AdminCard
-                                        total={totalPayment}
-                                        totalYearSal={addSalary}
-                                        totalYearOver={addOvertime}
-
-                                        total_Monthly_Salary_Overtime={totalSalaryOverTimeForThisMonth}
-                                        total_Monthly_Salary={totalSalaryForThisMonth}
-                                        total_Monthly_Overtime={totalOverTimeForThisMonth}
-                                    />
-                                    {/* <Chart salary={salaryForThisMonth} overTime={overTimeForThisMonth} /> */}
+                                    <AdminCard total={totalPayment} totalYearSal={addSalary} totalYearOver={addOvertime} />
+                                    {/* <Chart salary={salary} overTime={overtimeSalary} />  */}
                                 </>
                             )
                         }

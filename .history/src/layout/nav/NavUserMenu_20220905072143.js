@@ -71,8 +71,6 @@ const NavUserMenuDropdownToggle = React.memo(
   React.forwardRef(({ onClick, expanded = false, user = {} }, ref) => {
     const { currentUser } = useSelector((state) => state.auth);
 
-    console.log(currentUser?.data?.user?.photo)
-
     return (
       <a
         href="#/!"
@@ -86,7 +84,7 @@ const NavUserMenuDropdownToggle = React.memo(
           onClick(e);
         }}
       >
-        <img className="profile" alt={currentUser.data.user.firstName} src={`http://localhost:5000/img/users/${currentUser.data.user.photo}`} />
+        <img className="profile" alt={currentUser.data.user.firstName} src={currentUser.data.user.photo} />
         <div className="name">{currentUser.data.user.firstName} <CsLineIcons icon="chevron-bottom" size="18" />  </div>
         <small className="name"> {currentUser.data.user.role} </small>
       </a>
