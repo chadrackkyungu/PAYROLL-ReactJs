@@ -92,7 +92,6 @@ const routesAndMenuItems = {
           { path: '/calendar', label: 'My Calendar', component: employee.calendar },
           { path: '/add-employee', label: 'My Employees', component: addEmployee.myEmployee },
           { path: '/profile', label: 'My Profile', component: employee.profile },
-          { path: `/add-new-employee`, component: addEmployee.AddNewEmployee },
           { path: `/private`, component: Private },
           { path: `/pending-leave`, component: Pending },
           { path: `/approved-leave`, component: Approved },
