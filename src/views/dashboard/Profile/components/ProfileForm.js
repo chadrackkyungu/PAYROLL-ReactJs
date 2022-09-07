@@ -194,6 +194,7 @@ const AccountSettings = () => {
 
                 <Card>
                     <Card.Body>
+                    
                         <Row>
                             <Col md={6}>
                                 <label htmlFor="">ID Number</label>
@@ -207,7 +208,7 @@ const AccountSettings = () => {
                                 <div className="mb-3 filled">
                                     <CsLineIcons icon="gender" />
                                     <Select classNamePrefix="react-select" options={genderOptions} value={genderValue} onChange={selectGenderOnChange} placeholder="Select" />
-                                    {errors.IdNumber && touched.IdNumber && <div className="error">{errors.IdNumber}</div>}
+                                    {errors.gender && touched.gender && <div className="error">{errors.gender}</div>}
                                 </div>
 
                                 <label htmlFor="">Material Status</label>
@@ -239,9 +240,8 @@ const AccountSettings = () => {
                                     {errors.phoneNumber && touched.IdNumber && <div className="error">{errors.phoneNumber}</div>}
                                 </div>
                             </Col>
-
-
                         </Row>
+
                     </Card.Body>
                 </Card>
 

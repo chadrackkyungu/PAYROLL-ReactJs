@@ -24,7 +24,7 @@ const addEmployee = {
   PaySalary: lazy(() => import('views/dashboard/payslip/index')),
   PaymentHistory: lazy(() => import('views/dashboard/leave/index')),
   LeaveHistory: lazy(() => import('views/dashboard/history/My-leaves')),
-  AddNewEmployee: lazy(() => import('views/dashboard/Add New Employee/index')),
+  AddNewEmployee: lazy(() => import('views/dashboard/Profile/index')),
 };
 
 const appRoot = DEFAULT_PATHS.APP.endsWith('/') ? DEFAULT_PATHS.APP.slice(1, DEFAULT_PATHS.APP.length) : DEFAULT_PATHS.APP;

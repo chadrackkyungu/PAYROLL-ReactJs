@@ -19,14 +19,6 @@ const employee = {
   profile: lazy(() => import('views/dashboard/Profile/index')),
 };
 
-const addEmployee = {
-  announcement: lazy(() => import('views/dashboard/notifications/general')),
-  PaySalary: lazy(() => import('views/dashboard/payslip/index')),
-  PaymentHistory: lazy(() => import('views/dashboard/leave/index')),
-  LeaveHistory: lazy(() => import('views/dashboard/history/My-leaves')),
-  AddNewEmployee: lazy(() => import('views/dashboard/Add New Employee/index')),
-};
-
 const appRoot = DEFAULT_PATHS.APP.endsWith('/') ? DEFAULT_PATHS.APP.slice(1, DEFAULT_PATHS.APP.length) : DEFAULT_PATHS.APP;
 
 const newObject = window.localStorage.getItem("persist:starter-project");
@@ -80,16 +72,11 @@ const routesAndMenuItems = {
         label: 'Admin',
         icon: 'user',
         subs: [
-          // { path: '/notifications', label: 'My Notifications', component: employee.notifications },
+          { path: '/notifications', label: 'My Notifications', component: employee.notifications },
           // { path: '/payslip', label: 'My Payslip', component: employee.payslip },
-          // { path: '/leave', label: 'Apply for leave', component: employee.leave },
-          // { path: '/my-leaves', label: 'Leave History', component: employee.history },
-          { path: '/announcement', label: 'Announcement', component: addEmployee.announcement },
-          { path: '/pay-salary', label: 'Pay Salary', component: addEmployee.PaySalary },
-          { path: '/payment-history', label: 'Payment History', component: addEmployee.PaymentHistory },
-          { path: '/leave-history', label: 'Leave History', component: addEmployee.LeaveHistory },
+          { path: '/leave', label: 'Apply for leave', component: employee.leave },
+          { path: '/my-leaves', label: 'Leave History', component: employee.history },
           { path: '/calendar', label: 'My Calendar', component: employee.calendar },
-          { path: '/add-employee', label: 'Add new employee', component: addEmployee.AddNewEmployee },
           { path: '/profile', label: 'My Profile', component: employee.profile },
           { path: `/private`, component: Private },
           { path: `/pending-leave`, component: Pending },
