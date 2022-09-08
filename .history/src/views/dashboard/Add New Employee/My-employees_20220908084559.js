@@ -39,6 +39,7 @@ const Employees = () => {
     const [leaveId, setLeaveId] = useState();
     const [ViewEmployee, setViewEmployee] = useState(false);
     const token = currentUser?.token;
+    console.log(currentUser);
     const [myEmployees, setEmployees] = useState()
 
     const myHeaders = new Headers();
@@ -55,9 +56,8 @@ const Employees = () => {
             fetch(`http://localhost:5000/api/v1/users`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    // Do not return the current user details
                     const userDet = result?.data?.data?.filter(user => {
-                        return user?._id !== currentUser?.data?.user?._id
+                        return user !== 56
                     })
                     setEmployees(userDet)
                 })

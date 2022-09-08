@@ -55,7 +55,6 @@ const Employees = () => {
             fetch(`http://localhost:5000/api/v1/users`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    // Do not return the current user details
                     const userDet = result?.data?.data?.filter(user => {
                         return user?._id !== currentUser?.data?.user?._id
                     })

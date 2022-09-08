@@ -54,19 +54,15 @@ const Employees = () => {
         const approved = () => {
             fetch(`http://localhost:5000/api/v1/users`, requestOptions)
                 .then(response => response.json())
-                .then(result => {
-                    // Do not return the current user details
-                    const userDet = result?.data?.data?.filter(user => {
-                        return user?._id !== currentUser?.data?.user?._id
-                    })
-                    setEmployees(userDet)
-                })
+                .then(result => setEmployees(result.data.data))
                 .catch(error => console.log('error', error));
         }
         approved();
     }, []);
 
     const employeeDet = myEmployees?.filter(employee => employee._id === ViewEmployee);
+
+
 
 
     const deleteFunc = async () => {
@@ -133,50 +129,45 @@ const Employees = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {myEmployees?.map((empl, key) => {
-                                            return (
-                                                <tr key={"_tr_" + key}>
-                                                    <td>
-                                                        <div className="form-check font-size-16">
-                                                            <input type="checkbox" className="form-check-input" id={empl?._id} />
-                                                            <label className="form-check-label" htmlFor={empl?._id}> &nbsp;</label>
-                                                        </div>
-                                                    </td>
-                                                    <td>{empl.employeeNumber}</td>
-                                                    <td>{empl?.firstName} {empl?.lastName}</td>
-                                                    <td>{empl?.email}</td>
-                                                    <td> <Badge className="bg-info"> {empl?.role} </Badge> </td>
-                                                    <td>{empl?.gender}</td>
-                                                    <td><Badge className='bg-success cursor-pointer'
+                                        {myEmployees?.map((empl, key) => (
+                                            <tr key={"_tr_" + key}>
+                                                <td>
+                                                    <div className="form-check font-size-16">
+                                                        <input type="checkbox" className="form-check-input" id={empl?._id} />
+                                                        <label className="form-check-label" htmlFor={empl?._id}> &nbsp;</label>
+                                                    </div>
+                                                </td>
+                                                <td>{empl.employeeNumber}</td>
+                                                <td>{empl?.firstName} {empl?.lastName}</td>
+                                                <td>{empl?.email}</td>
+                                                <td> <Badge className="bg-info"> {empl?.role} </Badge> </td>
+                                                <td>{empl?.gender}</td>
+                                                <td><Badge className='bg-success cursor-pointer'
+                                                    onClick={() => {
+                                                        setLExample(true)
+                                                        setViewEmployee(empl?._id)
+                                                    }}> <CsLineIcons icon="eye" size="14" /> View  </Badge></td>
+
+                                                <td className="cursor-pointer"
+                                                    onClick={() => {
+                                                        setRightModalScrollExample(true)
+                                                        setLeaveId(empl._id);
+                                                    }}> <Badge> <CsLineIcons icon="pen" size="12" /> Edit </Badge>
+                                                </td>
+
+                                                <td>
+                                                    <Badge className="cursor-pointer bg-info"> <CsLineIcons icon="dollar" size="14" /> Pay Now</Badge>
+                                                </td>
+                                                <td>
+                                                    <Badge className="bg-danger cursor-pointer"
                                                         onClick={() => {
-                                                            setLExample(true)
+                                                            setSmExample(true)
                                                             setViewEmployee(empl?._id)
-                                                        }}> <CsLineIcons icon="eye" size="14" /> View  </Badge></td>
-
-                                                    <td className="cursor-pointer"
-                                                        onClick={() => {
-                                                            setRightModalScrollExample(true)
-                                                            setLeaveId(empl._id);
-                                                        }}> <Badge> <CsLineIcons icon="pen" size="12" /> Edit </Badge>
-                                                    </td>
-
-                                                    <td>
-                                                        <Badge className="cursor-pointer bg-info"> <CsLineIcons icon="dollar" size="14" /> Pay Now</Badge>
-                                                    </td>
-                                                    <td>
-                                                        <Badge className="bg-danger cursor-pointer"
-                                                            onClick={() => {
-                                                                setSmExample(true)
-                                                                setViewEmployee(empl?._id)
-                                                            }}
-                                                        >  <CsLineIcons icon="bin" size="14" /> Delete </Badge>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        }
-
-
-                                        )}
+                                                        }}
+                                                    >  <CsLineIcons icon="bin" size="14" /> Delete </Badge>
+                                                </td>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </table>
                             </div>

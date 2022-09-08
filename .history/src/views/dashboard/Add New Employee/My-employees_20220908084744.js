@@ -41,6 +41,11 @@ const Employees = () => {
     const token = currentUser?.token;
     const [myEmployees, setEmployees] = useState()
 
+    console.log('====================================');
+    console.log(myEmployees);
+    console.log(currentUser?.data?.user?._id);
+    console.log('====================================');
+
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
 
@@ -55,9 +60,8 @@ const Employees = () => {
             fetch(`http://localhost:5000/api/v1/users`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    // Do not return the current user details
                     const userDet = result?.data?.data?.filter(user => {
-                        return user?._id !== currentUser?.data?.user?._id
+                        return user !== currentUser?.data?.user?._id
                     })
                     setEmployees(userDet)
                 })
