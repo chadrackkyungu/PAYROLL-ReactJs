@@ -20,7 +20,7 @@ const employee = {
 };
 
 const addEmployee = {
-  announcement: lazy(() => import('views/dashboard/Anouncement/General-Announcement')),
+  announcement: lazy(() => import('views/dashboard/Anouncement/index')),
   PaySalary: lazy(() => import('views/dashboard/payslip/pay-employee')),
   PaymentHistory: lazy(() => import('views/dashboard/payslip/payment-list')),
   LeaveHistory: lazy(() => import('views/dashboard/history/My-leaves')),

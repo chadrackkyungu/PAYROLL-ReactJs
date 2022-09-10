@@ -17,8 +17,10 @@ import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
+// import EmployeesDetails from '../components/Employees-details';
 import PaymentDetails from './components/Payment-Details';
 import UpdatePaymentDetails from './components/Update-Payment';
+// import UploadEmployeePasswords from './components/UploadEmployeePasswords';
 import { warningMessage, successSubmitLeave } from "../../../components/Notifications/Notifications";
 
 
