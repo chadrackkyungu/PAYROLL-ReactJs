@@ -46,6 +46,10 @@ const EmployeeAnnouncement = () => {
         return a.user
     })
 
+    console.log('====================================');
+    console.log(indiviualAnnouncement);
+    console.log('====================================');
+
     return (
         <>
             <HtmlHead title={title} description={description} />
@@ -55,7 +59,7 @@ const EmployeeAnnouncement = () => {
                         <div className="page-title-container">
                             <BreadcrumbList items={breadcrumbs} />
                         </div>
-                        <Individual announcement={indiviualAnnouncement} />
+                        <Individual announcement={announcement} />
                     </section>
                 </Col>
             </Row>

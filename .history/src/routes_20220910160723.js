@@ -22,7 +22,6 @@ const employee = {
 const addEmployee = {
   announcement: lazy(() => import('views/dashboard/Anouncement/General-Announcement')),
   individual: lazy(() => import('views/dashboard/Anouncement/Employee-Announcement')),
-  sendAnnouncement: lazy(() => import('views/dashboard/Anouncement/Create-announcement')),
   PaySalary: lazy(() => import('views/dashboard/payslip/pay-employee')),
   PaymentHistory: lazy(() => import('views/dashboard/payslip/payment-list')),
   LeaveHistory: lazy(() => import('views/dashboard/history/My-leaves')),
@@ -99,7 +98,6 @@ const routesAndMenuItems = {
           { path: `/pay/:id`, component: addEmployee.PaySalary },
           { path: `/successful`, component: addEmployee.successful },
           { path: `/individual-announcement`, component: addEmployee.individual },
-          { path: `/send-announcement`, component: addEmployee.sendAnnouncement },
           { path: `/private`, component: Private },
           { path: `/pending-leave`, component: Pending },
           { path: `/approved-leave`, component: Approved },

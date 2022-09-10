@@ -12,6 +12,7 @@ import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import { warningMessage, successMessage } from "../../../../components/Notifications/Notifications";
 
 function UpdatePaymentForm() {
+    const urlReceipt = "http://localhost:5000/img/recept/";
 
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
@@ -66,12 +67,28 @@ function UpdatePaymentForm() {
     const formik = useFormik({ initialValues, validationSchema, onSubmit });
     const { handleSubmit, handleChange, values, touched, errors, setFieldValue } = formik;
 
+    const endDateOnChange = (paymentDate) => {
+        setFieldValue('paymentDate', new Date(paymentDate));
+    };
+
+    const [receipt, setReceipt] = useState()
+
+    const paymentReceptFunc = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            setFieldValue("paymentRecept", event.currentTarget.files[0]);
+            const reader = new FileReader();
+            reader.onload = (loadEvent) => {
+                setReceipt(loadEvent.target.result);
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    };
 
     return (
         <div>
             <Card className="mt-4">
                 <Card.Body>
-                    <h5 className='mb-5'> <b> Create new announcement</b>  </h5>
+                    <h5 className='mb-5'> <b> Create a ne announcement</b>  </h5>
                     <Row>
 
                         <Form onSubmit={handleSubmit} className="tooltip-end-top">
@@ -95,10 +112,18 @@ function UpdatePaymentForm() {
                                     {errors.hoursWork && touched.hoursWork && <div className="error">{errors.hoursWork}</div>}
                                 </div>
 
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="calendar" />
+                                    <DatePicker className="form-control" name="paymentDate" selected={values.paymentDate} onChange={endDateOnChange} placeholderText="Payment Date" />
+                                    {errors.paymentDate && touched.paymentDate && <div className="error">{errors.paymentDate}</div>}
+                                </div>
+
+
+
                             </Row>
 
                             <div className='d-flex flex-end'>
-                                <Button type="submit" variant="primary"> Send </Button>
+                                <Button type="submit" variant="primary"> Update</Button>
                             </div>
 
                         </Form>

@@ -43,8 +43,12 @@ const EmployeeAnnouncement = () => {
     }, []);
 
     const indiviualAnnouncement = announcement?.filter(a => {
-        return a.user
+        return a
     })
+
+    console.log('====================================');
+    console.log(indiviualAnnouncement);
+    console.log('====================================');
 
     return (
         <>
@@ -55,7 +59,7 @@ const EmployeeAnnouncement = () => {
                         <div className="page-title-container">
                             <BreadcrumbList items={breadcrumbs} />
                         </div>
-                        <Individual announcement={indiviualAnnouncement} />
+                        <Individual announcement={announcement} />
                     </section>
                 </Col>
             </Row>

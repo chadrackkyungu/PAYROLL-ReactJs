@@ -9,9 +9,10 @@ import * as Yup from 'yup';
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
-import { warningMessage, successMessage } from "../../../../components/Notifications/Notifications";
+import { warningMessage, successMessage } from "../../../components/Notifications/Notifications";
 
-function UpdatePaymentForm() {
+function UpdatePaymentForm({ details }) {
+    const urlReceipt = "http://localhost:5000/img/recept/";
 
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
@@ -25,11 +26,11 @@ function UpdatePaymentForm() {
     });
 
     const initialValues = {
-        salaryAmount: '',
-        overTimeAmount: "",
-        paymentDate: '',
-        hoursWork: '',
-        paymentRecept: ''
+        salaryAmount: details[0].salaryAmount,
+        overTimeAmount: details[0].overTimeAmount,
+        paymentDate: new Date(details[0].paymentDate),
+        hoursWork: details[0].hoursWork,
+        paymentRecept: details[0].paymentRecept
     };
 
     const onSubmit = async (values) => {
@@ -50,7 +51,7 @@ function UpdatePaymentForm() {
             redirect: 'follow'
         };
 
-        fetch(`http://localhost:5000/api/v1/payments/`, requestOptions)
+        fetch(`http://localhost:5000/api/v1/payments/${details[0]?._id}`, requestOptions)
             .then(response => response.json())
             .then(res => {
                 if (res.status === 'success') {
@@ -66,12 +67,28 @@ function UpdatePaymentForm() {
     const formik = useFormik({ initialValues, validationSchema, onSubmit });
     const { handleSubmit, handleChange, values, touched, errors, setFieldValue } = formik;
 
+    const endDateOnChange = (paymentDate) => {
+        setFieldValue('paymentDate', new Date(paymentDate));
+    };
+
+    const [receipt, setReceipt] = useState()
+
+    const paymentReceptFunc = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            setFieldValue("paymentRecept", event.currentTarget.files[0]);
+            const reader = new FileReader();
+            reader.onload = (loadEvent) => {
+                setReceipt(loadEvent.target.result);
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    };
 
     return (
         <div>
             <Card className="mt-4">
                 <Card.Body>
-                    <h5 className='mb-5'> <b> Create new announcement</b>  </h5>
+                    <h5 className='mb-5'> <b> Update The Payment Details</b>  </h5>
                     <Row>
 
                         <Form onSubmit={handleSubmit} className="tooltip-end-top">
@@ -95,10 +112,25 @@ function UpdatePaymentForm() {
                                     {errors.hoursWork && touched.hoursWork && <div className="error">{errors.hoursWork}</div>}
                                 </div>
 
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="calendar" />
+                                    <DatePicker className="form-control" name="paymentDate" selected={values.paymentDate} onChange={endDateOnChange} placeholderText="Payment Date" />
+                                    {errors.paymentDate && touched.paymentDate && <div className="error">{errors.paymentDate}</div>}
+                                </div>
+
+                                <div className="mb-3 filled">
+                                    <img src={receipt === undefined ? `${urlReceipt}${details[0].paymentRecept}` : receipt} className="rounded mb-1 float-start sw-18 mx-1" alt="docs image" />
+                                </div>
+
+                                <div className="mb-3 filled">
+                                    <Form.Control className="form-control" name="paymentRecept" type="file" onChange={paymentReceptFunc} accept="image/*" />
+                                    {errors.paymentRecept && touched.paymentRecept && <div className="error">{errors.paymentRecept}</div>}
+                                </div>
+
                             </Row>
 
                             <div className='d-flex flex-end'>
-                                <Button type="submit" variant="primary"> Send </Button>
+                                <Button type="submit" variant="primary"> Update</Button>
                             </div>
 
                         </Form>

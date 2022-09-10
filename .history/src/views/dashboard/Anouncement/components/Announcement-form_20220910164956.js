@@ -98,7 +98,7 @@ function UpdatePaymentForm() {
                             </Row>
 
                             <div className='d-flex flex-end'>
-                                <Button type="submit" variant="primary"> Send </Button>
+                                <Button type="submit" variant="primary"> Submit</Button>
                             </div>
 
                         </Form>
