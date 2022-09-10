@@ -10,6 +10,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Row, Col, Badge, Card, Modal, Button, Spinner } from 'react-bootstrap';
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
@@ -18,7 +19,7 @@ import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 // import EmployeesDetails from '../components/Employees-details';
-import PaymentDetails from './components/Payment-Details';
+// import UpdateEmployeesDetails from './components/UpdateEmplDetails';
 // import UploadEmployeePasswords from './components/UploadEmployeePasswords';
 import { warningMessage, successSubmitLeave } from "../../../components/Notifications/Notifications";
 
@@ -34,11 +35,10 @@ const Employees = () => {
     const [lExample, setLExample] = useState(false);
     const [smExample, setSmExample] = useState(false);
     const [rightModalScrollExample, setRightModalScrollExample] = useState(false);
-    const [statusUpdate, setStatusUpdate] = useState(false);
 
-    const [paymentId, setPaymentId] = useState(false);
+    const [ViewEmployee, setViewEmployee] = useState(false);
     const token = currentUser?.token;
-    const [payment, setPayment] = useState()
+    const [myEmployees, setEmployees] = useState()
 
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -51,21 +51,23 @@ const Employees = () => {
 
     useEffect(() => {
         const approved = () => {
-            fetch(`http://localhost:5000/api/v1/payments`, requestOptions)
+            fetch(`http://localhost:5000/api/v1/users`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    setPayment(result?.data?.data)
+                    // Do not return the current user details
+                    const userDet = result?.data?.data?.filter(user => {
+                        return user?._id !== currentUser?.data?.user?._id
+                    })
+                    setEmployees(userDet)
                 })
                 .catch(error => console.log('error', error));
         }
         approved();
     }, []);
 
-    const paymentdet = payment?.filter(employee => employee._id === paymentId);
+    const employeeDet = myEmployees?.filter(employee => employee._id === ViewEmployee);
 
-    if (paymentdet === undefined || payment === undefined) {
-        return <div>...</div>
-    }
+    console.log(myEmployees?.photo);
 
     const deleteFunc = async () => {
         const myHeader = new Headers();
@@ -78,16 +80,16 @@ const Employees = () => {
             body: raw,
             redirect: 'follow'
         };
-        fetch(`http://localhost:5000/api/v1/payments/${paymentdet[0]?._id}`, deleteRequest)
+        fetch(`http://localhost:5000/api/v1/users/${employeeDet[0]._id}`, deleteRequest)
             .then(response => response.json())
             .then(result => {
                 if (result.status === "fail") {
-                    warningMessage(`This payment does not exist anymore`)
+                    warningMessage(`This employee does not exist anymore`)
                 }
             })
             .catch(err => {
                 if (err.response === undefined) {
-                    successSubmitLeave(`You have Successfully deleted this payment`)
+                    successSubmitLeave(`You have Successfully deleted this employee`)
                 } else {
                     warningMessage(` 🤒 ${err.response}`)
                 }
@@ -96,45 +98,7 @@ const Employees = () => {
         setSmExample(false)
     }
 
-
-    console.log(paymentdet);
-
-    //* Updating the user status
-    const UpdateStatus = () => {
-        const myHeader = new Headers();
-        myHeader.append("Authorization", `Bearer ${token}`);
-        myHeader.append("Content-Type", "application/json");
-
-        const raw = JSON.stringify({
-            "status": "Paid"
-        });
-
-        const requestUpdateStatus = {
-            method: 'PATCH',
-            headers: myHeader,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        fetch(`http://localhost:5000/api/v1/payments/${paymentdet[0]?._id}/status`, requestUpdateStatus)
-            .then(response => response.json())
-            .then(result => {
-                if (result.status === "success") {
-                    successSubmitLeave(`Successful updated payment status`)
-                }
-                if (result.status === "fail") {
-                    warningMessage(`This payment does not exist anymore`)
-                }
-            })
-            .catch(err => {
-                warningMessage(` 🤒 ${err.response}`)
-            });
-
-        setStatusUpdate(false)
-    }
-
-
-    if (payment === undefined) {
+    if (myEmployees === undefined) {
         return (<div className="d-flex justify-content-center">
             <Spinner animation="border" variant="primary" />
         </div>
@@ -162,19 +126,19 @@ const Employees = () => {
                                                     <label className="form-check-label" htmlFor="customCheck1"> &nbsp;</label>
                                                 </div>
                                             </th>
+                                            <th className="align-middle">Empl No</th>
                                             <th className="align-middle">Pic</th>
-                                            <th className="align-middle">Name</th>
+                                            <th className="align-middle">Full Name</th>
                                             <th className="align-middle">Email</th>
                                             <th className="align-middle">Acc. No.</th>
-                                            <th className="align-middle">Payment Date</th>
-                                            <th className="align-middle">Status</th>
                                             <th className="align-middle">View</th>
                                             <th className="align-middle">Edit</th>
                                             <th className="align-middle">Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {payment?.map((empl, key) => {
+                                        {myEmployees?.map((empl, key) => {
+                                            console.log(empl.photo);
                                             return (
                                                 <tr key={"_tr_" + key} >
                                                     <td>
@@ -183,55 +147,47 @@ const Employees = () => {
                                                             <label className="form-check-label" htmlFor={empl?._id}> &nbsp;</label>
                                                         </div>
                                                     </td>
+                                                    <td>{empl.employeeNumber}</td>
 
                                                     <td>
                                                         <div className="sw-6 me-1 mb-1 d-inline-block ">
-                                                            <img src={`${urlUser}${empl?.user?.photo}`} alt="user"
+                                                            <img src={`${urlUser}${empl.photo}`} alt="user"
                                                                 className="img-fluid rounded-xl" />
                                                         </div>
                                                     </td>
 
-                                                    {/* <td>{empl?.user?.firstName} {empl?.user?.lastName}</td> */}
-                                                    <td>{empl?.user?.firstName} </td>
-                                                    <td>{empl?.user?.email}</td>
-                                                    <td>{empl?.user?.accountNumber}</td>
-                                                    <td>{empl?.paymentDate}</td>
+                                                    <td>{empl?.firstName} {empl?.lastName}</td>
+                                                    <td>{empl?.email}</td>
 
-                                                    <td><Badge className={`${empl?.status === 'pending' ? "bg-warning cursor-pointer" : "bg-primary"}  cursor-pointer`}
+                                                    <td><Badge className='bg-success cursor-pointer'
                                                         onClick={() => {
-                                                            if (empl?.status === 'pending') {
-                                                                setStatusUpdate(true)
-                                                                setPaymentId(empl?._id)
-                                                            }
-                                                        }}> {empl?.status === "pending" ? null : <CsLineIcons icon="check" size="14" />} {empl?.status} {empl?.status === "pending" ? <CsLineIcons icon="pen" size="14" /> : null}   </Badge>
+                                                            setLExample(true)
+                                                            setViewEmployee(empl?._id)
+                                                        }}> <CsLineIcons icon="eye" size="14" /> Status  </Badge>
                                                     </td>
 
 
                                                     <td><Badge className='bg-success cursor-pointer'
                                                         onClick={() => {
                                                             setLExample(true)
-                                                            setPaymentId(empl?._id)
+                                                            setViewEmployee(empl?._id)
                                                         }}> <CsLineIcons icon="eye" size="14" /> View  </Badge>
                                                     </td>
 
                                                     <td className="cursor-pointer"
                                                         onClick={() => {
-                                                            if (empl.status === "pending") {
-                                                                setRightModalScrollExample(true)
-                                                                setPaymentId(empl._id);
-                                                            }
-                                                        }}> <Badge> {empl.status === "pending" ? <CsLineIcons icon="pen" size="14" /> : null}  {empl.status === "pending" ? "Edit" : null}  </Badge>
+                                                            setRightModalScrollExample(true)
+                                                            setViewEmployee(empl._id);
+                                                        }}> <Badge> <CsLineIcons icon="pen" size="12" /> Edit   </Badge>
                                                     </td>
 
                                                     <td>
-                                                        <Badge className="cursor-pointer" bg="outline-danger"
+                                                        <Badge className="bg-danger cursor-pointer"
                                                             onClick={() => {
-                                                                if (empl.status === "pending") {
-                                                                    setSmExample(true)
-                                                                    setPaymentId(empl?._id)
-                                                                }
+                                                                setSmExample(true)
+                                                                setViewEmployee(empl?._id)
                                                             }}
-                                                        >  {empl.status === "pending" ? <CsLineIcons icon="bin" size="14" /> : null}  {empl.status === "pending" ? "Delete" : null}  </Badge>
+                                                        >  <CsLineIcons icon="bin" size="14" /> Delete </Badge>
                                                     </td>
                                                 </tr>
                                             )
@@ -250,29 +206,13 @@ const Employees = () => {
 
             {/* Modal View Details */}
 
-            <Modal show={statusUpdate} onHide={() => setStatusUpdate(false)} size="sm-down">
-                <Modal.Header closeButton>
-                    <Modal.Title> Update Payments Status </Modal.Title>
-                </Modal.Header>
-
-                <Modal.Body>
-                    <h4 className='text-warning'> Before updating  the status make sure the payment was successful done </h4>
-                </Modal.Body>
-
-                <Modal.Footer className="d-flex justify-content-around">
-                    <Button variant="primary" onClick={() => setStatusUpdate(false)}> No </Button>
-                    <Button variant="danger" onClick={UpdateStatus}>Yes</Button>
-                </Modal.Footer>
-            </Modal>
-
-
             <Modal show={lExample} onHide={() => setLExample(false)} size="lg">
                 <Modal.Header closeButton>
-                    <Modal.Title> Payments Details </Modal.Title>
+                    <Modal.Title> Employee Details </Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
-                    <PaymentDetails details={paymentdet} />
+                    {/* <EmployeesDetails details={employeeDet} /> */}
                 </Modal.Body>
 
                 <Modal.Footer>
@@ -293,7 +233,14 @@ const Employees = () => {
 
                 <Modal.Body>
                     <OverlayScrollbarsComponent options={{ overflowBehavior: { x: 'hidden', y: 'scroll' } }} className="scroll-track-visible">
-                        {/* <UpdateEmployeesDetails details={paymentdet} /> */}
+                        {/* <UpdateEmployeesDetails details={employeeDet} /> */}
+
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+
+                        {/* <UploadEmployeePasswords details={employeeDet} /> */}
                     </OverlayScrollbarsComponent>
                 </Modal.Body>
 

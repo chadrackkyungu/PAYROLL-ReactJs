@@ -10,6 +10,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Row, Col, Badge, Card, Modal, Button, Spinner } from 'react-bootstrap';
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
@@ -18,7 +19,7 @@ import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 // import EmployeesDetails from '../components/Employees-details';
-import PaymentDetails from './components/Payment-Details';
+// import UpdateEmployeesDetails from './components/UpdateEmplDetails';
 // import UploadEmployeePasswords from './components/UploadEmployeePasswords';
 import { warningMessage, successSubmitLeave } from "../../../components/Notifications/Notifications";
 
@@ -34,7 +35,6 @@ const Employees = () => {
     const [lExample, setLExample] = useState(false);
     const [smExample, setSmExample] = useState(false);
     const [rightModalScrollExample, setRightModalScrollExample] = useState(false);
-    const [statusUpdate, setStatusUpdate] = useState(false);
 
     const [paymentId, setPaymentId] = useState(false);
     const token = currentUser?.token;
@@ -78,7 +78,7 @@ const Employees = () => {
             body: raw,
             redirect: 'follow'
         };
-        fetch(`http://localhost:5000/api/v1/payments/${paymentdet[0]?._id}`, deleteRequest)
+        fetch(`http://localhost:5000/api/v1/users/${paymentdet[0]?._id}`, deleteRequest)
             .then(response => response.json())
             .then(result => {
                 if (result.status === "fail") {
@@ -95,44 +95,6 @@ const Employees = () => {
 
         setSmExample(false)
     }
-
-
-    console.log(paymentdet);
-
-    //* Updating the user status
-    const UpdateStatus = () => {
-        const myHeader = new Headers();
-        myHeader.append("Authorization", `Bearer ${token}`);
-        myHeader.append("Content-Type", "application/json");
-
-        const raw = JSON.stringify({
-            "status": "Paid"
-        });
-
-        const requestUpdateStatus = {
-            method: 'PATCH',
-            headers: myHeader,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        fetch(`http://localhost:5000/api/v1/payments/${paymentdet[0]?._id}/status`, requestUpdateStatus)
-            .then(response => response.json())
-            .then(result => {
-                if (result.status === "success") {
-                    successSubmitLeave(`Successful updated payment status`)
-                }
-                if (result.status === "fail") {
-                    warningMessage(`This payment does not exist anymore`)
-                }
-            })
-            .catch(err => {
-                warningMessage(` 🤒 ${err.response}`)
-            });
-
-        setStatusUpdate(false)
-    }
-
 
     if (payment === undefined) {
         return (<div className="d-flex justify-content-center">
@@ -163,10 +125,9 @@ const Employees = () => {
                                                 </div>
                                             </th>
                                             <th className="align-middle">Pic</th>
-                                            <th className="align-middle">Name</th>
+                                            <th className="align-middle">Full Name</th>
                                             <th className="align-middle">Email</th>
                                             <th className="align-middle">Acc. No.</th>
-                                            <th className="align-middle">Payment Date</th>
                                             <th className="align-middle">Status</th>
                                             <th className="align-middle">View</th>
                                             <th className="align-middle">Edit</th>
@@ -191,19 +152,17 @@ const Employees = () => {
                                                         </div>
                                                     </td>
 
-                                                    {/* <td>{empl?.user?.firstName} {empl?.user?.lastName}</td> */}
-                                                    <td>{empl?.user?.firstName} </td>
+                                                    <td>{empl?.user?.firstName} {empl?.user?.lastName}</td>
                                                     <td>{empl?.user?.email}</td>
                                                     <td>{empl?.user?.accountNumber}</td>
-                                                    <td>{empl?.paymentDate}</td>
 
                                                     <td><Badge className={`${empl?.status === 'pending' ? "bg-warning cursor-pointer" : "bg-primary"}  cursor-pointer`}
                                                         onClick={() => {
                                                             if (empl?.status === 'pending') {
-                                                                setStatusUpdate(true)
+                                                                setLExample(true)
                                                                 setPaymentId(empl?._id)
                                                             }
-                                                        }}> {empl?.status === "pending" ? null : <CsLineIcons icon="check" size="14" />} {empl?.status} {empl?.status === "pending" ? <CsLineIcons icon="pen" size="14" /> : null}   </Badge>
+                                                        }}> {empl?.status === "pending" ? null : <CsLineIcons icon="check" size="14" />} {empl?.status} {empl?.status === "pending" ? <CsLineIcons icon="pen" size="18" /> : null}   </Badge>
                                                     </td>
 
 
@@ -220,7 +179,7 @@ const Employees = () => {
                                                                 setRightModalScrollExample(true)
                                                                 setPaymentId(empl._id);
                                                             }
-                                                        }}> <Badge> {empl.status === "pending" ? <CsLineIcons icon="pen" size="14" /> : null}  {empl.status === "pending" ? "Edit" : null}  </Badge>
+                                                        }}> <Badge> {empl.status === "pending" ? <CsLineIcons icon="bin" size="14" /> : null}  {empl.status === "pending" ? "Edit" : null}  </Badge>
                                                     </td>
 
                                                     <td>
@@ -250,29 +209,13 @@ const Employees = () => {
 
             {/* Modal View Details */}
 
-            <Modal show={statusUpdate} onHide={() => setStatusUpdate(false)} size="sm-down">
-                <Modal.Header closeButton>
-                    <Modal.Title> Update Payments Status </Modal.Title>
-                </Modal.Header>
-
-                <Modal.Body>
-                    <h4 className='text-warning'> Before updating  the status make sure the payment was successful done </h4>
-                </Modal.Body>
-
-                <Modal.Footer className="d-flex justify-content-around">
-                    <Button variant="primary" onClick={() => setStatusUpdate(false)}> No </Button>
-                    <Button variant="danger" onClick={UpdateStatus}>Yes</Button>
-                </Modal.Footer>
-            </Modal>
-
-
             <Modal show={lExample} onHide={() => setLExample(false)} size="lg">
                 <Modal.Header closeButton>
-                    <Modal.Title> Payments Details </Modal.Title>
+                    <Modal.Title> Employee Details </Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
-                    <PaymentDetails details={paymentdet} />
+                    {/* <EmployeesDetails details={paymentdet} /> */}
                 </Modal.Body>
 
                 <Modal.Footer>
@@ -294,6 +237,13 @@ const Employees = () => {
                 <Modal.Body>
                     <OverlayScrollbarsComponent options={{ overflowBehavior: { x: 'hidden', y: 'scroll' } }} className="scroll-track-visible">
                         {/* <UpdateEmployeesDetails details={paymentdet} /> */}
+
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+
+                        {/* <UploadEmployeePasswords details={paymentdet} /> */}
                     </OverlayScrollbarsComponent>
                 </Modal.Body>
 

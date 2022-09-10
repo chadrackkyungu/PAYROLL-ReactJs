@@ -203,7 +203,7 @@ const Employees = () => {
                                                                 setStatusUpdate(true)
                                                                 setPaymentId(empl?._id)
                                                             }
-                                                        }}> {empl?.status === "pending" ? null : <CsLineIcons icon="check" size="14" />} {empl?.status} {empl?.status === "pending" ? <CsLineIcons icon="pen" size="14" /> : null}   </Badge>
+                                                        }}> {empl?.status === "pending" ? null : <CsLineIcons icon="check" size="14" />} {empl?.status} {empl?.status === "pending" ? <CsLineIcons icon="pen" size="18" /> : null}   </Badge>
                                                     </td>
 
 

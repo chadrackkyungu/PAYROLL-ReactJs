@@ -10,6 +10,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Row, Col, Badge, Card, Modal, Button, Spinner } from 'react-bootstrap';
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
@@ -18,7 +19,7 @@ import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 // import EmployeesDetails from '../components/Employees-details';
-import PaymentDetails from './components/Payment-Details';
+// import UpdateEmployeesDetails from './components/UpdateEmplDetails';
 // import UploadEmployeePasswords from './components/UploadEmployeePasswords';
 import { warningMessage, successSubmitLeave } from "../../../components/Notifications/Notifications";
 
@@ -67,9 +68,10 @@ const Employees = () => {
         return <div>...</div>
     }
 
+    const myHeader = new Headers();
+    myHeader.append("Authorization", `Bearer ${token}`);
+
     const deleteFunc = async () => {
-        const myHeader = new Headers();
-        myHeader.append("Authorization", `Bearer ${token}`);
 
         const raw = "";
         const deleteRequest = {
@@ -96,43 +98,19 @@ const Employees = () => {
         setSmExample(false)
     }
 
-
-    console.log(paymentdet);
-
     //* Updating the user status
     const UpdateStatus = () => {
-        const myHeader = new Headers();
-        myHeader.append("Authorization", `Bearer ${token}`);
-        myHeader.append("Content-Type", "application/json");
-
         const raw = JSON.stringify({
             "status": "Paid"
         });
 
-        const requestUpdateStatus = {
+        const requestOptions = {
             method: 'PATCH',
-            headers: myHeader,
+            headers: myHeaders,
             body: raw,
             redirect: 'follow'
         };
-
-        fetch(`http://localhost:5000/api/v1/payments/${paymentdet[0]?._id}/status`, requestUpdateStatus)
-            .then(response => response.json())
-            .then(result => {
-                if (result.status === "success") {
-                    successSubmitLeave(`Successful updated payment status`)
-                }
-                if (result.status === "fail") {
-                    warningMessage(`This payment does not exist anymore`)
-                }
-            })
-            .catch(err => {
-                warningMessage(` 🤒 ${err.response}`)
-            });
-
-        setStatusUpdate(false)
     }
-
 
     if (payment === undefined) {
         return (<div className="d-flex justify-content-center">
@@ -163,10 +141,9 @@ const Employees = () => {
                                                 </div>
                                             </th>
                                             <th className="align-middle">Pic</th>
-                                            <th className="align-middle">Name</th>
+                                            <th className="align-middle">Full Name</th>
                                             <th className="align-middle">Email</th>
                                             <th className="align-middle">Acc. No.</th>
-                                            <th className="align-middle">Payment Date</th>
                                             <th className="align-middle">Status</th>
                                             <th className="align-middle">View</th>
                                             <th className="align-middle">Edit</th>
@@ -191,19 +168,17 @@ const Employees = () => {
                                                         </div>
                                                     </td>
 
-                                                    {/* <td>{empl?.user?.firstName} {empl?.user?.lastName}</td> */}
-                                                    <td>{empl?.user?.firstName} </td>
+                                                    <td>{empl?.user?.firstName} {empl?.user?.lastName}</td>
                                                     <td>{empl?.user?.email}</td>
                                                     <td>{empl?.user?.accountNumber}</td>
-                                                    <td>{empl?.paymentDate}</td>
 
                                                     <td><Badge className={`${empl?.status === 'pending' ? "bg-warning cursor-pointer" : "bg-primary"}  cursor-pointer`}
                                                         onClick={() => {
                                                             if (empl?.status === 'pending') {
                                                                 setStatusUpdate(true)
-                                                                setPaymentId(empl?._id)
+                                                                setStatusUpdate(empl?._id)
                                                             }
-                                                        }}> {empl?.status === "pending" ? null : <CsLineIcons icon="check" size="14" />} {empl?.status} {empl?.status === "pending" ? <CsLineIcons icon="pen" size="14" /> : null}   </Badge>
+                                                        }}> {empl?.status === "pending" ? null : <CsLineIcons icon="check" size="14" />} {empl?.status} {empl?.status === "pending" ? <CsLineIcons icon="pen" size="18" /> : null}   </Badge>
                                                     </td>
 
 
@@ -272,7 +247,7 @@ const Employees = () => {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <PaymentDetails details={paymentdet} />
+                    {/* <EmployeesDetails details={paymentdet} /> */}
                 </Modal.Body>
 
                 <Modal.Footer>

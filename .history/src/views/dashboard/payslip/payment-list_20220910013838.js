@@ -18,7 +18,7 @@ import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 // import EmployeesDetails from '../components/Employees-details';
-import PaymentDetails from './components/Payment-Details';
+// import UpdateEmployeesDetails from './components/UpdateEmplDetails';
 // import UploadEmployeePasswords from './components/UploadEmployeePasswords';
 import { warningMessage, successSubmitLeave } from "../../../components/Notifications/Notifications";
 
@@ -97,8 +97,7 @@ const Employees = () => {
     }
 
 
-    console.log(paymentdet);
-
+    console.log(myHeaders.append("Content-Type", "application/json"););
     //* Updating the user status
     const UpdateStatus = () => {
         const myHeader = new Headers();
@@ -120,7 +119,7 @@ const Employees = () => {
             .then(response => response.json())
             .then(result => {
                 if (result.status === "success") {
-                    successSubmitLeave(`Successful updated payment status`)
+                    successSubmitLeave(`This payment does not exist anymore`)
                 }
                 if (result.status === "fail") {
                     warningMessage(`This payment does not exist anymore`)
@@ -163,10 +162,9 @@ const Employees = () => {
                                                 </div>
                                             </th>
                                             <th className="align-middle">Pic</th>
-                                            <th className="align-middle">Name</th>
+                                            <th className="align-middle">Full Name</th>
                                             <th className="align-middle">Email</th>
                                             <th className="align-middle">Acc. No.</th>
-                                            <th className="align-middle">Payment Date</th>
                                             <th className="align-middle">Status</th>
                                             <th className="align-middle">View</th>
                                             <th className="align-middle">Edit</th>
@@ -191,19 +189,17 @@ const Employees = () => {
                                                         </div>
                                                     </td>
 
-                                                    {/* <td>{empl?.user?.firstName} {empl?.user?.lastName}</td> */}
-                                                    <td>{empl?.user?.firstName} </td>
+                                                    <td>{empl?.user?.firstName} {empl?.user?.lastName}</td>
                                                     <td>{empl?.user?.email}</td>
                                                     <td>{empl?.user?.accountNumber}</td>
-                                                    <td>{empl?.paymentDate}</td>
 
                                                     <td><Badge className={`${empl?.status === 'pending' ? "bg-warning cursor-pointer" : "bg-primary"}  cursor-pointer`}
                                                         onClick={() => {
                                                             if (empl?.status === 'pending') {
                                                                 setStatusUpdate(true)
-                                                                setPaymentId(empl?._id)
+                                                                setStatusUpdate(empl?._id)
                                                             }
-                                                        }}> {empl?.status === "pending" ? null : <CsLineIcons icon="check" size="14" />} {empl?.status} {empl?.status === "pending" ? <CsLineIcons icon="pen" size="14" /> : null}   </Badge>
+                                                        }}> {empl?.status === "pending" ? null : <CsLineIcons icon="check" size="14" />} {empl?.status} {empl?.status === "pending" ? <CsLineIcons icon="pen" size="18" /> : null}   </Badge>
                                                     </td>
 
 
@@ -272,7 +268,7 @@ const Employees = () => {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <PaymentDetails details={paymentdet} />
+                    {/* <EmployeesDetails details={paymentdet} /> */}
                 </Modal.Body>
 
                 <Modal.Footer>

@@ -163,10 +163,9 @@ const Employees = () => {
                                                 </div>
                                             </th>
                                             <th className="align-middle">Pic</th>
-                                            <th className="align-middle">Name</th>
+                                            <th className="align-middle">Full Name</th>
                                             <th className="align-middle">Email</th>
                                             <th className="align-middle">Acc. No.</th>
-                                            <th className="align-middle">Payment Date</th>
                                             <th className="align-middle">Status</th>
                                             <th className="align-middle">View</th>
                                             <th className="align-middle">Edit</th>
@@ -191,11 +190,9 @@ const Employees = () => {
                                                         </div>
                                                     </td>
 
-                                                    {/* <td>{empl?.user?.firstName} {empl?.user?.lastName}</td> */}
-                                                    <td>{empl?.user?.firstName} </td>
+                                                    <td>{empl?.user?.firstName} {empl?.user?.lastName}</td>
                                                     <td>{empl?.user?.email}</td>
                                                     <td>{empl?.user?.accountNumber}</td>
-                                                    <td>{empl?.paymentDate}</td>
 
                                                     <td><Badge className={`${empl?.status === 'pending' ? "bg-warning cursor-pointer" : "bg-primary"}  cursor-pointer`}
                                                         onClick={() => {
@@ -203,7 +200,7 @@ const Employees = () => {
                                                                 setStatusUpdate(true)
                                                                 setPaymentId(empl?._id)
                                                             }
-                                                        }}> {empl?.status === "pending" ? null : <CsLineIcons icon="check" size="14" />} {empl?.status} {empl?.status === "pending" ? <CsLineIcons icon="pen" size="14" /> : null}   </Badge>
+                                                        }}> {empl?.status === "pending" ? null : <CsLineIcons icon="check" size="14" />} {empl?.status} {empl?.status === "pending" ? <CsLineIcons icon="pen" size="18" /> : null}   </Badge>
                                                     </td>
 
 
