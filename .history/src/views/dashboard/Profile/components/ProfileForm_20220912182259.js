@@ -14,7 +14,6 @@ import { Logout } from "../../../../auth/authSlice"
 
 const AccountSettings = () => {
     const urlUser = "http://localhost:5000/img/users/"
-    const urlDoc = "http://localhost:5000/img/docs/"
     const dispatch = useDispatch();
     const history = useHistory()
     const { currentUser } = useSelector((state) => state.auth);
@@ -22,8 +21,6 @@ const AccountSettings = () => {
     const [thumb, setThumb] = useState(`${urlUser}${currentUser?.data?.user.photo}`);
     const [image, setImage] = useState()
     const initialstate = currentUser?.data?.user;
-
-    console.log(currentUser);
 
 
     const initialValues = {
@@ -345,24 +342,14 @@ const AccountSettings = () => {
                 </Card>
 
 
-                <h5 className=" mt-2 text-primary"> Documents Images </h5>
-                {
-                    currentUser?.data?.user?.role === "user" ?
-                        <Card className="mt-2">
-                            <div className="d-flex justify-content-between">
-                                {
-                                    currentUser?.data?.user?.uploadDocPic?.map((docImg, i) => {
-                                        return (
-                                            <div className="my-5 d-flex" key={i}>
-                                                <img src={`${urlDoc}${docImg}`} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
-                                            </div>
-                                        )
+                <Card>
+                    <div className="my-5">
+                        <img src={!doc1 ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" : doc1} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
+                        <img src={!doc2 ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" : doc2} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
+                        <img src={!doc3 ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" : doc3} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
+                    </div>
 
-                                    })
-                                }
-                            </div>
-                        </Card> : null
-                }
+                </Card>
 
 
                 <Button type="submit" variant="primary mt-4 w-25">Update</Button>

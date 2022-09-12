@@ -347,7 +347,7 @@ const AccountSettings = () => {
 
                 <h5 className=" mt-2 text-primary"> Documents Images </h5>
                 {
-                    currentUser?.data?.user?.role === "user" ?
+                    !currentUser?.data?.user?.role === "user" ?
                         <Card className="mt-2">
                             <div className="d-flex justify-content-between">
                                 {

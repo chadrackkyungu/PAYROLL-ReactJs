@@ -345,24 +345,20 @@ const AccountSettings = () => {
                 </Card>
 
 
-                <h5 className=" mt-2 text-primary"> Documents Images </h5>
-                {
-                    currentUser?.data?.user?.role === "user" ?
-                        <Card className="mt-2">
-                            <div className="d-flex justify-content-between">
-                                {
-                                    currentUser?.data?.user?.uploadDocPic?.map((docImg, i) => {
-                                        return (
-                                            <div className="my-5 d-flex" key={i}>
-                                                <img src={`${urlDoc}${docImg}`} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
-                                            </div>
-                                        )
+                <Card>
+                    {
+                        currentUser?.data?.user?.uploadDocPic?.map((docImg, i) => {
+                            return (
+                                <div className="my-5" key={i}>
+                                    <img src={docImg} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
+                                </div>
+                            )
 
-                                    })
-                                }
-                            </div>
-                        </Card> : null
-                }
+                        })
+                    }
+
+
+                </Card>
 
 
                 <Button type="submit" variant="primary mt-4 w-25">Update</Button>
