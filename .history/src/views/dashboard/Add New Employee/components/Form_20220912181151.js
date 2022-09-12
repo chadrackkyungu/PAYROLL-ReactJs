@@ -19,6 +19,7 @@ const WizardBasic = () => {
     const history = useHistory()
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
+    // const [thumb, setThumb] = useState('/img/profile/profile-1.webp');
     const [image, setImage] = useState()
     // const initialValues = initialValueEmpty
     const validationSchema = validationSchema2
@@ -244,6 +245,9 @@ const WizardBasic = () => {
     }; // End
     //* Selection
 
+
+
+
     //* upload documents image 
     const refFileUpload = useRef(null);
 
@@ -336,7 +340,7 @@ const WizardBasic = () => {
                                 >
                                     <CsLineIcons icon="upload" className="text-alternate" />
                                 </Button>
-                                <Form.Control type="file" ref={refFileUpload} className="file-upload d-none" accept="image/*" onChange={changeThumb} required />
+                                <Form.Control type="file" ref={refFileUpload} className="file-upload d-none" accept="image/*" onChange={changeThumb} />
                             </div>
 
 
@@ -409,16 +413,16 @@ const WizardBasic = () => {
                             {/* <div className="my-5 d-flex justify-content-center"> */}
                             <div className="my-5">
                                 <img src={!doc1 ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" : doc1} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
-                                <img src={!doc2 ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" : doc2} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
-                                <img src={!doc3 ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" : doc3} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
+                                <img src={doc2} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
+                                <img src={doc3} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
                             </div>
 
                             <div className="d-flex">
-                                <Form.Control className="mx-2" name="uploadDocPic" type="file" onChange={uploadDocuments} accept="image/*" required />
+                                <Form.Control className="mx-2" name="uploadDocPic" type="file" onChange={uploadDocuments} accept="image/*" />
                                 <br />
-                                <Form.Control className="mx-2" name="uploadDocPic2" type="file" onChange={uploadDocuments2} accept="image/*" required />
+                                <Form.Control className="mx-2" name="uploadDocPic2" type="file" onChange={uploadDocuments2} accept="image/*" />
                                 <br />
-                                <Form.Control className="mx-2" name="uploadDocPic3" type="file" onChange={uploadDocuments3} accept="image/*" required />
+                                <Form.Control className="mx-2" name="uploadDocPic3" type="file" onChange={uploadDocuments3} accept="image/*" />
                             </div>
 
 

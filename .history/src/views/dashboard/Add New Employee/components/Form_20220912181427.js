@@ -336,7 +336,7 @@ const WizardBasic = () => {
                                 >
                                     <CsLineIcons icon="upload" className="text-alternate" />
                                 </Button>
-                                <Form.Control type="file" ref={refFileUpload} className="file-upload d-none" accept="image/*" onChange={changeThumb} required />
+                                <Form.Control type="file" ref={refFileUpload} className="file-upload d-none" accept="image/*" onChange={changeThumb} />
                             </div>
 
 
@@ -414,11 +414,11 @@ const WizardBasic = () => {
                             </div>
 
                             <div className="d-flex">
-                                <Form.Control className="mx-2" name="uploadDocPic" type="file" onChange={uploadDocuments} accept="image/*" required />
+                                <Form.Control className="mx-2" name="uploadDocPic" type="file" onChange={uploadDocuments} accept="image/*" />
                                 <br />
-                                <Form.Control className="mx-2" name="uploadDocPic2" type="file" onChange={uploadDocuments2} accept="image/*" required />
+                                <Form.Control className="mx-2" name="uploadDocPic2" type="file" onChange={uploadDocuments2} accept="image/*" />
                                 <br />
-                                <Form.Control className="mx-2" name="uploadDocPic3" type="file" onChange={uploadDocuments3} accept="image/*" required />
+                                <Form.Control className="mx-2" name="uploadDocPic3" type="file" onChange={uploadDocuments3} accept="image/*" />
                             </div>
 
 

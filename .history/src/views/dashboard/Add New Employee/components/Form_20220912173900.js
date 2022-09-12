@@ -15,12 +15,16 @@ import { warningMessage, successSubmitLeave } from "../../../../components/Notif
 
 const WizardBasic = () => {
 
+    const urlUser = "http://localhost:5000/img/users/"
+    const urlDoc = "http://localhost:5000/img/docs/"
+
     const dispatch = useDispatch();
     const history = useHistory()
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
+    const [thumb, setThumb] = useState('/img/profile/profile-1.webp');
     const [image, setImage] = useState()
-    // const initialValues = initialValueEmpty
+    const initialValues = initialValueEmpty
     const validationSchema = validationSchema2
 
     const [profile, setProfile] = useState(); // Photo user profile
@@ -66,78 +70,46 @@ const WizardBasic = () => {
     // *==================================
 
 
-    const initialValues = {
-        IdNumber: "",
-        gender: '',
-        dateOfBirth: null,
-        language: '',
-        phoneNumber: '',
-        materialStatus: '',
-        streetAddress: '',
-        city: '',
-        country: '',
-        houseNumber: '',
-        zipCode: '',
-        stateProvince: '',
-        accountName: '',
-        accountType: '',
-        branchName: '',
-        accountNumber: '',
-        photo: '',
-        email: '',
-        employeeNumber: '',
-        firstName: '',
-        lastName: '',
-        role: '',
-        startDate: null,
-        password: '',
-        passwordConfirm: '',
-        uploadDocPic: '',
-        uploadDocPic2: '',
-        uploadDocPic3: '',
-    };
-
-
-
     const onSubmit = async (values) => {
 
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${token}`);
+        console.log("Result : ", values)
 
-        const formdata = new FormData();
-        formdata.append("IdNumber", values.IdNumber);
-        formdata.append("gender", values.gender);
-        formdata.append("dateOfBirth", values.dateOfBirth);
-        formdata.append("language", values.language);
-        formdata.append("phoneNumber", values.phoneNumber);
-        formdata.append("materialStatus", values.materialStatus);
-        formdata.append("streetAddress", values.streetAddress);
-        formdata.append("city", values.city);
-        formdata.append("country", values.country);
-        formdata.append("houseNumber", values.houseNumber);
-        formdata.append("zipCode", values.zipCode);
-        formdata.append("stateProvince", values.stateProvince);
-        formdata.append("accountName", values.accountName);
-        formdata.append("accountType", values.accountType);
-        formdata.append("branchName", values.branchName);
-        formdata.append("accountNumber", values.accountNumber);
-        formdata.append("photo", values.photo);
-        formdata.append("email", values.email);
-        formdata.append("employeeNumber", values.employeeNumber);
-        formdata.append("firstName", values.firstName);
-        formdata.append("lastName", values.lastName);
-        formdata.append("role", values.role);
-        formdata.append("startDate", values.startDate);
-        formdata.append("password", values.password);
-        formdata.append("passwordConfirm", values.passwordConfirm);
-        formdata.append("uploadDocPic", values.uploadDocPic);
-        formdata.append("uploadDocPic", values.uploadDocPic2);
-        formdata.append("uploadDocPic", values.uploadDocPic3);
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        const raw = JSON.stringify({
+            "IdNumber": values.IdNumber,
+            "gender": values.gender,
+            "dateOfBirth": values.dateOfBirth,
+            "language": values.language,
+            "phoneNumber": values.phoneNumber,
+            "materialStatus": values.materialStatus,
+            "streetAddress": values.streetAddress,
+            "city": values.city,
+            "country": values.country,
+            "houseNumber": values.houseNumber,
+            "zipCode": values.zipCode,
+            "stateProvince": values.stateProvince,
+            "accountName": values.accountName,
+            "accountType": values.accountType,
+            "branchName": values.branchName,
+            "accountNumber": values.accountNumber,
+            "photo": values.photo,
+            "agreed": values.agreed,
+            "email": values.email,
+            "employeeNumber": values.employeeNumber,
+            "firstName": values.firstName,
+            "lastName": values.lastName,
+            "password": values.password,
+            "passwordConfirm": values.passwordConfirm,
+            "role": values.role,
+            "startDate": values.startDate
+        });
 
         const requestOptions = {
             method: 'POST',
             headers: myHeaders,
-            body: formdata,
+            body: raw,
             redirect: 'follow'
         };
 
@@ -147,11 +119,8 @@ const WizardBasic = () => {
                 if (result.status === "success") {
                     successSubmitLeave(`Successfully Added the employee!!`)
                 }
-                if (result.status === "fail") {
-                    successSubmitLeave(`You do not have permission to add an employee`)
-                }
                 if (result.status === "error") {
-                    warningMessage(`${result.status.message}`)
+                    warningMessage(`This employee exist already in the system!!. try to add another employee`)
                 }
             })
             .catch(err => warningMessage(` 🤒 ${err.response.data.message}`));
@@ -159,6 +128,29 @@ const WizardBasic = () => {
 
     const formik = useFormik({ initialValues, validationSchema, onSubmit });
     const { handleSubmit, handleChange, values, touched, errors, setFieldValue } = formik;
+
+    //* Photo profile
+    // const refFileUpload = useRef(null);
+
+    // const onThumbChangeClick = () => {
+    //     if (refFileUpload) {
+    //         refFileUpload.current.dispatchEvent(new MouseEvent('click'));
+    //     }
+    // };
+
+    // const changeThumb = (event) => {
+    //     if (event.target.files && event.target.files[0]) {
+    //         console.log(event.target.files[0])
+    //         setImage(event.target.files[0])
+    //         const reader = new FileReader();
+    //         reader.onload = (loadEvent) => {
+    //             setThumb(loadEvent.target.result);
+    //         };
+    //         reader.readAsDataURL(event.target.files[0]);
+    //     }
+    // };
+    // End
+
 
     //* Date 
     const birthDateOnChange = (date) => {
@@ -243,6 +235,9 @@ const WizardBasic = () => {
         setRoleValue(selectedOption);
     }; // End
     //* Selection
+
+
+
 
     //* upload documents image 
     const refFileUpload = useRef(null);
@@ -329,14 +324,25 @@ const WizardBasic = () => {
 
                         <Step id="step1" name="First" desc="First description">
 
-                            <div className="m-3 mx-auto position-relative mt-5" id="imageUpload">
-                                <img src={!profile ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" : profile} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
+                            {/* <div className="m-3 mx-auto position-relative" id="imageUpload">
+                                <img src={thumb} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
                                 <Button size="sm" variant="separator-light" className="btn-icon btn-icon-only position-absolute rounded-xl s-0 b-0"
                                     onClick={onThumbChangeClick}
                                 >
                                     <CsLineIcons icon="upload" className="text-alternate" />
                                 </Button>
-                                <Form.Control type="file" ref={refFileUpload} className="file-upload d-none" accept="image/*" onChange={changeThumb} required />
+                                <Form.Control type="file" ref={refFileUpload} className="file-upload d-none" accept="image/*" onChange={changeThumb} />
+                            </div> */}
+
+
+                            <div className="m-3 mx-auto position-relative mt-5" id="imageUpload">
+                                <img src={profile} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
+                                <Button size="sm" variant="separator-light" className="btn-icon btn-icon-only position-absolute rounded-xl s-0 b-0"
+                                    onClick={onThumbChangeClick}
+                                >
+                                    <CsLineIcons icon="upload" className="text-alternate" />
+                                </Button>
+                                <Form.Control type="file" ref={refFileUpload} className="file-upload d-none" accept="image/*" onChange={changeThumb} />
                             </div>
 
 
@@ -404,21 +410,18 @@ const WizardBasic = () => {
                                 </Row>
                             </div>
 
-                            <h5 className="text-primary"> Upload Documents 3 Images  </h5>
-
-                            {/* <div className="my-5 d-flex justify-content-center"> */}
                             <div className="my-5">
-                                <img src={!doc1 ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" : doc1} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
-                                <img src={!doc2 ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" : doc2} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
-                                <img src={!doc3 ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" : doc3} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
+                                <img src={doc1} className="rounded mb-1 float-start sw-18 mx-1" alt="docs image" />
+                                <img src={doc2} className="rounded mb-1 float-start sw-18 mx-1" alt="docs image" />
+                                <img src={doc3} className="rounded mb-1 float-start sw-18 mx-1" alt="docs image" />
                             </div>
 
                             <div className="d-flex">
-                                <Form.Control className="mx-2" name="uploadDocPic" type="file" onChange={uploadDocuments} accept="image/*" required />
+                                <Form.Control className="mx-2" name="uploadDocPic" type="file" onChange={uploadDocuments} accept="image/*" />
                                 <br />
-                                <Form.Control className="mx-2" name="uploadDocPic2" type="file" onChange={uploadDocuments2} accept="image/*" required />
+                                <Form.Control className="mx-2" name="uploadDocPic2" type="file" onChange={uploadDocuments2} accept="image/*" />
                                 <br />
-                                <Form.Control className="mx-2" name="uploadDocPic3" type="file" onChange={uploadDocuments3} accept="image/*" required />
+                                <Form.Control className="mx-2" name="uploadDocPic3" type="file" onChange={uploadDocuments3} accept="image/*" />
                             </div>
 
 

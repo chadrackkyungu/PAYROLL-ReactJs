@@ -19,6 +19,7 @@ const WizardBasic = () => {
     const history = useHistory()
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
+    // const [thumb, setThumb] = useState('/img/profile/profile-1.webp');
     const [image, setImage] = useState()
     // const initialValues = initialValueEmpty
     const validationSchema = validationSchema2
@@ -90,8 +91,6 @@ const WizardBasic = () => {
         lastName: '',
         role: '',
         startDate: null,
-        password: '',
-        passwordConfirm: '',
         uploadDocPic: '',
         uploadDocPic2: '',
         uploadDocPic3: '',
@@ -100,6 +99,10 @@ const WizardBasic = () => {
 
 
     const onSubmit = async (values) => {
+
+        console.log('====================================');
+        console.log(values);
+        console.log('====================================');
 
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
@@ -128,8 +131,6 @@ const WizardBasic = () => {
         formdata.append("lastName", values.lastName);
         formdata.append("role", values.role);
         formdata.append("startDate", values.startDate);
-        formdata.append("password", values.password);
-        formdata.append("passwordConfirm", values.passwordConfirm);
         formdata.append("uploadDocPic", values.uploadDocPic);
         formdata.append("uploadDocPic", values.uploadDocPic2);
         formdata.append("uploadDocPic", values.uploadDocPic3);
@@ -159,6 +160,29 @@ const WizardBasic = () => {
 
     const formik = useFormik({ initialValues, validationSchema, onSubmit });
     const { handleSubmit, handleChange, values, touched, errors, setFieldValue } = formik;
+
+    //* Photo profile
+    // const refFileUpload = useRef(null);
+
+    // const onThumbChangeClick = () => {
+    //     if (refFileUpload) {
+    //         refFileUpload.current.dispatchEvent(new MouseEvent('click'));
+    //     }
+    // };
+
+    // const changeThumb = (event) => {
+    //     if (event.target.files && event.target.files[0]) {
+    //         console.log(event.target.files[0])
+    //         setImage(event.target.files[0])
+    //         const reader = new FileReader();
+    //         reader.onload = (loadEvent) => {
+    //             setThumb(loadEvent.target.result);
+    //         };
+    //         reader.readAsDataURL(event.target.files[0]);
+    //     }
+    // };
+    // End
+
 
     //* Date 
     const birthDateOnChange = (date) => {
@@ -243,6 +267,9 @@ const WizardBasic = () => {
         setRoleValue(selectedOption);
     }; // End
     //* Selection
+
+
+
 
     //* upload documents image 
     const refFileUpload = useRef(null);
@@ -329,14 +356,25 @@ const WizardBasic = () => {
 
                         <Step id="step1" name="First" desc="First description">
 
-                            <div className="m-3 mx-auto position-relative mt-5" id="imageUpload">
-                                <img src={!profile ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" : profile} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
+                            {/* <div className="m-3 mx-auto position-relative" id="imageUpload">
+                                <img src={thumb} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
                                 <Button size="sm" variant="separator-light" className="btn-icon btn-icon-only position-absolute rounded-xl s-0 b-0"
                                     onClick={onThumbChangeClick}
                                 >
                                     <CsLineIcons icon="upload" className="text-alternate" />
                                 </Button>
-                                <Form.Control type="file" ref={refFileUpload} className="file-upload d-none" accept="image/*" onChange={changeThumb} required />
+                                <Form.Control type="file" ref={refFileUpload} className="file-upload d-none" accept="image/*" onChange={changeThumb} />
+                            </div> */}
+
+
+                            <div className="m-3 mx-auto position-relative mt-5" id="imageUpload">
+                                <img src={profile} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
+                                <Button size="sm" variant="separator-light" className="btn-icon btn-icon-only position-absolute rounded-xl s-0 b-0"
+                                    onClick={onThumbChangeClick}
+                                >
+                                    <CsLineIcons icon="upload" className="text-alternate" />
+                                </Button>
+                                <Form.Control type="file" ref={refFileUpload} className="file-upload d-none" accept="image/*" onChange={changeThumb} />
                             </div>
 
 
@@ -408,17 +446,17 @@ const WizardBasic = () => {
 
                             {/* <div className="my-5 d-flex justify-content-center"> */}
                             <div className="my-5">
-                                <img src={!doc1 ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" : doc1} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
-                                <img src={!doc2 ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" : doc2} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
-                                <img src={!doc3 ? "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" : doc3} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
+                                <img src={doc1} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
+                                <img src={doc2} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
+                                <img src={doc3} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
                             </div>
 
                             <div className="d-flex">
-                                <Form.Control className="mx-2" name="uploadDocPic" type="file" onChange={uploadDocuments} accept="image/*" required />
+                                <Form.Control className="mx-2" name="uploadDocPic" type="file" onChange={uploadDocuments} accept="image/*" />
                                 <br />
-                                <Form.Control className="mx-2" name="uploadDocPic2" type="file" onChange={uploadDocuments2} accept="image/*" required />
+                                <Form.Control className="mx-2" name="uploadDocPic2" type="file" onChange={uploadDocuments2} accept="image/*" />
                                 <br />
-                                <Form.Control className="mx-2" name="uploadDocPic3" type="file" onChange={uploadDocuments3} accept="image/*" required />
+                                <Form.Control className="mx-2" name="uploadDocPic3" type="file" onChange={uploadDocuments3} accept="image/*" />
                             </div>
 
 
