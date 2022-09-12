@@ -43,6 +43,9 @@ function General({ announcement }) {
         setSmExample(false)
         successMessage(`You have successful deleted this announcement`)
     }
+    console.log('====================================');
+    console.log(MessageId);
+    console.log('====================================');
 
     return (
         <div>
@@ -78,7 +81,7 @@ function General({ announcement }) {
                                 </Col>
                             </Row>
                             <div className="d-flex justify-content-end">
-                                {/* <Badge bg="outline-primary" className="me-3 cursor-pointer">Edit</Badge> */}
+                                <Badge bg="outline-primary" className="me-3 cursor-pointer">Edit</Badge>
                                 <Badge bg="outline-danger" className="cursor-pointer"
                                     onClick={() => {
                                         setSmExample(true)

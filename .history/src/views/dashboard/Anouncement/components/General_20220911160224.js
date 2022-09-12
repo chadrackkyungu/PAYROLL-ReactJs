@@ -31,18 +31,18 @@ function General({ announcement }) {
         fetch(`http://localhost:5000/api/v1/announcements/${MessageId}`, requestOptions)
             .then(response => response.json())
             .then(result => {
-                if (result.status === 'success') {
-                    successMessage(`You have successful deleted this announcement`)
-                }
+                console.log(result);
                 if (result.status === 'fail') {
                     successMessage(`You have successful deleted this announcement`)
                 }
             })
-            .catch(err => console.log(` 🤒 ${err.response}`))
+            .catch(err => warningMessage(` 🤒 ${err.response}`))
 
         setSmExample(false)
-        successMessage(`You have successful deleted this announcement`)
     }
+    console.log('====================================');
+    console.log(MessageId);
+    console.log('====================================');
 
     return (
         <div>
@@ -78,7 +78,7 @@ function General({ announcement }) {
                                 </Col>
                             </Row>
                             <div className="d-flex justify-content-end">
-                                {/* <Badge bg="outline-primary" className="me-3 cursor-pointer">Edit</Badge> */}
+                                <Badge bg="outline-primary" className="me-3 cursor-pointer">Edit</Badge>
                                 <Badge bg="outline-danger" className="cursor-pointer"
                                     onClick={() => {
                                         setSmExample(true)

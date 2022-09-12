@@ -17,6 +17,8 @@ function UpdatePaymentForm() {
     const token = currentUser?.token;
     const [users, setUsers] = useState()
 
+
+
     useEffect(() => {
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
@@ -28,14 +30,9 @@ function UpdatePaymentForm() {
         };
         fetch("http://localhost:5000/api/v1/users", requestOptions)
             .then(response => response.json())
-            .then(result => {
-                const userDet = result?.data?.data?.filter(user => {
-                    return user?._id !== currentUser?.data?.user?._id
-                })
-                setUsers(userDet)
-            })
+            .then(result => setUsers(result.data.data))
             .catch(error => console.log('error', error));
-    }, [token, currentUser?.data?.user?._id]);
+    }, [token]);
 
     const validationSchema = Yup.object().shape({
         category: Yup.string().nullable().required('Category is required'),
@@ -66,9 +63,10 @@ function UpdatePaymentForm() {
     const individualAPI = `http://localhost:5000/api/v1/announcements/${employeeValue?.value}`
 
     const onSubmit = async (values) => {
+        console.log(values);
+
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
-        myHeaders.append("Content-Type", "application/json");
 
         const raw = JSON.stringify({
             "category": values.category,
@@ -83,7 +81,7 @@ function UpdatePaymentForm() {
             redirect: 'follow'
         };
 
-        fetch(employeeValue === undefined ? generalAPI : individualAPI, requestOptions)
+        fetch(generalAPI, requestOptions)
             .then(response => response.json())
             .then(res => {
                 console.log(res);
@@ -109,6 +107,7 @@ function UpdatePaymentForm() {
         { value: 'Others', label: 'Others' },
     ];
     const [categoryValue, setCategoryValue] = useState();
+
     const categoryOnChange = (selectedOption) => {
         setFieldValue('category', selectedOption.value);
         setCategoryValue(selectedOption);
@@ -120,16 +119,13 @@ function UpdatePaymentForm() {
         { value: 'Others', label: 'Others' },
     ];
     const [typeValue, setTypeValue] = useState();
+
     const typeOnChange = (selectedOption) => {
         setFieldValue('types', selectedOption.value);
         setTypeValue(selectedOption);
     };
 
 
-    const [isSwitchOn, setIsSwitchOn] = useState(false);
-    const onSwitchAction = () => {
-        setIsSwitchOn(!isSwitchOn);
-    };
 
     return (
         <div>
@@ -137,25 +133,22 @@ function UpdatePaymentForm() {
                 <Card.Body>
                     <h5 className='mb-5'> <b> Send an announcement</b>  </h5>
                     <Row>
+
                         <Form onSubmit={handleSubmit} className="tooltip-end-top">
-                            <Form.Check type="switch" className="mb-5" id="customSwitch" label="Switch to individual announcement" onChange={onSwitchAction} />
-                            {
-                                isSwitchOn && (
-                                    <Row className="d-flex justify-content-end">
-                                        <Col md={4}>
-                                            <h3>  </h3>
-                                            <label>Select Employee</label>
-                                            <div className="mb-3 filled">
-                                                <CsLineIcons icon="menu-dropdown" />
-                                                <Select classNamePrefix="react-select"
-                                                    options={employee}
-                                                    value={employeeValue}
-                                                    onChange={employeeOnChange} />
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                )
-                            }
+                            <Row className="d-flex justify-content-end">
+                                <Col md={4}>
+                                    <h3>  </h3>
+                                    <label>Select Employee</label>
+                                    <div className="mb-3 filled">
+                                        <CsLineIcons icon="menu-dropdown" />
+                                        <Select classNamePrefix="react-select"
+                                            options={employee}
+                                            value={employeeValue}
+                                            onChange={employeeOnChange} />
+                                    </div>
+                                </Col>
+                            </Row>
+
                             <Row>
                                 <Col md={6}>
                                     <label>Select Category</label>
@@ -176,6 +169,8 @@ function UpdatePaymentForm() {
                                 </Col>
                             </Row>
 
+
+
                             <div className="mb-3 filled">
                                 <CsLineIcons icon="notebook-1" />
                                 <Form.Control name="message" as="textarea" rows={5} value={values.message} onChange={handleChange} placeholder="Message" />
@@ -185,7 +180,9 @@ function UpdatePaymentForm() {
                             <div className='d-flex flex-end'>
                                 <Button type="submit" variant="primary"> Send </Button>
                             </div>
+
                         </Form>
+
                     </Row>
                 </Card.Body>
             </Card>

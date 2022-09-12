@@ -12,11 +12,11 @@ function General({ announcement }) {
     const token = currentUser?.token;
 
     const [smExample, setSmExample] = useState(false);
-    const [MessageId, setMessageId] = useState();
+    const [MessageId, setMessageId] = useState(false);
 
     const deleteMessage = () => {
         const myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${token}`);
+        myHeaders.append("Authorization", `Bearer ${}`);
         myHeaders.append("Content-Type", "application/json");
 
         const raw = ""
@@ -32,16 +32,15 @@ function General({ announcement }) {
             .then(response => response.json())
             .then(result => {
                 if (result.status === 'success') {
-                    successMessage(`You have successful deleted this announcement`)
+
                 }
                 if (result.status === 'fail') {
-                    successMessage(`You have successful deleted this announcement`)
+
                 }
             })
-            .catch(err => console.log(` 🤒 ${err.response}`))
+            .catch(error => console.log('error', error));
 
-        setSmExample(false)
-        successMessage(`You have successful deleted this announcement`)
+        setMessageId(false)
     }
 
     return (
@@ -78,7 +77,7 @@ function General({ announcement }) {
                                 </Col>
                             </Row>
                             <div className="d-flex justify-content-end">
-                                {/* <Badge bg="outline-primary" className="me-3 cursor-pointer">Edit</Badge> */}
+                                <Badge bg="outline-primary" className="me-3 cursor-pointer">Edit</Badge>
                                 <Badge bg="outline-danger" className="cursor-pointer"
                                     onClick={() => {
                                         setSmExample(true)

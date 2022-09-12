@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Form, Row, Card, Col } from 'react-bootstrap';
 import { useFormik } from 'formik';
@@ -15,27 +15,6 @@ function UpdatePaymentForm() {
 
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
-    const [users, setUsers] = useState()
-
-    useEffect(() => {
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${token}`);
-
-        const requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-        fetch("http://localhost:5000/api/v1/users", requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                const userDet = result?.data?.data?.filter(user => {
-                    return user?._id !== currentUser?.data?.user?._id
-                })
-                setUsers(userDet)
-            })
-            .catch(error => console.log('error', error));
-    }, [token, currentUser?.data?.user?._id]);
 
     const validationSchema = Yup.object().shape({
         category: Yup.string().nullable().required('Category is required'),
@@ -49,50 +28,34 @@ function UpdatePaymentForm() {
         message: '',
     };
 
-    // *Select employee
-    const employee = users?.map(user => ({
-        value: user._id,
-        label: user.email
-    }))
-
-    const [employeeValue, setEmployeeValue] = useState();
-
-    const employeeOnChange = (selectedOption) => {
-        setEmployeeValue(selectedOption);
-    };
-    //* End
-
-    const generalAPI = "http://localhost:5000/api/v1/announcements/";
-    const individualAPI = `http://localhost:5000/api/v1/announcements/${employeeValue?.value}`
-
     const onSubmit = async (values) => {
+        console.log(values);
+
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
-        myHeaders.append("Content-Type", "application/json");
 
-        const raw = JSON.stringify({
-            "category": values.category,
-            "types": values.types,
-            "message": values.message
-        });
+        const formdata = new FormData();
+        formdata.append("salaryAmount", values.salaryAmount);
+        formdata.append("overTimeAmount", values.overTimeAmount);
+        formdata.append("hoursWork", values.hoursWork);
+        formdata.append("paymentDate", values.paymentDate);
+        formdata.append("paymentRecept", values.paymentRecept);
 
         const requestOptions = {
-            method: 'POST',
+            method: 'PATCH',
             headers: myHeaders,
-            body: raw,
+            body: formdata,
             redirect: 'follow'
         };
 
-        fetch(employeeValue === undefined ? generalAPI : individualAPI, requestOptions)
+        fetch(`http://localhost:5000/api/v1/payments/`, requestOptions)
             .then(response => response.json())
             .then(res => {
-                console.log(res);
-
                 if (res.status === 'success') {
-                    successMessage(`You have successful send an announcement`)
+                    successMessage(`Successful Update Payments `)
                 }
-                if (res.status === 'error') {
-                    warningMessage(`Fail to send the announcement`)
+                if (res.status === 'fail') {
+                    warningMessage(`Fail to payment payment tickets`)
                 }
             })
             .catch(err => warningMessage(` 🤒 ${err.response.data.message}`))
@@ -108,7 +71,8 @@ function UpdatePaymentForm() {
         { value: 'Maintenance', label: 'Maintenance' },
         { value: 'Others', label: 'Others' },
     ];
-    const [categoryValue, setCategoryValue] = useState();
+    const [categoryValue, setCategoryValue] = useState(category[0]);
+
     const categoryOnChange = (selectedOption) => {
         setFieldValue('category', selectedOption.value);
         setCategoryValue(selectedOption);
@@ -119,16 +83,11 @@ function UpdatePaymentForm() {
         { value: 'Money', label: 'Money' },
         { value: 'Others', label: 'Others' },
     ];
-    const [typeValue, setTypeValue] = useState();
+    const [typeValue, setTypeValue] = useState(types[0]);
+
     const typeOnChange = (selectedOption) => {
         setFieldValue('types', selectedOption.value);
         setTypeValue(selectedOption);
-    };
-
-
-    const [isSwitchOn, setIsSwitchOn] = useState(false);
-    const onSwitchAction = () => {
-        setIsSwitchOn(!isSwitchOn);
     };
 
     return (
@@ -137,28 +96,11 @@ function UpdatePaymentForm() {
                 <Card.Body>
                     <h5 className='mb-5'> <b> Send an announcement</b>  </h5>
                     <Row>
+
                         <Form onSubmit={handleSubmit} className="tooltip-end-top">
-                            <Form.Check type="switch" className="mb-5" id="customSwitch" label="Switch to individual announcement" onChange={onSwitchAction} />
-                            {
-                                isSwitchOn && (
-                                    <Row className="d-flex justify-content-end">
-                                        <Col md={4}>
-                                            <h3>  </h3>
-                                            <label>Select Employee</label>
-                                            <div className="mb-3 filled">
-                                                <CsLineIcons icon="menu-dropdown" />
-                                                <Select classNamePrefix="react-select"
-                                                    options={employee}
-                                                    value={employeeValue}
-                                                    onChange={employeeOnChange} />
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                )
-                            }
+
                             <Row>
                                 <Col md={6}>
-                                    <label>Select Category</label>
                                     <div className="mb-3 filled">
                                         <CsLineIcons icon="menu-dropdown" />
                                         <Select classNamePrefix="react-select" name="category" options={category} value={categoryValue} onChange={categoryOnChange} placeholder="Select category" />
@@ -167,25 +109,26 @@ function UpdatePaymentForm() {
                                 </Col>
 
                                 <Col md={6}>
-                                    <label>Select Type</label>
                                     <div className="mb-3 filled">
                                         <CsLineIcons icon="menu-dropdown" />
                                         <Select classNamePrefix="react-select" name="types" options={types} value={typeValue} onChange={typeOnChange} placeholder="Select types" />
                                         {errors.types && touched.types && <div className="error">{errors.types}</div>}
                                     </div>
                                 </Col>
-                            </Row>
 
-                            <div className="mb-3 filled">
-                                <CsLineIcons icon="notebook-1" />
-                                <Form.Control name="message" as="textarea" rows={5} value={values.message} onChange={handleChange} placeholder="Message" />
-                                {errors.message && touched.message && <div className="error">{errors.message}</div>}
-                            </div>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="notebook-1" />
+                                    <Form.Control name="message" as="textarea" rows={5} value={values.message} onChange={handleChange} placeholder="Message" />
+                                    {errors.message && touched.message && <div className="error">{errors.message}</div>}
+                                </div>
+                            </Row>
 
                             <div className='d-flex flex-end'>
                                 <Button type="submit" variant="primary"> Send </Button>
                             </div>
+
                         </Form>
+
                     </Row>
                 </Card.Body>
             </Card>

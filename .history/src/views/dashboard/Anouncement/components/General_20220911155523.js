@@ -12,7 +12,7 @@ function General({ announcement }) {
     const token = currentUser?.token;
 
     const [smExample, setSmExample] = useState(false);
-    const [MessageId, setMessageId] = useState();
+    const [MessageId, setMessageId] = useState(false);
 
     const deleteMessage = () => {
         const myHeaders = new Headers();
@@ -31,17 +31,13 @@ function General({ announcement }) {
         fetch(`http://localhost:5000/api/v1/announcements/${MessageId}`, requestOptions)
             .then(response => response.json())
             .then(result => {
-                if (result.status === 'success') {
-                    successMessage(`You have successful deleted this announcement`)
-                }
                 if (result.status === 'fail') {
                     successMessage(`You have successful deleted this announcement`)
                 }
             })
-            .catch(err => console.log(` 🤒 ${err.response}`))
+            .catch(err => warningMessage(` 🤒 ${err.response.data.message}`))
 
-        setSmExample(false)
-        successMessage(`You have successful deleted this announcement`)
+        setMessageId(false)
     }
 
     return (
@@ -78,7 +74,7 @@ function General({ announcement }) {
                                 </Col>
                             </Row>
                             <div className="d-flex justify-content-end">
-                                {/* <Badge bg="outline-primary" className="me-3 cursor-pointer">Edit</Badge> */}
+                                <Badge bg="outline-primary" className="me-3 cursor-pointer">Edit</Badge>
                                 <Badge bg="outline-danger" className="cursor-pointer"
                                     onClick={() => {
                                         setSmExample(true)

@@ -1,25 +1,29 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
 import { Row, Col, Card, Badge, Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { warningMessage, successMessage } from "../../../../components/Notifications/Notifications";
 
 function General({ announcement }) {
     const urlUser = "http://localhost:5000/img/users/"
-    const { currentUser } = useSelector((state) => state.auth);
-    const token = currentUser?.token;
 
     const [smExample, setSmExample] = useState(false);
-    const [MessageId, setMessageId] = useState();
+    const [MessageId, setMessageId] = useState(false);
 
-    const deleteMessage = () => {
+    const deleteMessage = (id) => {
+        console.log('====================================');
+        console.log(id);
+        console.log('====================================');
+
         const myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${token}`);
+        myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMThmMjg3NDUxZWJkYWJkYzk5ZDZjNyIsImlhdCI6MTY2Mjc1NjAyOCwiZXhwIjoxNjcwNTMyMDI4fQ.3oZ90JY4IYcaY5DTj3QPrenIbGAZLyhCnmjJ5Gtk31Y");
         myHeaders.append("Content-Type", "application/json");
 
-        const raw = ""
+        const raw = JSON.stringify({
+            "category": "Sport",
+            "types": "Bad attitude",
+            "message": "As the name implies, findOneAndUpdate() finds the first document that matches a given filter, applies an update, and returns the document. By default, findOneAndUpdate() returns the document as it was before update was applied."
+        });
 
         const requestOptions = {
             method: 'DELETE',
@@ -28,21 +32,17 @@ function General({ announcement }) {
             redirect: 'follow'
         };
 
-        fetch(`http://localhost:5000/api/v1/announcements/${MessageId}`, requestOptions)
+        fetch(`http://localhost:5000/api/v1/announcements/${id}`, requestOptions)
             .then(response => response.json())
-            .then(result => {
-                if (result.status === 'success') {
-                    successMessage(`You have successful deleted this announcement`)
-                }
-                if (result.status === 'fail') {
-                    successMessage(`You have successful deleted this announcement`)
-                }
-            })
-            .catch(err => console.log(` 🤒 ${err.response}`))
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
 
-        setSmExample(false)
-        successMessage(`You have successful deleted this announcement`)
+        // setMessageId(false)
     }
+
+    console.log('====================================');
+    console.log(MessageId);
+    console.log('====================================');
 
     return (
         <div>
@@ -78,7 +78,7 @@ function General({ announcement }) {
                                 </Col>
                             </Row>
                             <div className="d-flex justify-content-end">
-                                {/* <Badge bg="outline-primary" className="me-3 cursor-pointer">Edit</Badge> */}
+                                <Badge bg="outline-primary" className="me-3 cursor-pointer">Edit</Badge>
                                 <Badge bg="outline-danger" className="cursor-pointer"
                                     onClick={() => {
                                         setSmExample(true)
@@ -98,7 +98,7 @@ function General({ announcement }) {
 
                 <Modal.Footer>
                     <Button variant="primary" onClick={() => setSmExample(false)}>No</Button>
-                    <Button variant="danger" onClick={deleteMessage} >Yes</Button>
+                    <Button variant="danger" >Yes</Button>
                 </Modal.Footer>
             </Modal>
 
