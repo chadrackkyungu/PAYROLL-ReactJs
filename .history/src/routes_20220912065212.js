@@ -6,16 +6,9 @@ import { DEFAULT_PATHS } from 'config.js';
 //* Pages
 const dashboard = lazy(() => import('views/dashboard/Index'));
 const Private = lazy(() => import('views/dashboard/notifications/private'));
-
-//* Employee
 const Pending = lazy(() => import('views/dashboard/history/Pending-leaves'));
 const Approved = lazy(() => import('views/dashboard/history/Approved-leaves'));
 const Declined = lazy(() => import('views/dashboard/history/Decline-leaves'));
-
-//* Admin 
-const adminPending = lazy(() => import('views/dashboard/Admin-leave-History/Pending-leaves'));
-const adminApproved = lazy(() => import('views/dashboard/Admin-leave-History/Approved-leaves'));
-const adminDeclined = lazy(() => import('views/dashboard/Admin-leave-History/Decline-leaves'));
 
 const employee = {
   notifications: lazy(() => import('views/dashboard/notifications/general')),
@@ -32,7 +25,7 @@ const addEmployee = {
   sendAnnouncement: lazy(() => import('views/dashboard/Anouncement/Create-announcement')),
   PaySalary: lazy(() => import('views/dashboard/payslip/pay-employee')),
   PaymentHistory: lazy(() => import('views/dashboard/payslip/payment-list')),
-  LeaveHistory: lazy(() => import('views/dashboard/Admin-leave-History/My-leaves')),
+  LeaveHistory: lazy(() => import('views/dashboard/history/My-leaves')),
   AddNewEmployee: lazy(() => import('views/dashboard/Add New Employee/index')),
   myEmployee: lazy(() => import('views/dashboard/Add New Employee/My-employees')),
   successful: lazy(() => import('views/dashboard/payslip/success-payment')),
@@ -60,6 +53,7 @@ const routesAndMenuItems = {
       label: 'Home',
       icon: 'shop',
     },
+
     {
       path: `${appRoot}/employee`,
       exact: true,
@@ -101,11 +95,10 @@ const routesAndMenuItems = {
           { path: `/successful`, component: addEmployee.successful },
           { path: `/individual-announcement`, component: addEmployee.individual },
           { path: `/send-announcement`, component: addEmployee.sendAnnouncement },
-          // { path: `/private`, component: Private },
-          { path: '/my-leaves', component: addEmployee.LeaveHistory },
-          { path: `/pending-leave`, component: adminPending },
-          { path: `/approved-leave`, component: adminApproved },
-          { path: `/decline-leave`, component: adminDeclined },
+          { path: `/private`, component: Private },
+          { path: `/pending-leave`, component: Pending },
+          { path: `/approved-leave`, component: Approved },
+          { path: `/decline-leave`, component: Declined },
         ],
       }
     )

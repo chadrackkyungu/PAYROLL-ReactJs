@@ -11,7 +11,7 @@ function LeaveModalDetails(props) {
     console.log(leaves, id);
 
     return (
-        <div>
+        <Card>
             <Row className="mb-3">
                 <Col md={6}>
                     <p className="text-primary"> <b> Leave Start Date </b> </p>
@@ -27,7 +27,7 @@ function LeaveModalDetails(props) {
             <b className="mb-2 text-primary"> Description : </b>
             <p> {leaveObj.message} </p>
 
-        </div>
+        </Card>
     )
 }
 

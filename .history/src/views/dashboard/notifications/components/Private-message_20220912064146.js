@@ -8,7 +8,6 @@ function PrivateMessage() {
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
     const [message, setMessage] = useState();
-    const urlUser = "http://localhost:5000/img/users/"
 
     const getNotification = async () => {
         const myHeaders = new Headers();
@@ -49,7 +48,7 @@ function PrivateMessage() {
                                         <Col md={2}>
                                             <div className="notification-img">
                                                 <div className="sw-10 me-1 mb-1 d-inline-block">
-                                                    <img src={`${urlUser}${details?.admin?.photo}`} className="img-fluid rounded-md" alt="" />
+                                                    <img src={details.admin.photo} className="img-fluid rounded-md" alt="" />
                                                 </div>
                                             </div>
                                         </Col>

@@ -102,7 +102,6 @@ const routesAndMenuItems = {
           { path: `/individual-announcement`, component: addEmployee.individual },
           { path: `/send-announcement`, component: addEmployee.sendAnnouncement },
           // { path: `/private`, component: Private },
-          { path: '/my-leaves', component: addEmployee.LeaveHistory },
           { path: `/pending-leave`, component: adminPending },
           { path: `/approved-leave`, component: adminApproved },
           { path: `/decline-leave`, component: adminDeclined },
