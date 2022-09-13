@@ -1,0 +1,372 @@
+/* eslint-disable prettier/prettier */
+import React, { useState, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Col, Card, Button, Form, Row } from 'react-bootstrap';
+import { useFormik } from 'formik';
+import DatePicker from 'react-datepicker'; // Date picker
+import 'react-datepicker/dist/react-datepicker.css'; // Date Style
+import Select from 'react-select';
+import CsLineIcons from 'cs-line-icons/CsLineIcons';
+import { validationSchema } from './Validation';
+import { warningMessage, successMessage } from "../../../../components/Notifications/Notifications";
+import { Logout } from "../../../../auth/authSlice"
+
+const AccountSettings = () => {
+    const urlUser = "http://localhost:5000/img/users/"
+    const urlDoc = "http://localhost:5000/img/docs/"
+    const dispatch = useDispatch();
+    const history = useHistory()
+    const { currentUser } = useSelector((state) => state.auth);
+    const token = currentUser?.token;
+    // const [thumb, setThumb] = useState(`${urlUser}${currentUser?.data?.user.photo}`);
+    const [profile, setProfile] = useState(); // Photo user profile
+    const initialstate = currentUser?.data?.user;
+
+    const initialValues = {
+        IdNumber: initialstate?.IdNumber,
+        gender: initialstate?.gender,
+        dateOfBirth: initialstate?.dateOfBirth,
+        language: initialstate?.language,
+        phoneNumber: initialstate?.phoneNumber,
+        materialStatus: initialstate?.materialStatus,
+        streetAddress: initialstate?.streetAddress,
+        city: initialstate?.city,
+        country: initialstate?.country,
+        houseNumber: initialstate?.houseNumber,
+        zipCode: initialstate?.zipCode,
+        stateProvince: initialstate?.stateProvince,
+        accountName: initialstate?.accountName,
+        accountType: initialstate?.accountType,
+        branchName: initialstate?.branchName,
+        accountNumber: initialstate?.accountNumber,
+        // photo: image === undefined ? image : thumb,
+    };
+
+
+    const onSubmit = async (values) => {
+
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${token}`);
+        // myHeaders.append("Content-Type", "application/json");
+
+        const formdata = new FormData();
+        formdata.append("IdNumber", values.IdNumber);
+        formdata.append("gender", values.gender);
+        formdata.append("dateOfBirth", values.dateOfBirth);
+        formdata.append("language", values.language);
+        formdata.append("phoneNumber", values.phoneNumber);
+        formdata.append("materialStatus", values.materialStatus);
+        formdata.append("streetAddress", values.streetAddress);
+        formdata.append("city", values.city);
+        formdata.append("country", values.country);
+        formdata.append("houseNumber", values.houseNumber);
+        formdata.append("zipCode", values.zipCode);
+        formdata.append("stateProvince", values.stateProvince);
+        formdata.append("accountName", values.accountName);
+        formdata.append("accountType", values.accountType);
+        formdata.append("branchName", values.branchName);
+        formdata.append("accountNumber", values.accountNumber);
+        formdata.append("photo", values.photo);
+
+        const requestOptions = {
+            method: 'PATCH',
+            headers: myHeaders,
+            body: formdata,
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:5000/api/v1/users/updateMe", requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                if (result.status === "success") {
+
+                    console.log("Result : ", result);
+                    window.setTimeout(() => {
+                        dispatch(Logout({
+                            thumb: '/img/profile/profile-9.webp',
+                            // role: 'admin',
+                        }))
+                    }, 3000);
+
+                    successMessage(`Successfully updated the account`)
+
+                    window.setTimeout(() => {
+                        history.push('/login');
+                    }, 3000);
+                }
+            })
+            .catch(err => warningMessage(` 🤒 ${err.response.data.message}`));
+    };
+
+    const formik = useFormik({ initialValues, validationSchema, onSubmit });
+    const { handleSubmit, handleChange, values, touched, errors, setFieldValue } = formik;
+
+    //* Photo profile
+    const refFileUpload = useRef(null);
+
+    const onThumbChangeClick = () => {
+        if (refFileUpload) {
+            refFileUpload.current.dispatchEvent(new MouseEvent('click'));
+        }
+    };
+
+    const changeThumb = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            setFieldValue("photo", event.target.files[0])
+            const reader = new FileReader();
+            reader.onload = (loadEvent) => {
+                setProfile(loadEvent.target.result);
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    };
+
+    //* Date 
+    const birthDateOnChange = (date) => {
+        setFieldValue('dateOfBirth', new Date(date));
+    }; //* End
+
+    //* Selection
+    // Gender
+    const genderOptions = [
+        { value: initialstate?.gender, label: initialstate?.gender },
+        { value: 'Male', label: 'Male' },
+        { value: 'Female', label: 'Female' },
+        { value: 'Other', label: 'Other' },
+    ];
+
+    const [genderValue, setGenderValue] = useState(genderOptions[0]);
+    const selectGenderOnChange = (selectedOption) => {
+        setFieldValue('gender', selectedOption.value);
+        setGenderValue(selectedOption);
+    }; // End
+
+    // Material Status
+    const materialOptions = [
+        { value: initialstate?.materialStatus, label: initialstate?.materialStatus },
+        { value: 'married', label: 'married' },
+        { value: 'un married', label: 'un married' },
+    ];
+    const [materialStatusValue, setMaterialStatusValue] = useState(materialOptions[0]);
+    const selectMaterialStatusOnChange = (selectedOption) => {
+        setFieldValue('materialStatus', selectedOption.value);
+        setMaterialStatusValue(selectedOption);
+    }; // End
+
+    // Account type
+    const typeOptions = [
+        { value: initialstate?.accountType, label: initialstate?.accountType },
+        { value: 'Savings', label: 'Savings' },
+        { value: 'Other', label: 'Other' },
+    ];
+    const [typeValue, setTypeValue] = useState(typeOptions[0]);
+    const selectTypeOnChange = (selectedOption) => {
+        setFieldValue('accountType', selectedOption.value);
+        setTypeValue(selectedOption);
+    }; // End
+
+    // Language
+    const languageOptions = [
+        { value: initialstate?.language, label: initialstate?.language },
+        { value: 'English', label: 'English' },
+        { value: 'Français', label: 'Français' },
+    ];
+    const [languageValue, setLanguageValue] = useState(languageOptions[0]);
+    const selectLanguageOnChange = (selectedOption) => {
+        setFieldValue('language', selectedOption.value);
+        setLanguageValue(selectedOption);
+    }; // End
+    //* Selection
+
+    return (
+        <>
+            <Form onSubmit={handleSubmit} className="d-flex flex-column tooltip-end-top">
+
+                <div className="m-3 mx-auto position-relative" id="imageUpload">
+                    <img src={profile === undefined ? `${urlUser}${currentUser?.data?.user.photo}` : profile} alt="user" className="rounded-xl border border-separator-light border-4 sw-11 sh-11" id="contactThumbModal" />
+                    <Button size="sm" variant="separator-light" className="btn-icon btn-icon-only position-absolute rounded-xl s-0 b-0"
+                        onClick={onThumbChangeClick}
+                    >
+                        <CsLineIcons icon="upload" className="text-alternate" />
+                    </Button>
+                    <Form.Control type="file" ref={refFileUpload} className="file-upload d-none" accept="image/*" onChange={changeThumb} />
+                </div>
+
+                <h5 className="mb-2 mt-2 text-primary"> Personal details </h5>
+
+                <Card>
+                    <Card.Body>
+
+                        <Row>
+                            <Col md={6}>
+                                <label htmlFor="">ID Number</label>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="user" />
+                                    <Form.Control type="text" placeholder="ID Number" name="IdNumber" value={values.IdNumber} onChange={handleChange} />
+                                    {errors.IdNumber && touched.IdNumber && <div className="error">{errors.IdNumber}</div>}
+                                </div>
+
+                                <label htmlFor="">Gender</label>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="gender" />
+                                    <Select classNamePrefix="react-select" options={genderOptions} value={genderValue} onChange={selectGenderOnChange} placeholder="Select" />
+                                    {errors.gender && touched.gender && <div className="error">{errors.gender}</div>}
+                                </div>
+
+                                <label htmlFor="">Material Status</label>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="user" />
+                                    <Select classNamePrefix="react-select" options={materialOptions} value={materialStatusValue} onChange={selectMaterialStatusOnChange} placeholder="Select" name="materialStatus" />
+                                    {errors.materialStatus && touched.materialStatus && <div className="error">{errors.materialStatus}</div>}
+                                </div>
+                            </Col>
+                            <Col md={6}>
+                                <label htmlFor="">Date of birth</label>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="calendar" />
+                                    <DatePicker className="form-control" name="dateOfBirth" selected={new Date(values.dateOfBirth)} onChange={birthDateOnChange} placeholderText="Date of birth" />
+                                    {errors.dateOfBirth && touched.dateOfBirth && <div className="error">{errors.dateOfBirth}</div>}
+                                </div>
+
+                                <label htmlFor="">Language</label>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="web" />
+                                    <Select classNamePrefix="react-select" options={languageOptions} value={languageValue} onChange={selectLanguageOnChange} name="language" />
+                                    {errors.language && touched.language && <div className="error">{errors.language}</div>}
+                                </div>
+
+                                <label htmlFor="">Phone Number</label>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="phone" />
+                                    <Form.Control type="text" placeholder="Phone Number" defaultValue="Blanch" name="phoneNumber" value={values.phoneNumber} onChange={handleChange} />
+                                    {errors.phoneNumber && touched.IdNumber && <div className="error">{errors.phoneNumber}</div>}
+                                </div>
+                            </Col>
+                        </Row>
+
+                    </Card.Body>
+                </Card>
+
+                <h5 className="mb-2 mt-2 text-primary"> Address details </h5>
+
+                <Card>
+                    <Card.Body>
+                        <Row>
+                            <Col md={6}>
+                                <label htmlFor="">Street Address</label>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="pin" />
+                                    <Form.Control type="text" placeholder="21 Doris Street" name="streetAddress" value={values.streetAddress} onChange={handleChange} />
+                                    {errors.streetAddress && touched.streetAddress && <div className="error">{errors.streetAddress}</div>}
+                                </div>
+
+                                <label htmlFor="">City</label>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="pin" />
+                                    <Form.Control type="text" placeholder="Johannesburg" defaultValue="Johannesburg" name="city" value={values.city} onChange={handleChange} />
+                                    {errors.city && touched.city && <div className="error">{errors.city}</div>}
+                                </div>
+
+                                <label htmlFor="">Country</label>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="web" />
+                                    <Form.Control type="text" placeholder="South Africa" defaultValue="South Africa" name="country" value={values.country} onChange={handleChange} />
+                                    {errors.country && touched.country && <div className="error">{errors.country}</div>}
+                                </div>
+                            </Col>
+
+                            <Col md={6}>
+                                <label htmlFor="">House Number</label>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="home-garage" />
+                                    <Form.Control type="number" placeholder="14" defaultValue="14" name="houseNumber" value={values.houseNumber} onChange={handleChange} />
+                                    {errors.houseNumber && touched.houseNumber && <div className="error">{errors.houseNumber}</div>}
+                                </div>
+
+                                <label htmlFor="">ZipCode</label>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="web" />
+                                    <Form.Control type="number" placeholder="2001" defaultValue="2001" name="zipCode" value={values.zipCode} onChange={handleChange} />
+                                    {errors.zipCode && touched.zipCode && <div className="error">{errors.zipCode}</div>}
+                                </div>
+
+                                <label htmlFor="">State / Province</label>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="web" />
+                                    <Form.Control type="text" placeholder="Gauteng" defaultValue="Gauteng" name="stateProvince" value={values.stateProvince} onChange={handleChange} />
+                                    {errors.stateProvince && touched.stateProvince && <div className="error">{errors.stateProvince}</div>}
+                                </div>
+                            </Col>
+                        </Row>
+                    </Card.Body>
+                </Card>
+
+                <h5 className="mb-2 mt-2 text-primary"> Account details </h5>
+
+                <Card>
+                    <Card.Body>
+                        <Row>
+                            <Col md={6}>
+                                <label htmlFor="">Account Name</label>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="credit-card" />
+                                    <Form.Control type="text" placeholder="Account Name" defaultValue="Blanch" name="accountName" value={values.accountName} onChange={handleChange} />
+                                    {errors.accountName && touched.accountName && <div className="error">{errors.accountName}</div>}
+                                </div>
+
+                                <label htmlFor="">Account Type</label>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="credit-card" />
+                                    <Select classNamePrefix="react-select" options={typeOptions} value={typeValue} onChange={selectTypeOnChange} placeholder="Select" name="type" />
+                                    {errors.accountType && touched.accountType && <div className="error">{errors.accountType}</div>}
+                                </div>
+                            </Col>
+
+                            <Col md={6}>
+                                <label htmlFor="">Branch Name</label>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="credit-card" />
+                                    <Form.Control type="text" placeholder="Branch Name" defaultValue="Lwazi" name="branchName" value={values.branchName} onChange={handleChange} />
+                                    {errors.branchName && touched.branchName && <div className="error">{errors.branchName}</div>}
+                                </div>
+
+                                <label htmlFor="">Account Number</label>
+                                <div className="mb-3 filled">
+                                    <CsLineIcons icon="money" />
+                                    <Form.Control type="number" placeholder="89234643452345" defaultValue="89234643452345" name="accountNumber" value={values.accountNumber} onChange={handleChange} />
+                                    {errors.accountNumber && touched.accountNumber && <div className="error">{errors.accountNumber}</div>}
+                                </div>
+                            </Col>
+                        </Row>
+                    </Card.Body>
+                </Card>
+
+
+                <h5 className=" mt-2 text-primary"> Documents Images </h5>
+                {
+                    currentUser?.data?.user?.role === "user" ?
+                        <Card className="mt-2">
+                            <div className="d-flex justify-content-between">
+                                {
+                                    currentUser?.data?.user?.uploadDocPic?.map((docImg, i) => {
+                                        return (
+                                            <div className="my-5 d-flex" key={i}>
+                                                <img src={`${urlDoc}${docImg}`} className="rounded mb-1 float-start sw-30 mx-1" alt="docs image" />
+                                            </div>
+                                        )
+
+                                    })
+                                }
+                            </div>
+                        </Card> : null
+                }
+
+
+                <Button type="submit" variant="primary mt-4 w-25">Update</Button>
+            </Form>
+        </>
+    );
+};
+
+export default AccountSettings;
