@@ -55,12 +55,9 @@ const GeneralAnnouncement = () => {
 
     if (announcement === undefined || announcement.length === 0) {
         return (
-            <>
-                <Link to="/admin/send-announcement" className="btn btn-primary  my-5"> + Send a new announcement </Link>
-                <div className="d-flex justify-content-center">
-                    <h1 className="text-danger"> You do not have any announcement yet </h1>
-                </div>
-            </>
+            <div className="d-flex justify-content-center">
+                <h1 className="text-danger"> You do not have any announcement yet </h1>
+            </div>
         )
     }
 
