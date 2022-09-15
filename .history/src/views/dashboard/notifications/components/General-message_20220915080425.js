@@ -37,12 +37,14 @@ function GeneralMessage() {
         )
     }
 
-    if (message.length === 0) {
-        return (
-            <div className="d-flex justify-content-center">
-                <h1 className="text-danger"> You do not have any notifications </h1>
-            </div>
-        )
+    console.log('====================================');
+    console.log(message);
+    console.log('====================================');
+
+    if (message.console === 0) {
+        <div className="d-flex justify-content-center">
+            <h4> You don't have any notifications </h4>
+        </div>
     }
 
     return (

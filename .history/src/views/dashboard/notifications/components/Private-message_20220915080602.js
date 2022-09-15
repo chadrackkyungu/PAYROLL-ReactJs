@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 import { Row, Col, Card, Spinner } from 'react-bootstrap';
 // import { IoIosArrowDroprightCircle } from 'react-icons/io';
 
-function GeneralMessage() {
-    const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
+function PrivateMessage() {
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
     const [message, setMessage] = useState();
+    const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
 
     const getNotification = async () => {
         const myHeaders = new Headers();
@@ -20,9 +20,9 @@ function GeneralMessage() {
             redirect: 'follow'
         };
 
-        fetch("https://polar-basin-47052.herokuapp.com/api/v1/announcements/me/general", requestOptions)
+        fetch("https://polar-basin-47052.herokuapp.com/api/v1/announcements/me", requestOptions)
             .then(response => response.json())
-            .then(result => setMessage(result.data.announce))
+            .then(result => setMessage(result.data.leaves))
             .catch(error => console.log('error', error));
     }
     useEffect(() => {
@@ -40,7 +40,7 @@ function GeneralMessage() {
     if (message.length === 0) {
         return (
             <div className="d-flex justify-content-center">
-                <h1 className="text-danger"> You do not have any notifications </h1>
+                <h1> You do not have any notifications </h1>
             </div>
         )
     }
@@ -62,19 +62,18 @@ function GeneralMessage() {
                                             </div>
                                         </Col>
                                         <Col md={10}>
-                                            <h5>  <b className="text-primary"> Category : </b> {details?.category}    </h5>
-                                            <h6> <span className="text-danger"> Author : </span>  {details?.admin?.firstName}     </h6>
+                                            <h5>  <b className="text-primary"> Category : </b> {details.category}    </h5>
+                                            <h6> <span className="text-danger"> Author : </span>  {details.admin.firstName}     </h6>
                                             <div className="notifications">
-                                                <p>  {details?.message} </p>
+                                                <p>  {details.message} </p>
                                             </div>
-                                            <h5>    Type :  {details?.types}  </h5>
+                                            <h5>    Type :  {details.types}  </h5>
                                         </Col>
                                     </Row>
                                 </Col>
 
                                 <Col md={2}>
-                                    <b> {details?.date} </b>
-                                    {/* <p className="mt-4"> <Link to="#/"> <IoIosArrowDroprightCircle size={24} />  </Link> </p> */}
+                                    <b> {details.date} </b>
                                 </Col>
                             </Row>
                         </Card>
@@ -87,4 +86,4 @@ function GeneralMessage() {
     )
 }
 
-export default GeneralMessage
+export default PrivateMessage

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
-import { Row, Col, Spinner } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
@@ -50,23 +50,6 @@ const Payslip = () => {
     }, []);
 
     const employeeDet = myEmployees?.filter(employee => employee._id === id);
-
-    if (myEmployees === undefined) {
-        return (
-            <div className="d-flex justify-content-center">
-                <Spinner animation="border" variant="primary" />
-            </div>
-        )
-    }
-
-    if (myEmployees.length === 0) {
-        return (
-            <div className="d-flex justify-content-center">
-                <h1 className="text-danger"> You have not yet paid any employees  </h1>
-            </div>
-        )
-    }
-
 
     return (
         <>

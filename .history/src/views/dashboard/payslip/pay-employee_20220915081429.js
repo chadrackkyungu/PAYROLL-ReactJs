@@ -62,7 +62,7 @@ const Payslip = () => {
     if (myEmployees.length === 0) {
         return (
             <div className="d-flex justify-content-center">
-                <h1 className="text-danger"> You have not yet paid any employees  </h1>
+                <h1 className="text-danger"> You have no employees currently </h1>
             </div>
         )
     }

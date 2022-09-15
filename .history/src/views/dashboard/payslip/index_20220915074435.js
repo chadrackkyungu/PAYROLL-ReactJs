@@ -1,26 +1,26 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import { Row, Col, Badge, Spinner } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 import { MdNotificationsActive } from 'react-icons/md';
-import { useSelector } from 'react-redux';
-import General from "./components/General"
+import PayslipDetails from './components/Payslip-details';
 
-const GeneralAnnouncement = () => {
-    const title = 'Announcement';
-    const description = 'This is an Announcement page';
-    const breadcrumbs = [{ to: '', text: 'General Announcement' }];
+const Payslip = () => {
+    const title = 'Payslip';
+    const description = 'This is a payslip page';
+    const breadcrumbs = [{ to: '', text: 'Payslip' }];
     useCustomLayout({ placement: MENU_PLACEMENT.Vertical, layout: LAYOUT.Fluid });
 
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
-    const [announcement, setAnnouncement] = useState();
+    const [paySlip, setPayslip] = useState();
 
-    const getNotification = async () => {
+    const getPayslip = async () => {
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
 
@@ -30,34 +30,19 @@ const GeneralAnnouncement = () => {
             redirect: 'follow'
         };
 
-        fetch("https://polar-basin-47052.herokuapp.com/api/v1/announcements", requestOptions)
+        fetch("https://polar-basin-47052.herokuapp.com/api/v1/payments/me", requestOptions)
             .then(response => response.json())
-            .then(result => {
-                if (result.status === 'success') {
-                    setAnnouncement(result.data.data)
-                }
-            })
+            .then(result => setPayslip(result.data.leaves))
             .catch(error => console.log('error', error));
     }
     useEffect(() => {
-        getNotification();
+        getPayslip();
     }, []);
 
-
-
-    if (announcement === undefined) {
-        return (
-            <div className="d-flex justify-content-center">
-                <Spinner animation="border" variant="primary" />
-            </div>
-        )
-    }
-
-    if (announcement.length === 0) {
-        return (
-            <div className="d-flex justify-content-center">
-                <h1 className="text-danger"> You do not have any announcement yet </h1>
-            </div>
+    if (paySlip === undefined) {
+        return (<div className="d-flex justify-content-center">
+            <Spinner animation="border" variant="primary" />
+        </div>
         )
     }
 
@@ -69,11 +54,14 @@ const GeneralAnnouncement = () => {
                     <section className="scroll-section" id="title">
                         <div className="page-title-container d-flex justify-content-between">
                             <BreadcrumbList items={breadcrumbs} />
-                            <Link to="/admin/individual-announcement" variant="primary">
-                                Individual Announcement <Badge bg="primary"> <MdNotificationsActive size={18} /> </Badge>
+                            <Link to="/employee/private" variant="primary">
+                                Private Notification <Badge bg="primary"> <MdNotificationsActive size={18} /> 3</Badge>
+                                <span className="visually-hidden">unread messages</span>
                             </Link>
                         </div>
-                        <General announcement={announcement} />
+                        <div className="align-items-center m-5">
+                            <PayslipDetails paySlipDetail={paySlip} />
+                        </div>
                     </section>
                 </Col>
             </Row>
@@ -81,4 +69,4 @@ const GeneralAnnouncement = () => {
     );
 };
 
-export default GeneralAnnouncement;
+export default Payslip;

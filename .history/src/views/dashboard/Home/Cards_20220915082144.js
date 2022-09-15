@@ -2,7 +2,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { Card, Col, Row } from 'react-bootstrap';
+import { Card, Col, Row, Spinner } from 'react-bootstrap';
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
 
 const Cards = ({ total, monthlySalary, overTimePrevMonth }) => {

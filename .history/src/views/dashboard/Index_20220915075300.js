@@ -22,13 +22,6 @@ const Dashboard = () => {
     useCustomLayout({ placement: MENU_PLACEMENT.Vertical, layout: LAYOUT.Fluid });
 
     const { currentUser } = useSelector((state) => state.auth);
-
-    if (currentUser === undefined) {
-        return <div className="d-flex justify-content-center">
-            <Spinner animation="border" variant="primary" />
-        </div>
-    }
-
     const token = currentUser?.token;
     const userRole = currentUser?.data?.user?.role;
     const [payment, setPayment] = useState();

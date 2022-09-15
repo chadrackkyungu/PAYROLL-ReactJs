@@ -137,13 +137,7 @@ const Employees = () => {
         )
     }
 
-    if (payment.length === 0) {
-        return (
-            <div className="d-flex justify-content-center">
-                <h1 className="text-danger"> You have not yet paid any employees  </h1>
-            </div>
-        )
-    }
+
 
     return (
         <>

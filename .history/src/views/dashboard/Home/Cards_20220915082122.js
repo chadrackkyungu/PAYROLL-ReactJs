@@ -2,10 +2,18 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { Card, Col, Row } from 'react-bootstrap';
+import { Card, Col, Row, Spinner } from 'react-bootstrap';
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
 
 const Cards = ({ total, monthlySalary, overTimePrevMonth }) => {
+
+    if (total === undefined || monthlySalary === undefined || overTimePrevMonth === undefined) {
+        return <div className="d-flex justify-content-center">
+            <Spinner animation="border" variant="primary" />
+        </div>
+    }
+
+
 
     const totalPay = Math.abs(total) > 999 ? Math.sign(total) * ((Math.abs(total) / 1000).toFixed(1)) + 'k' : Math.sign(total) * Math.abs(total)
 

@@ -3,7 +3,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Row, Col, Card, Spinner } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
@@ -22,13 +22,6 @@ const Dashboard = () => {
     useCustomLayout({ placement: MENU_PLACEMENT.Vertical, layout: LAYOUT.Fluid });
 
     const { currentUser } = useSelector((state) => state.auth);
-
-    if (currentUser === undefined) {
-        return <div className="d-flex justify-content-center">
-            <Spinner animation="border" variant="primary" />
-        </div>
-    }
-
     const token = currentUser?.token;
     const userRole = currentUser?.data?.user?.role;
     const [payment, setPayment] = useState();
@@ -58,9 +51,7 @@ const Dashboard = () => {
     }, []);
 
     if (payment === undefined) {
-        return <div className="d-flex justify-content-center">
-            <Spinner animation="border" variant="primary" />
-        </div>
+
     }
 
     const salary = payment?.map(pay => pay?.salaryAmount)
