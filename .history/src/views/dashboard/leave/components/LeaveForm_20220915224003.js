@@ -1,7 +1,6 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Button, Form, Col, Row, Spinner } from 'react-bootstrap';
 import { useFormik } from 'formik';
@@ -13,7 +12,7 @@ import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import { warningMessage, successSubmitLeave } from "../../../../components/Notifications/Notifications";
 
 function LeaveForm() {
-    const history = useHistory()
+
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
     const [btnLoad, setBtnLoad] = useState(false)
@@ -55,9 +54,6 @@ function LeaveForm() {
                 if (res.status === 'success') {
                     setBtnLoad(false)
                     successSubmitLeave(` Successfully submit a leave 🍺👏`)
-                    window.setTimeout(() => {
-                        history.push('/employee/my-leaves');
-                    }, 4000);
                 }
             })
             .catch(err => {

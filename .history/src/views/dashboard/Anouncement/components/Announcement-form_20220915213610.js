@@ -2,7 +2,6 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Button, Form, Row, Card, Col, Spinner } from 'react-bootstrap';
 import { useFormik } from 'formik';
@@ -14,7 +13,6 @@ import { warningMessage, successMessage } from "../../../../components/Notificat
 
 function UpdatePaymentForm() {
 
-    const history = useHistory()
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
     const [users, setUsers] = useState()
@@ -95,11 +93,6 @@ function UpdatePaymentForm() {
                 if (res.status === 'success') {
                     setBtnLoad(false)
                     successMessage(`You have successful send an announcement`)
-
-                    window.setTimeout(() => {
-                        history.push('/Admin/announcement');
-                    }, 4000);
-
                 }
                 if (res.status === 'error') {
                     setBtnLoad(false)
@@ -200,7 +193,7 @@ function UpdatePaymentForm() {
                                 <Button type="submit" variant="primary">
                                     <span className="me-2">Send</span>
                                     {
-                                        !btnLoad ? <CsLineIcons icon="send" size="18" /> : <Spinner as="span" animation="border" size="sm" />
+                                        !btnLoad ? <CsLineIcons icon="send" size="sm" /> : <Spinner as="span" animation="border" size="sm" />
                                     }
 
                                 </Button>

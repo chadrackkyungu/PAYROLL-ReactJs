@@ -36,7 +36,11 @@ function Individual({ announcement }) {
             .then(result => {
                 if (result.status === 'success') {
                     successMessage(`You have successful deleted this announcement`)
-                    window.location.reload();
+
+                    window.setTimeout(() => {
+                        window.location.reload();
+                    }, 4000);
+
                 }
                 if (result.status === 'fail') {
                     successMessage(`You have successful deleted this announcement`)

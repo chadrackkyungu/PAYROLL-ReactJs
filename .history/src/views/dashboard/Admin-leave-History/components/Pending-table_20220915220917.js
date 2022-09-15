@@ -38,9 +38,6 @@ function PendingTable(props) {
             .then(result => {
                 if (result.status === "success") {
                     successSubmitLeave(`You have successful approved this leave`)
-                    window.setTimeout(() => {
-                        window.location.reload();
-                    }, 4000);
                 }
                 if (result.status === "fail") {
                     warningMessage(`This leave couldn't be approved`)
@@ -146,8 +143,7 @@ function PendingTable(props) {
                                                 setLeaveId(leave.id);
                                             }
                                         }}
-                                    > {leave.status === "pending" ? "Declined" : "no action"}
-                                        <CsLineIcons icon="close" size="12" /> </Badge>
+                                    > {leave.status === "pending" ? "Declined" : "no action"} <CsLineIcons icon="close" size="12" /> </Badge>
                                 </td>
 
                             </tr>

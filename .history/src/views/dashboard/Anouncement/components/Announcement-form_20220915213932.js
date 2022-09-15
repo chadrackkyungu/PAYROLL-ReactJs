@@ -98,8 +98,7 @@ function UpdatePaymentForm() {
 
                     window.setTimeout(() => {
                         history.push('/Admin/announcement');
-                    }, 4000);
-
+                    }, 5000);
                 }
                 if (res.status === 'error') {
                     setBtnLoad(false)

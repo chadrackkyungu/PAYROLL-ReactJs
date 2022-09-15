@@ -150,10 +150,6 @@ const WizardBasic = () => {
                 if (result.status === "success") {
                     successSubmitLeave(`Successfully Added the employee!!`)
                     setBtnLoad(false)
-
-                    window.setTimeout(() => {
-                        history.push('/Admin/add-employee')
-                    }, 4000);
                 }
                 if (result.status === "fail") {
                     setBtnLoad(false)
@@ -588,7 +584,7 @@ const WizardBasic = () => {
                                 <Button type="submit" variant="primary" className="btn-icon btn-icon-end">
                                     <span className="me-2">Submit</span>
                                     {
-                                        !btnLoad ? <CsLineIcons icon="arrow-right" /> : <Spinner as="span" animation="border" size="sm" />
+                                        btnLoad ? <CsLineIcons icon="arrow-right" /> : <Spinner as="span" animation="border" size="sm" />
                                     }
 
                                 </Button>

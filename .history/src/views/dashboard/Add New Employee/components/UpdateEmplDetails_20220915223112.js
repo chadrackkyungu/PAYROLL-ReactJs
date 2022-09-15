@@ -3,7 +3,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { Col, Button, Form, Row, Spinner } from 'react-bootstrap';
+import { Col, Button, Form, Row } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import DatePicker from 'react-datepicker'; // Date picker
 import 'react-datepicker/dist/react-datepicker.css'; // Date Style
@@ -106,11 +106,6 @@ const UpdateUserDetails = ({ details }) => {
                 if (result.status === "success") {
                     setBtnLoad(false)
                     successSubmitLeave(`Successfully updated the employee details !!`)
-
-                    window.setTimeout(() => {
-                        window.location.reload();
-                    }, 4000);
-
                 }
                 if (result.status === "error") {
                     setBtnLoad(false)
@@ -472,10 +467,10 @@ const UpdateUserDetails = ({ details }) => {
                 <br />
                 <br />
                 <Button type="submit" variant="primary" className="btn-icon btn-icon-end">
-                    <span className="me-2">Update user info</span>
+                    <span>Update user info</span>
 
                     {
-                        !btnLoad ? <CsLineIcons icon="arrow-right" /> : <Spinner as="span" animation="border" size="sm" />
+                        !btnLoad ? <CsLineIcons icon="send" size="18" /> : <Spinner as="span" animation="border" size="sm" />
                     }
 
                 </Button>

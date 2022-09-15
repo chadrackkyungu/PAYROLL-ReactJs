@@ -1,14 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Row, Col, Card, Badge, Button, Modal } from 'react-bootstrap';
+import { Row, Col, Card, Badge, Button, Modal, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { successMessage } from "../../../../components/Notifications/Notifications";
 
-function Individual({ announcement }) {
+function General({ announcement }) {
+    const history = useHistory()
     const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
-
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
 
@@ -36,7 +37,7 @@ function Individual({ announcement }) {
             .then(result => {
                 if (result.status === 'success') {
                     successMessage(`You have successful deleted this announcement`)
-                    window.location.reload();
+                    history.go(0);
                 }
                 if (result.status === 'fail') {
                     successMessage(`You have successful deleted this announcement`)
@@ -47,6 +48,9 @@ function Individual({ announcement }) {
         setSmExample(false)
         successMessage(`You have successful deleted this announcement`)
     }
+
+
+
 
     return (
         <div>
@@ -86,15 +90,6 @@ function Individual({ announcement }) {
                                     <b> {details?.date} </b>
                                 </Col>
                             </Row>
-
-                            <div className="mt-5 d-flex">
-                                <div className="sw-10 me-1 mb-1 d-inline-block">
-                                    <img src={`${urlUser}${details?.user?.photo}`} className="img-fluid rounded-md" alt="" />
-                                </div>
-                                <h6> <span className="text-danger m-3"> To Employee : </span> {details?.user?.firstName}   {details?.user?.lastName}  </h6>
-                            </div>
-
-
                             <div className="d-flex justify-content-end">
                                 {/* <Badge bg="outline-primary" className="me-3 cursor-pointer">Edit</Badge> */}
                                 <Badge bg="outline-danger" className="cursor-pointer"
@@ -108,6 +103,7 @@ function Individual({ announcement }) {
                     )
                 }
                 )
+
             }
 
             <Modal show={smExample} onHide={() => setSmExample(false)} size="sm">
@@ -123,4 +119,4 @@ function Individual({ announcement }) {
     )
 }
 
-export default Individual
+export default General

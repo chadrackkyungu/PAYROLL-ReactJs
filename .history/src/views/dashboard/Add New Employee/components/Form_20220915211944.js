@@ -150,24 +150,15 @@ const WizardBasic = () => {
                 if (result.status === "success") {
                     successSubmitLeave(`Successfully Added the employee!!`)
                     setBtnLoad(false)
-
-                    window.setTimeout(() => {
-                        history.push('/Admin/add-employee')
-                    }, 4000);
                 }
                 if (result.status === "fail") {
-                    setBtnLoad(false)
                     successSubmitLeave(`You do not have permission to add an employee`)
                 }
                 if (result.status === "error") {
-                    setBtnLoad(false)
                     warningMessage(`${result.status.message}`)
                 }
             })
-            .catch(err => {
-                setBtnLoad(false)
-                warningMessage(` 🤒 ${err.response.data.message}`)
-            });
+            .catch(err => warningMessage(` 🤒 ${err.response.data.message}`));
     };
 
     const formik = useFormik({ initialValues, validationSchema, onSubmit });
@@ -588,7 +579,7 @@ const WizardBasic = () => {
                                 <Button type="submit" variant="primary" className="btn-icon btn-icon-end">
                                     <span className="me-2">Submit</span>
                                     {
-                                        !btnLoad ? <CsLineIcons icon="arrow-right" /> : <Spinner as="span" animation="border" size="sm" />
+                                        btnLoad ? <CsLineIcons icon="arrow-right" /> : <Spinner as="span" animation="border" size="sm" />
                                     }
 
                                 </Button>

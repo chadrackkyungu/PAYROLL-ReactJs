@@ -65,8 +65,8 @@ function UpdatePaymentForm({ details }) {
                     successMessage(`Successful Update Payments `)
 
                     window.setTimeout(() => {
-                        window.location.reload();
-                    }, 4000);
+                        history.push('/Admin/payment-history');
+                    }, 4000)
                 }
                 if (res.status === 'fail') {
                     setBtnLoad(false);

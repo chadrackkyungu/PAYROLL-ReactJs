@@ -146,8 +146,7 @@ function PendingTable(props) {
                                                 setLeaveId(leave.id);
                                             }
                                         }}
-                                    > {leave.status === "pending" ? "Declined" : "no action"}
-                                        <CsLineIcons icon="close" size="12" /> </Badge>
+                                    > {leave.status === "pending" ? "Declined" : "no action"} <CsLineIcons icon="close" size="12" /> </Badge>
                                 </td>
 
                             </tr>

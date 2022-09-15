@@ -55,21 +55,16 @@ function PaymentForm({ employeeDetails }) {
             .then(res => {
                 if (res.status === 'success') {
                     successMessage(`Successfully Payment`)
-                    setBtnLoad(false);
 
                     window.setTimeout(() => {
                         history.push('/Admin/successful')
                     }, 3000);
                 }
                 if (res.status === 'fail') {
-                    setBtnLoad(false);
                     warningMessage(`Payment Was not completed successfully`)
                 }
             })
-            .catch(err => {
-                setBtnLoad(false);
-                warningMessage(` 🤒 ${err.response.data.message}`)
-            })
+            .catch(err => warningMessage(` 🤒 ${err.response.data.message}`))
     }
 
     const formik = useFormik({ initialValues, validationSchema, onSubmit });

@@ -27,7 +27,7 @@ const WizardBasic = () => {
     const [doc1, setDoc1] = useState(); // Photo document 1
     const [doc2, setDoc2] = useState(); // Photo document 2
     const [doc3, setDoc3] = useState(); // Photo document 3
-    const [btnLoad, setBtnLoad] = useState(false)
+    const [btnLoad, setBtnLoad] = useState(true)
 
 
     const onClickNext = (goToNext, steps, step) => {
@@ -102,7 +102,7 @@ const WizardBasic = () => {
 
     const onSubmit = async (values) => {
 
-        setBtnLoad(true)
+        console.log(values);
 
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
@@ -149,25 +149,15 @@ const WizardBasic = () => {
             .then(result => {
                 if (result.status === "success") {
                     successSubmitLeave(`Successfully Added the employee!!`)
-                    setBtnLoad(false)
-
-                    window.setTimeout(() => {
-                        history.push('/Admin/add-employee')
-                    }, 4000);
                 }
                 if (result.status === "fail") {
-                    setBtnLoad(false)
                     successSubmitLeave(`You do not have permission to add an employee`)
                 }
                 if (result.status === "error") {
-                    setBtnLoad(false)
                     warningMessage(`${result.status.message}`)
                 }
             })
-            .catch(err => {
-                setBtnLoad(false)
-                warningMessage(` 🤒 ${err.response.data.message}`)
-            });
+            .catch(err => warningMessage(` 🤒 ${err.response.data.message}`));
     };
 
     const formik = useFormik({ initialValues, validationSchema, onSubmit });
@@ -586,9 +576,9 @@ const WizardBasic = () => {
                                 </Row>
 
                                 <Button type="submit" variant="primary" className="btn-icon btn-icon-end">
-                                    <span className="me-2">Submit</span>
+                                    <span>Submit</span>
                                     {
-                                        !btnLoad ? <CsLineIcons icon="arrow-right" /> : <Spinner as="span" animation="border" size="sm" />
+                                        btnLoad ? <CsLineIcons icon="arrow-right" /> : <Spinner as="span" animation="border" size="sm" />
                                     }
 
                                 </Button>

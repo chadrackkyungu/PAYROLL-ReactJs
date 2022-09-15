@@ -106,11 +106,6 @@ const UpdateUserDetails = ({ details }) => {
                 if (result.status === "success") {
                     setBtnLoad(false)
                     successSubmitLeave(`Successfully updated the employee details !!`)
-
-                    window.setTimeout(() => {
-                        window.location.reload();
-                    }, 4000);
-
                 }
                 if (result.status === "error") {
                     setBtnLoad(false)

@@ -1,9 +1,10 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 import React, { useRef, useState } from 'react';
+import classNames from 'classnames';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Col, Button, Form, Row, Spinner } from 'react-bootstrap';
+import { Col, Button, Form, Row, Spinner, Card } from 'react-bootstrap';
 import { Wizard, Steps, Step, WithWizard } from 'react-albus';
 import { useFormik } from 'formik';
 import DatePicker from 'react-datepicker'; // Date picker
@@ -28,6 +29,14 @@ const WizardBasic = () => {
     const [doc2, setDoc2] = useState(); // Photo document 2
     const [doc3, setDoc3] = useState(); // Photo document 3
     const [btnLoad, setBtnLoad] = useState(false)
+
+    const [cardLoading, setCardLoading] = useState(false);
+    const addCardOverlaySpinner = () => {
+        setCardLoading(true);
+        setTimeout(() => {
+            setCardLoading(false);
+        }, 3000);
+    };
 
 
     const onClickNext = (goToNext, steps, step) => {
@@ -150,10 +159,6 @@ const WizardBasic = () => {
                 if (result.status === "success") {
                     successSubmitLeave(`Successfully Added the employee!!`)
                     setBtnLoad(false)
-
-                    window.setTimeout(() => {
-                        history.push('/Admin/add-employee')
-                    }, 4000);
                 }
                 if (result.status === "fail") {
                     setBtnLoad(false)
@@ -585,13 +590,28 @@ const WizardBasic = () => {
 
                                 </Row>
 
-                                <Button type="submit" variant="primary" className="btn-icon btn-icon-end">
+                                {/* <Button type="submit" variant="primary" className="btn-icon btn-icon-end">
                                     <span className="me-2">Submit</span>
                                     {
                                         !btnLoad ? <CsLineIcons icon="arrow-right" /> : <Spinner as="span" animation="border" size="sm" />
                                     }
 
-                                </Button>
+                                </Button> */}
+
+                                <section className="scroll-section" id="cardOverlaySpinner">
+                                    <h2 className="small-title">Card Overlay Spinner</h2>
+                                    <Card
+                                        body
+                                        className={classNames('mb-5', {
+                                            'overlay-spinner': cardLoading,
+                                        })}
+                                    >
+                                        <p>Below button will add a border spinner as an overlay to the parent card and it will be removed in 3 seconds.</p>
+                                        <Button type="submit" variant="primary" className="btn-icon btn-icon-end" onClick={addCardOverlaySpinner}>
+                                            Submit
+                                        </Button>
+                                    </Card>
+                                </section>
 
                             </div>
                         </Step>

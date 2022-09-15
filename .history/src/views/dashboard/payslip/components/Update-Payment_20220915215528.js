@@ -2,7 +2,6 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Button, Form, Row, Card, Spinner } from 'react-bootstrap';
 import { useFormik } from 'formik';
@@ -13,7 +12,6 @@ import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import { warningMessage, successMessage } from "../../../../components/Notifications/Notifications";
 
 function UpdatePaymentForm({ details }) {
-    const history = useHistory()
     const urlReceipt = "https://polar-basin-47052.herokuapp.com/img/recept/";
 
     const { currentUser } = useSelector((state) => state.auth);
@@ -63,10 +61,6 @@ function UpdatePaymentForm({ details }) {
                 if (res.status === 'success') {
                     setBtnLoad(false);
                     successMessage(`Successful Update Payments `)
-
-                    window.setTimeout(() => {
-                        window.location.reload();
-                    }, 4000);
                 }
                 if (res.status === 'fail') {
                     setBtnLoad(false);
@@ -148,7 +142,7 @@ function UpdatePaymentForm({ details }) {
                                 <Button type="submit" variant="primary">
                                     <span className="me-2">Update</span>
                                     {
-                                        !btnLoad ? <CsLineIcons icon="arrow-right" /> : <Spinner as="span" animation="border" size="sm" />
+                                        !btnLoad ? <CsLineIcons icon="send" size="18" /> : <Spinner as="span" animation="border" size="sm" />
                                     }
 
                                 </Button>

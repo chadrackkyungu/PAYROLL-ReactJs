@@ -4,7 +4,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
-import { Badge, Card, Modal, Button } from 'react-bootstrap';
+import { Badge, Card, Modal, Button, Spinner } from 'react-bootstrap';
 import { warningMessage, successSubmitLeave } from "../../../../components/Notifications/Notifications";
 
 function PendingTable(props) {
@@ -14,7 +14,7 @@ function PendingTable(props) {
     const [rightModalExample, setRightModalExample] = useState(false);
     const [declineModal, setDeclineModal] = useState(false);
     const [leaveId, setLeaveId] = useState();
-
+    const [btnLoad, setBtnLoad] = useState(false)
 
     //* Approved
     const ApprovedLeave = () => {
@@ -56,6 +56,9 @@ function PendingTable(props) {
 
     //* Declined
     const DeclinedLeave = () => {
+
+        setBtnLoad(true)
+
         const myHeader = new Headers();
         myHeader.append("Authorization", `Bearer ${token}`);
         myHeader.append("Content-Type", "application/json");
@@ -75,16 +78,19 @@ function PendingTable(props) {
             .then(response => response.json())
             .then(result => {
                 if (result.status === "success") {
+                    setBtnLoad(false)
                     successSubmitLeave(`This leave was successful declined`)
                     window.setTimeout(() => {
                         window.location.reload();
                     }, 4000);
                 }
                 if (result.status === "fail") {
+                    setBtnLoad(false)
                     warningMessage(`This leave couldn't be declined`)
                 }
             })
             .catch(err => {
+                setBtnLoad(false)
                 warningMessage(` 🤒 ${err.response}`)
             });
 
@@ -147,7 +153,18 @@ function PendingTable(props) {
                                             }
                                         }}
                                     > {leave.status === "pending" ? "Declined" : "no action"}
-                                        <CsLineIcons icon="close" size="12" /> </Badge>
+
+
+
+                                        {
+                                            !btnLoad ? <CsLineIcons icon="close" size="12" /> : <Spinner as="span" animation="border" size="sm" />
+                                        }
+
+
+                                    </Badge>
+
+
+
                                 </td>
 
                             </tr>

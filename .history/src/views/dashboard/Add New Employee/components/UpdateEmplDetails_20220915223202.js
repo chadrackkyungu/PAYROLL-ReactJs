@@ -106,11 +106,6 @@ const UpdateUserDetails = ({ details }) => {
                 if (result.status === "success") {
                     setBtnLoad(false)
                     successSubmitLeave(`Successfully updated the employee details !!`)
-
-                    window.setTimeout(() => {
-                        window.location.reload();
-                    }, 4000);
-
                 }
                 if (result.status === "error") {
                     setBtnLoad(false)
@@ -472,7 +467,7 @@ const UpdateUserDetails = ({ details }) => {
                 <br />
                 <br />
                 <Button type="submit" variant="primary" className="btn-icon btn-icon-end">
-                    <span className="me-2">Update user info</span>
+                    <span>Update user info</span>
 
                     {
                         !btnLoad ? <CsLineIcons icon="arrow-right" /> : <Spinner as="span" animation="border" size="sm" />
