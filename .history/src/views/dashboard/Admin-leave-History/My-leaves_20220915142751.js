@@ -10,12 +10,14 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import "./my-leaves.css";
+import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { Row, Col, Badge, Card, Modal, Button, Spinner } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
+import { MdNotificationsActive } from 'react-icons/md';
 import Cards from "./components/Cards"
 import LeaveModalDetails from "./components/Leave-modal-details";
 import { warningMessage, successSubmitLeave } from "../../../components/Notifications/Notifications";

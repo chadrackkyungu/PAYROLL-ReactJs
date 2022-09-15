@@ -44,7 +44,7 @@ const Pending = () => {
 
     useEffect(() => {
         const pending = () => {
-            fetch(`https://polar-basin-47052.herokuapp.com/api/v1/leaves/${id}/status/pending`, requestOptions)
+            fetch(`https://polar-basin-47052.herokuapp.com/api/v1/leaves/status/pending`, requestOptions)
                 .then(response => response.json())
                 .then(result => setPendingLeave(result.data.leaves))
                 .catch(error => console.log('error', error));

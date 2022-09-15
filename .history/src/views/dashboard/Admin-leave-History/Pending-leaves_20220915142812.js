@@ -44,7 +44,7 @@ const Pending = () => {
 
     useEffect(() => {
         const pending = () => {
-            fetch(`https://polar-basin-47052.herokuapp.com/api/v1/leaves/${id}/status/pending`, requestOptions)
+            fetch(`https://polar-basin-47052.herokuapp.com/api/v1/leaves/status/pending`, requestOptions)
                 .then(response => response.json())
                 .then(result => setPendingLeave(result.data.leaves))
                 .catch(error => console.log('error', error));
@@ -64,10 +64,6 @@ const Pending = () => {
                     <section className="scroll-section" id="title">
                         <div className="page-title-container d-flex justify-content-between">
                             <BreadcrumbList items={breadcrumbs} />
-                            <Link to="/employee/pending-leave" variant="primary">
-                                Private Notification <Badge bg="primary"> <MdNotificationsActive size={18} /> </Badge>
-                                <span className="visually-hidden">unread messages</span>
-                            </Link>
                         </div>
 
                         <Cards />

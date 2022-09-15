@@ -1,3 +1,4 @@
+/* eslint-disable no-unneeded-ternary */
 /* eslint-disable consistent-return */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/self-closing-comp */
@@ -8,9 +9,9 @@
 /* eslint-disable react/jsx-curly-brace-presence */
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
-import "./pending.css";
-import { useSelector } from 'react-redux';
+import "./decline.css";
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import { Row, Col, Badge } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
@@ -18,20 +19,19 @@ import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
 import { MdNotificationsActive } from 'react-icons/md';
 import Cards from "./components/Cards"
-import PendingTable from "./components/Pending-table"
+import DeclineTable from "./components/Decline-table";
 
-
-const Pending = () => {
+const Declined = () => {
     const { currentUser } = useSelector((state) => state.auth);
-
-    const id = currentUser.data?.user._id;
-    const token = currentUser?.token;
 
     const title = 'My Leaves';
     const description = 'This is a History page';
     const breadcrumbs = [{ to: '', text: 'My Leaves' }];
     useCustomLayout({ placement: MENU_PLACEMENT.Vertical, layout: LAYOUT.Fluid });
-    const [pendingLeave, setPendingLeave] = useState()
+
+    const id = currentUser.data?.user._id;
+    const token = currentUser?.token;
+    const [declineLeave, setDeclineLeave] = useState()
 
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -43,18 +43,14 @@ const Pending = () => {
     };
 
     useEffect(() => {
-        const pending = () => {
-            fetch(`https://polar-basin-47052.herokuapp.com/api/v1/leaves/${id}/status/pending`, requestOptions)
+        const approved = () => {
+            fetch(`https://polar-basin-47052.herokuapp.com/api/v1/leaves/status/decline`, requestOptions)
                 .then(response => response.json())
-                .then(result => setPendingLeave(result.data.leaves))
+                .then(result => setDeclineLeave(result.data.leaves))
                 .catch(error => console.log('error', error));
         }
-        pending();
+        approved();
     }, []);
-
-    // const newArray = pendingLeave?.filter(obj => {
-    //     return delete obj.message
-    // });
 
     return (
         <>
@@ -71,7 +67,8 @@ const Pending = () => {
                         </div>
 
                         <Cards />
-                        <PendingTable data={pendingLeave} />
+
+                        <DeclineTable data={declineLeave} />
 
                     </section>
                 </Col>
@@ -80,7 +77,7 @@ const Pending = () => {
     );
 };
 
-export default Pending;
+export default Declined;
 
 
 
