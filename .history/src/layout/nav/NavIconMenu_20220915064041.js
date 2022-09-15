@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
@@ -64,11 +63,7 @@ const NavIconMenu = () => {
             <CsLineIcons icon="light-off" size="18" className="dark" />
           </a>
         </li>
-
-        {/* This is for the Icon Notifications belt */}
         {/* <IconMenuNotifications /> */}
-
-
       </ul>
       <SearchModal show={showSearchModal} setShow={setShowSearchModal} />
     </>

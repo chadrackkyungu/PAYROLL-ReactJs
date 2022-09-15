@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
@@ -15,7 +14,7 @@ const OptionGroup = ({ label = '', children, noContainer = false }) => (
     {noContainer ? children : <div className="row d-flex g-3 justify-content-between flex-wrap mb-3">{children}</div>}
   </div>
 );
-const OptionItem = ({ label = '', className = 'w-50', active = false, onClick = () => { }, children }) => (
+const OptionItem = ({ label = '', className = 'w-50', active = false, onClick = () => {}, children }) => (
   <div onClick={onClick} className={classNames('cursor-pointer flex-grow-1 option col', className, { active })}>
     {children}
     <div className="text-muted text-part">
@@ -69,9 +68,7 @@ const SettingsModal = ({ handleClose, show = false }) => {
                     </Card>
                   </OptionItem>
                 </div>
-
-
-                {/* <div className="row d-flex g-3 justify-content-between flex-wrap mb-3">
+                <div className="row d-flex g-3 justify-content-between flex-wrap mb-3">
                   <OptionItem
                     label="LIGHT GREEN"
                     active={color === THEME_COLOR.LightGreen}
@@ -90,11 +87,8 @@ const SettingsModal = ({ handleClose, show = false }) => {
                       <div className="green-dark" />
                     </Card>
                   </OptionItem>
-                </div> */}
-
-
-
-                {/* <div className="row d-flex g-3 justify-content-between flex-wrap mb-3">
+                </div>
+                <div className="row d-flex g-3 justify-content-between flex-wrap mb-3">
                   <OptionItem
                     label="LIGHT PINK"
                     active={color === THEME_COLOR.LightPink}
@@ -109,10 +103,8 @@ const SettingsModal = ({ handleClose, show = false }) => {
                       <div className="pink-dark" />
                     </Card>
                   </OptionItem>
-                </div> */}
-
-
-                {/* <div className="row d-flex g-3 justify-content-between flex-wrap mb-3">
+                </div>
+                <div className="row d-flex g-3 justify-content-between flex-wrap mb-3">
                   <OptionItem
                     label="LIGHT PURPLE"
                     className="w-50"
@@ -132,10 +124,8 @@ const SettingsModal = ({ handleClose, show = false }) => {
                       <div className="purple-dark" />
                     </Card>
                   </OptionItem>
-                </div> */}
-
-
-                {/* <div className="row d-flex g-3 justify-content-between flex-wrap mb-3">
+                </div>
+                <div className="row d-flex g-3 justify-content-between flex-wrap mb-3">
                   <OptionItem label="LIGHT RED" active={color === THEME_COLOR.LightRed} onClick={() => handleChange(settingsChangeColor, THEME_COLOR.LightRed)}>
                     <Card className="rounded-md p-3 mb-1 no-shadow color">
                       <div className="red-light" />
@@ -146,14 +136,10 @@ const SettingsModal = ({ handleClose, show = false }) => {
                       <div className="red-dark" />
                     </Card>
                   </OptionItem>
-                </div> */}
-
-
+                </div>
               </>
             </OptionGroup>
-
-
-            {/* <OptionGroup label="Override Nav Palette">
+            <OptionGroup label="Override Nav Palette">
               <>
                 <OptionItem
                   label="DEFAULT"
@@ -189,12 +175,8 @@ const SettingsModal = ({ handleClose, show = false }) => {
                   </Card>
                 </OptionItem>
               </>
-            </OptionGroup> */}
-
-
-
-
-            {/* <OptionGroup label="Menu Placement">
+            </OptionGroup>
+            <OptionGroup label="Menu Placement">
               <>
                 <OptionItem
                   label="HORIZONTAL"
@@ -217,11 +199,8 @@ const SettingsModal = ({ handleClose, show = false }) => {
                   </Card>
                 </OptionItem>
               </>
-            </OptionGroup> */}
-
-
-
-            {/* <OptionGroup label="Menu Behaviour">
+            </OptionGroup>
+            <OptionGroup label="Menu Behaviour">
               <>
                 <OptionItem
                   label="PINNED"
@@ -244,11 +223,8 @@ const SettingsModal = ({ handleClose, show = false }) => {
                   </Card>
                 </OptionItem>
               </>
-            </OptionGroup> */}
-
-
-
-            {/* <OptionGroup label="Layout">
+            </OptionGroup>
+            <OptionGroup label="Layout">
               <>
                 <OptionItem label="FLUID" active={layout === LAYOUT.Fluid} onClick={() => handleChange(settingsChangeLayout, LAYOUT.Fluid)}>
                   <Card className="rounded-md p-3 mb-1 no-shadow">
@@ -263,9 +239,7 @@ const SettingsModal = ({ handleClose, show = false }) => {
                   </Card>
                 </OptionItem>
               </>
-            </OptionGroup> */}
-
-
+            </OptionGroup>
             <OptionGroup label="Radius">
               <>
                 <OptionItem
@@ -298,9 +272,6 @@ const SettingsModal = ({ handleClose, show = false }) => {
                 </OptionItem>
               </>
             </OptionGroup>
-
-
-
           </OverlayScrollbarsComponent>
         </Modal.Body>
       </Modal>

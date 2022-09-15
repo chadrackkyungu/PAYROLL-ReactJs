@@ -3,15 +3,13 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { Card, Col, Row, Spinner } from 'react-bootstrap';
+import { Card, Col, Row } from 'react-bootstrap';
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
 
 const AdminCards = ({ total, totalYearSal, totalYearOver, total_Monthly_Salary_Overtime, total_Monthly_Salary, total_Monthly_Overtime }) => {
 
     if (total === undefined || totalYearSal === undefined || totalYearOver === undefined || totalYearSal === undefined || total_Monthly_Salary_Overtime === undefined || total_Monthly_Salary_Overtime === undefined || total_Monthly_Salary === undefined || total_Monthly_Overtime === undefined) {
-        return <div className="d-flex justify-content-center">
-            <Spinner animation="border" variant="primary" />
-        </div>
+        return <> ... </>
     }
 
     const totalPay = Math.abs(total) > 999 ? Math.sign(total) * ((Math.abs(total) / 1000).toFixed(1)) + 'k' : Math.sign(total) * Math.abs(total)

@@ -248,7 +248,7 @@ const SettingsModal = ({ handleClose, show = false }) => {
 
 
 
-            {/* <OptionGroup label="Layout">
+            <OptionGroup label="Layout">
               <>
                 <OptionItem label="FLUID" active={layout === LAYOUT.Fluid} onClick={() => handleChange(settingsChangeLayout, LAYOUT.Fluid)}>
                   <Card className="rounded-md p-3 mb-1 no-shadow">
@@ -263,9 +263,7 @@ const SettingsModal = ({ handleClose, show = false }) => {
                   </Card>
                 </OptionItem>
               </>
-            </OptionGroup> */}
-
-
+            </OptionGroup>
             <OptionGroup label="Radius">
               <>
                 <OptionItem
@@ -298,9 +296,6 @@ const SettingsModal = ({ handleClose, show = false }) => {
                 </OptionItem>
               </>
             </OptionGroup>
-
-
-
           </OverlayScrollbarsComponent>
         </Modal.Body>
       </Modal>

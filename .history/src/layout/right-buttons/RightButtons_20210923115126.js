@@ -34,7 +34,7 @@ const RightButtons = () => {
           </Button>
         </OverlayTrigger>
 
-        {/* <OverlayTrigger delay={{ show: 1000, hide: 0 }} overlay={<Tooltip>Niches</Tooltip>} placement="left">
+        <OverlayTrigger delay={{ show: 1000, hide: 0 }} overlay={<Tooltip>Niches</Tooltip>} placement="left">
           <Button variant="primary" className="settings-button p-0" onClick={showNichesModal}>
             <span>
               <CsLineIcons icon="toy" className="position-relative" />
@@ -53,7 +53,7 @@ const RightButtons = () => {
               <CsLineIcons icon="cart" className="position-relative" />
             </span>
           </Button>
-        </OverlayTrigger> */}
+        </OverlayTrigger>
       </div>
       <SettingsModal show={isShowSettingsModal} handleClose={closeSettingsModal} />
       <NichesModal show={isShowNichesModal} handleClose={closeNichesModal} />

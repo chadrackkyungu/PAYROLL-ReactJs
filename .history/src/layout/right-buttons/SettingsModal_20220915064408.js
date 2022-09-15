@@ -151,9 +151,7 @@ const SettingsModal = ({ handleClose, show = false }) => {
 
               </>
             </OptionGroup>
-
-
-            {/* <OptionGroup label="Override Nav Palette">
+            <OptionGroup label="Override Nav Palette">
               <>
                 <OptionItem
                   label="DEFAULT"
@@ -189,12 +187,8 @@ const SettingsModal = ({ handleClose, show = false }) => {
                   </Card>
                 </OptionItem>
               </>
-            </OptionGroup> */}
-
-
-
-
-            {/* <OptionGroup label="Menu Placement">
+            </OptionGroup>
+            <OptionGroup label="Menu Placement">
               <>
                 <OptionItem
                   label="HORIZONTAL"
@@ -217,11 +211,8 @@ const SettingsModal = ({ handleClose, show = false }) => {
                   </Card>
                 </OptionItem>
               </>
-            </OptionGroup> */}
-
-
-
-            {/* <OptionGroup label="Menu Behaviour">
+            </OptionGroup>
+            <OptionGroup label="Menu Behaviour">
               <>
                 <OptionItem
                   label="PINNED"
@@ -244,11 +235,8 @@ const SettingsModal = ({ handleClose, show = false }) => {
                   </Card>
                 </OptionItem>
               </>
-            </OptionGroup> */}
-
-
-
-            {/* <OptionGroup label="Layout">
+            </OptionGroup>
+            <OptionGroup label="Layout">
               <>
                 <OptionItem label="FLUID" active={layout === LAYOUT.Fluid} onClick={() => handleChange(settingsChangeLayout, LAYOUT.Fluid)}>
                   <Card className="rounded-md p-3 mb-1 no-shadow">
@@ -263,9 +251,7 @@ const SettingsModal = ({ handleClose, show = false }) => {
                   </Card>
                 </OptionItem>
               </>
-            </OptionGroup> */}
-
-
+            </OptionGroup>
             <OptionGroup label="Radius">
               <>
                 <OptionItem
@@ -298,9 +284,6 @@ const SettingsModal = ({ handleClose, show = false }) => {
                 </OptionItem>
               </>
             </OptionGroup>
-
-
-
           </OverlayScrollbarsComponent>
         </Modal.Body>
       </Modal>

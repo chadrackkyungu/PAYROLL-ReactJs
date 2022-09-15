@@ -8,6 +8,7 @@ import { Spinner } from 'react-bootstrap';
 
 const Doughnut = ({ currentMonth, prevMonth }) => {
 
+    console.log("Cureent ", currentMonth);
     if (currentMonth !== currentMonth || prevMonth !== prevMonth) {
         return <div className="d-flex justify-content-center">
             <Spinner animation="border" variant="primary" />

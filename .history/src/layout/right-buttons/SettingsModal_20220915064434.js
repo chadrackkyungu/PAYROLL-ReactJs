@@ -150,157 +150,140 @@ const SettingsModal = ({ handleClose, show = false }) => {
 
 
               </>
-            </OptionGroup>
-
-
-            {/* <OptionGroup label="Override Nav Palette">
-              <>
-                <OptionItem
-                  label="DEFAULT"
-                  className="w-33"
-                  active={navColor === NAV_COLOR.Default}
-                  onClick={() => handleChange(settingsChangeNavColor, NAV_COLOR.Default)}
-                >
-                  <Card className="rounded-md p-3 mb-1 no-shadow">
-                    <Figure className="figure-primary top" />
-                    <Figure className="figure-secondary bottom" />
-                  </Card>
-                </OptionItem>
-                <OptionItem
-                  label="LIGHT"
-                  className="w-33"
-                  active={navColor === NAV_COLOR.Light}
-                  onClick={() => handleChange(settingsChangeNavColor, NAV_COLOR.Light)}
-                >
-                  <Card className="rounded-md p-3 mb-1 no-shadow">
-                    <Figure className="figure-primary figure-light top" />
-                    <Figure className="figure-secondary bottom" />
-                  </Card>
-                </OptionItem>
-                <OptionItem
-                  label="DARK"
-                  className="w-33"
-                  active={navColor === NAV_COLOR.Dark}
-                  onClick={() => handleChange(settingsChangeNavColor, NAV_COLOR.Dark)}
-                >
-                  <Card className="rounded-md p-3 mb-1 no-shadow">
-                    <Figure className="figure-primary figure-dark top" />
-                    <Figure className="figure-secondary bottom" />
-                  </Card>
-                </OptionItem>
-              </>
-            </OptionGroup> */}
-
-
-
-
-            {/* <OptionGroup label="Menu Placement">
-              <>
-                <OptionItem
-                  label="HORIZONTAL"
-                  active={placement === MENU_PLACEMENT.Horizontal}
-                  onClick={() => handleChange(menuChangePlacement, MENU_PLACEMENT.Horizontal)}
-                >
-                  <Card className="rounded-md p-3 mb-1 no-shadow">
-                    <Figure className="figure-primary top" />
-                    <Figure className="figure-secondary bottom" />
-                  </Card>
-                </OptionItem>
-                <OptionItem
-                  label="VERTICAL"
-                  active={placement === MENU_PLACEMENT.Vertical}
-                  onClick={() => handleChange(menuChangePlacement, MENU_PLACEMENT.Vertical)}
-                >
-                  <Card className="rounded-md p-3 mb-1 no-shadow">
-                    <Figure className="figure-primary left" />
-                    <Figure className="figure-secondary right" />
-                  </Card>
-                </OptionItem>
-              </>
-            </OptionGroup> */}
-
-
-
-            {/* <OptionGroup label="Menu Behaviour">
-              <>
-                <OptionItem
-                  label="PINNED"
-                  active={behaviour === MENU_BEHAVIOUR.Pinned}
-                  onClick={() => handleChange(menuChangeBehaviour, MENU_BEHAVIOUR.Pinned)}
-                >
-                  <Card className="rounded-md p-3 mb-1 no-shadow">
-                    <Figure className="figure-primary left large" />
-                    <Figure className="figure-secondary right small" />
-                  </Card>
-                </OptionItem>
-                <OptionItem
-                  label="UNPINNED"
-                  active={behaviour === MENU_BEHAVIOUR.Unpinned}
-                  onClick={() => handleChange(menuChangeBehaviour, MENU_BEHAVIOUR.Unpinned)}
-                >
-                  <Card className="rounded-md p-3 mb-1 no-shadow">
-                    <Figure className="figure-primary left" />
-                    <Figure className="figure-secondary right" />
-                  </Card>
-                </OptionItem>
-              </>
-            </OptionGroup> */}
-
-
-
-            {/* <OptionGroup label="Layout">
-              <>
-                <OptionItem label="FLUID" active={layout === LAYOUT.Fluid} onClick={() => handleChange(settingsChangeLayout, LAYOUT.Fluid)}>
-                  <Card className="rounded-md p-3 mb-1 no-shadow">
-                    <Figure className="figure-primary top" />
-                    <Figure className="figure-secondary bottom" />
-                  </Card>
-                </OptionItem>
-                <OptionItem label="BOXED" active={layout === LAYOUT.Boxed} onClick={() => handleChange(settingsChangeLayout, LAYOUT.Boxed)}>
-                  <Card className="rounded-md p-3 mb-1 no-shadow">
-                    <Figure className="figure-primary top" />
-                    <Figure className="figure-secondary bottom small" />
-                  </Card>
-                </OptionItem>
-              </>
-            </OptionGroup> */}
-
-
-            <OptionGroup label="Radius">
-              <>
-                <OptionItem
-                  label="ROUNDED"
-                  className="w-33"
-                  active={radius === RADIUS.Rounded}
-                  onClick={() => handleChange(settingsChangeRadius, RADIUS.Rounded)}
-                >
-                  <Card className="radius-rounded rounded-md p-3 mb-1 no-shadow">
-                    <Figure className="figure-primary top" />
-                    <Figure className="figure-secondary bottom" />
-                  </Card>
-                </OptionItem>
-                <OptionItem
-                  label="STANDARD"
-                  className="w-33"
-                  active={radius === RADIUS.Standard}
-                  onClick={() => handleChange(settingsChangeRadius, RADIUS.Standard)}
-                >
-                  <Card className="radius-regular rounded-md p-3 mb-1 no-shadow">
-                    <Figure className="figure-primary top" />
-                    <Figure className="figure-secondary bottom" />
-                  </Card>
-                </OptionItem>
-                <OptionItem label="FLAT" active={radius === RADIUS.Flat} onClick={() => handleChange(settingsChangeRadius, RADIUS.Flat)}>
-                  <Card className="radius-flat rounded-md p-3 mb-1 no-shadow">
-                    <Figure className="figure-primary top" />
-                    <Figure className="figure-secondary bottom" />
-                  </Card>
-                </OptionItem>
-              </>
-            </OptionGroup>
-
-
-
+              {/* </OptionGroup> */}
+              <OptionGroup label="Override Nav Palette">
+                <>
+                  <OptionItem
+                    label="DEFAULT"
+                    className="w-33"
+                    active={navColor === NAV_COLOR.Default}
+                    onClick={() => handleChange(settingsChangeNavColor, NAV_COLOR.Default)}
+                  >
+                    <Card className="rounded-md p-3 mb-1 no-shadow">
+                      <Figure className="figure-primary top" />
+                      <Figure className="figure-secondary bottom" />
+                    </Card>
+                  </OptionItem>
+                  <OptionItem
+                    label="LIGHT"
+                    className="w-33"
+                    active={navColor === NAV_COLOR.Light}
+                    onClick={() => handleChange(settingsChangeNavColor, NAV_COLOR.Light)}
+                  >
+                    <Card className="rounded-md p-3 mb-1 no-shadow">
+                      <Figure className="figure-primary figure-light top" />
+                      <Figure className="figure-secondary bottom" />
+                    </Card>
+                  </OptionItem>
+                  <OptionItem
+                    label="DARK"
+                    className="w-33"
+                    active={navColor === NAV_COLOR.Dark}
+                    onClick={() => handleChange(settingsChangeNavColor, NAV_COLOR.Dark)}
+                  >
+                    <Card className="rounded-md p-3 mb-1 no-shadow">
+                      <Figure className="figure-primary figure-dark top" />
+                      <Figure className="figure-secondary bottom" />
+                    </Card>
+                  </OptionItem>
+                </>
+              </OptionGroup>
+              <OptionGroup label="Menu Placement">
+                <>
+                  <OptionItem
+                    label="HORIZONTAL"
+                    active={placement === MENU_PLACEMENT.Horizontal}
+                    onClick={() => handleChange(menuChangePlacement, MENU_PLACEMENT.Horizontal)}
+                  >
+                    <Card className="rounded-md p-3 mb-1 no-shadow">
+                      <Figure className="figure-primary top" />
+                      <Figure className="figure-secondary bottom" />
+                    </Card>
+                  </OptionItem>
+                  <OptionItem
+                    label="VERTICAL"
+                    active={placement === MENU_PLACEMENT.Vertical}
+                    onClick={() => handleChange(menuChangePlacement, MENU_PLACEMENT.Vertical)}
+                  >
+                    <Card className="rounded-md p-3 mb-1 no-shadow">
+                      <Figure className="figure-primary left" />
+                      <Figure className="figure-secondary right" />
+                    </Card>
+                  </OptionItem>
+                </>
+              </OptionGroup>
+              <OptionGroup label="Menu Behaviour">
+                <>
+                  <OptionItem
+                    label="PINNED"
+                    active={behaviour === MENU_BEHAVIOUR.Pinned}
+                    onClick={() => handleChange(menuChangeBehaviour, MENU_BEHAVIOUR.Pinned)}
+                  >
+                    <Card className="rounded-md p-3 mb-1 no-shadow">
+                      <Figure className="figure-primary left large" />
+                      <Figure className="figure-secondary right small" />
+                    </Card>
+                  </OptionItem>
+                  <OptionItem
+                    label="UNPINNED"
+                    active={behaviour === MENU_BEHAVIOUR.Unpinned}
+                    onClick={() => handleChange(menuChangeBehaviour, MENU_BEHAVIOUR.Unpinned)}
+                  >
+                    <Card className="rounded-md p-3 mb-1 no-shadow">
+                      <Figure className="figure-primary left" />
+                      <Figure className="figure-secondary right" />
+                    </Card>
+                  </OptionItem>
+                </>
+              </OptionGroup>
+              <OptionGroup label="Layout">
+                <>
+                  <OptionItem label="FLUID" active={layout === LAYOUT.Fluid} onClick={() => handleChange(settingsChangeLayout, LAYOUT.Fluid)}>
+                    <Card className="rounded-md p-3 mb-1 no-shadow">
+                      <Figure className="figure-primary top" />
+                      <Figure className="figure-secondary bottom" />
+                    </Card>
+                  </OptionItem>
+                  <OptionItem label="BOXED" active={layout === LAYOUT.Boxed} onClick={() => handleChange(settingsChangeLayout, LAYOUT.Boxed)}>
+                    <Card className="rounded-md p-3 mb-1 no-shadow">
+                      <Figure className="figure-primary top" />
+                      <Figure className="figure-secondary bottom small" />
+                    </Card>
+                  </OptionItem>
+                </>
+              </OptionGroup>
+              <OptionGroup label="Radius">
+                <>
+                  <OptionItem
+                    label="ROUNDED"
+                    className="w-33"
+                    active={radius === RADIUS.Rounded}
+                    onClick={() => handleChange(settingsChangeRadius, RADIUS.Rounded)}
+                  >
+                    <Card className="radius-rounded rounded-md p-3 mb-1 no-shadow">
+                      <Figure className="figure-primary top" />
+                      <Figure className="figure-secondary bottom" />
+                    </Card>
+                  </OptionItem>
+                  <OptionItem
+                    label="STANDARD"
+                    className="w-33"
+                    active={radius === RADIUS.Standard}
+                    onClick={() => handleChange(settingsChangeRadius, RADIUS.Standard)}
+                  >
+                    <Card className="radius-regular rounded-md p-3 mb-1 no-shadow">
+                      <Figure className="figure-primary top" />
+                      <Figure className="figure-secondary bottom" />
+                    </Card>
+                  </OptionItem>
+                  <OptionItem label="FLAT" active={radius === RADIUS.Flat} onClick={() => handleChange(settingsChangeRadius, RADIUS.Flat)}>
+                    <Card className="radius-flat rounded-md p-3 mb-1 no-shadow">
+                      <Figure className="figure-primary top" />
+                      <Figure className="figure-secondary bottom" />
+                    </Card>
+                  </OptionItem>
+                </>
+              </OptionGroup>
           </OverlayScrollbarsComponent>
         </Modal.Body>
       </Modal>

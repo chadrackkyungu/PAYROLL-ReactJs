@@ -1,4 +1,3 @@
-/* eslint-disable no-self-compare */
 /* eslint-disable react/jsx-fragments */
 /* eslint-disable lines-between-class-members */
 /* eslint-disable prettier/prettier */
@@ -8,7 +7,8 @@ import { Spinner } from 'react-bootstrap';
 
 const Doughnut = ({ currentMonth, prevMonth }) => {
 
-    if (currentMonth !== currentMonth || prevMonth !== prevMonth) {
+    console.log("Cureent ", currentMonth);
+    if (currentMonth === undefined || prevMonth === undefined) {
         return <div className="d-flex justify-content-center">
             <Spinner animation="border" variant="primary" />
         </div>

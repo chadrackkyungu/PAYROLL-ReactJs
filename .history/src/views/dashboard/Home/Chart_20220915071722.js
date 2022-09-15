@@ -9,7 +9,7 @@ import { Spinner } from 'react-bootstrap';
 
 const Areachart = ({ salary, overTime }) => {
 
-    if (salary[0] === undefined || overTime[0] === undefined) {
+    if (salary === undefined || overTime === undefined) {
         return <div className="d-flex justify-content-center">
             <Spinner animation="border" variant="primary" />
         </div>
@@ -77,6 +77,10 @@ const Areachart = ({ salary, overTime }) => {
         }
     }
 
+
+    console.log(salary)
+    console.log(overTime)
+
     const Amount = [
         {
             name: 'Salary Amount',
@@ -88,6 +92,12 @@ const Areachart = ({ salary, overTime }) => {
         },
         true
     ]
+
+    if (Amount === undefined || Months === undefined) {
+        return <div className="d-flex justify-content-center">
+            <Spinner animation="border" variant="primary" />
+        </div>
+    }
 
     // eslint-disable-next-line lines-between-class-members
     return (

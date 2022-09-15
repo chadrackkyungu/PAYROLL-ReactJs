@@ -1,18 +1,10 @@
-/* eslint-disable no-self-compare */
 /* eslint-disable react/jsx-fragments */
 /* eslint-disable lines-between-class-members */
 /* eslint-disable prettier/prettier */
 import React from "react"
 import ReactEcharts from "echarts-for-react"
-import { Spinner } from 'react-bootstrap';
 
 const Doughnut = ({ currentMonth, prevMonth }) => {
-
-    if (currentMonth !== currentMonth || prevMonth !== prevMonth) {
-        return <div className="d-flex justify-content-center">
-            <Spinner animation="border" variant="primary" />
-        </div>
-    }
 
     const getOption = () => {
         return {
@@ -58,7 +50,7 @@ const Doughnut = ({ currentMonth, prevMonth }) => {
 
     return (
         <React.Fragment>
-            <ReactEcharts style={{ height: "350px" }} option={getOption()} />
+            <ReactEcharts style={{ height: "350px" }} option={!getOption() ? null : getOption()} />
         </React.Fragment>
     )
 }
