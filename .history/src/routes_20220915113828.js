@@ -3,6 +3,8 @@
 /* eslint-disable prettier/prettier */
 import { lazy } from 'react';
 import { DEFAULT_PATHS } from 'config.js';
+// import { useHistory } from 'react-router-dom';
+import History from "./History";
 
 //* Pages
 const dashboard = lazy(() => import('views/dashboard/Index'));
@@ -43,13 +45,32 @@ const appRoot = DEFAULT_PATHS.APP.endsWith('/') ? DEFAULT_PATHS.APP.slice(1, DEF
 
 const newObject = window.localStorage.getItem("persist:starter-project");
 const user = JSON.parse(newObject);
+
+if (user === undefined) {
+  <History />
+}
+
 const { currentUser } = JSON.parse(user.auth)
+
+
+
 const userRole = currentUser?.data?.user?.role;
+
+const check = userRole === "admin" ? true : false;
+
+console.log("###############################");
+console.log("###############################");
+console.log("###############################");
+console.log(check);
+
+console.log(userRole);
+console.log("###############################");
+console.log("###############################");
+console.log("###############################");
 
 const routesAndMenuItems = {
 
   mainMenuItems: [
-
     {
       path: DEFAULT_PATHS.APP,
       exact: true,
@@ -62,9 +83,7 @@ const routesAndMenuItems = {
       label: 'Home',
       icon: 'shop',
     },
-
-
-    userRole === 'user' && {
+    {
       path: `${appRoot}/employee`,
       exact: true,
       redirect: true,
@@ -85,32 +104,34 @@ const routesAndMenuItems = {
       ],
     },
 
-    userRole === 'admin' && {
-      path: `${appRoot}/Admin`,
-      exact: true,
-      redirect: true,
-      to: `${appRoot}/Admin/notifications`,
-      label: 'Admin',
-      icon: 'user',
-      subs: [
-        { path: '/announcement', label: 'Announcement', component: addEmployee.announcement },
-        { path: '/payment-history', label: 'Payment History', component: addEmployee.PaymentHistory },
-        { path: '/leave-history', label: 'Leave History', component: addEmployee.LeaveHistory },
-        { path: '/calendar', label: 'My Calendar', component: employee.calendar },
-        { path: '/add-employee', label: 'My Employees', component: addEmployee.myEmployee },
-        { path: '/profile', label: 'My Profile', component: employee.profile },
-        { path: `/add-new-employee`, component: addEmployee.AddNewEmployee },
-        { path: `/pay/:id`, component: addEmployee.PaySalary },
-        { path: `/successful`, component: addEmployee.successful },
-        { path: `/individual-announcement`, component: addEmployee.individual },
-        { path: `/send-announcement`, component: addEmployee.sendAnnouncement },
-        // { path: `/private`, component: Private },
-        { path: '/my-leaves', component: addEmployee.LeaveHistory },
-        { path: `/pending-leave`, component: adminPending },
-        { path: `/approved-leave`, component: adminApproved },
-        { path: `/decline-leave`, component: adminDeclined },
-      ],
-    }
+    (
+      check && {
+        path: `${appRoot}/Admin`,
+        exact: true,
+        redirect: true,
+        to: `${appRoot}/Admin/notifications`,
+        label: 'Admin',
+        icon: 'user',
+        subs: [
+          { path: '/announcement', label: 'Announcement', component: addEmployee.announcement },
+          { path: '/payment-history', label: 'Payment History', component: addEmployee.PaymentHistory },
+          { path: '/leave-history', label: 'Leave History', component: addEmployee.LeaveHistory },
+          { path: '/calendar', label: 'My Calendar', component: employee.calendar },
+          { path: '/add-employee', label: 'My Employees', component: addEmployee.myEmployee },
+          { path: '/profile', label: 'My Profile', component: employee.profile },
+          { path: `/add-new-employee`, component: addEmployee.AddNewEmployee },
+          { path: `/pay/:id`, component: addEmployee.PaySalary },
+          { path: `/successful`, component: addEmployee.successful },
+          { path: `/individual-announcement`, component: addEmployee.individual },
+          { path: `/send-announcement`, component: addEmployee.sendAnnouncement },
+          // { path: `/private`, component: Private },
+          { path: '/my-leaves', component: addEmployee.LeaveHistory },
+          { path: `/pending-leave`, component: adminPending },
+          { path: `/approved-leave`, component: adminApproved },
+          { path: `/decline-leave`, component: adminDeclined },
+        ],
+      }
+    )
 
 
 

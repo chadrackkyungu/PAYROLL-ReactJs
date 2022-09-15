@@ -1,4 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable no-unneeded-ternary */
 /* eslint-disable prettier/prettier */
 import { lazy } from 'react';
@@ -43,13 +42,24 @@ const appRoot = DEFAULT_PATHS.APP.endsWith('/') ? DEFAULT_PATHS.APP.slice(1, DEF
 
 const newObject = window.localStorage.getItem("persist:starter-project");
 const user = JSON.parse(newObject);
-const { currentUser } = JSON.parse(user.auth)
+const { currentUser } = JSON.parse(user?.auth)
 const userRole = currentUser?.data?.user?.role;
+
+const check = userRole === "admin" ? true : false;
+
+console.log("###############################");
+console.log("###############################");
+console.log("###############################");
+console.log(check);
+
+console.log(userRole);
+console.log("###############################");
+console.log("###############################");
+console.log("###############################");
 
 const routesAndMenuItems = {
 
   mainMenuItems: [
-
     {
       path: DEFAULT_PATHS.APP,
       exact: true,
@@ -62,9 +72,7 @@ const routesAndMenuItems = {
       label: 'Home',
       icon: 'shop',
     },
-
-
-    userRole === 'user' && {
+    {
       path: `${appRoot}/employee`,
       exact: true,
       redirect: true,
@@ -85,7 +93,7 @@ const routesAndMenuItems = {
       ],
     },
 
-    userRole === 'admin' && {
+    ...(check && {
       path: `${appRoot}/Admin`,
       exact: true,
       redirect: true,
@@ -111,9 +119,7 @@ const routesAndMenuItems = {
         { path: `/decline-leave`, component: adminDeclined },
       ],
     }
-
-
-
+    )
   ],
   sidebarItems: [],
 };

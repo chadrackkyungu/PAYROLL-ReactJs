@@ -44,7 +44,19 @@ const appRoot = DEFAULT_PATHS.APP.endsWith('/') ? DEFAULT_PATHS.APP.slice(1, DEF
 const newObject = window.localStorage.getItem("persist:starter-project");
 const user = JSON.parse(newObject);
 const { currentUser } = JSON.parse(user.auth)
+
 const userRole = currentUser?.data?.user?.role;
+// const check = userRole === "admin" ? true : false;
+
+// console.log("###############################");
+// console.log("###############################");
+// console.log("###############################");
+// console.log(check);
+
+// console.log(userRole);
+// console.log("###############################");
+// console.log("###############################");
+// console.log("###############################");
 
 const routesAndMenuItems = {
 
@@ -62,9 +74,7 @@ const routesAndMenuItems = {
       label: 'Home',
       icon: 'shop',
     },
-
-
-    userRole === 'user' && {
+    {
       path: `${appRoot}/employee`,
       exact: true,
       redirect: true,
