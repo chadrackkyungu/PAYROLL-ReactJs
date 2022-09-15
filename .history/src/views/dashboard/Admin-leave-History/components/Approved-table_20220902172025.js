@@ -4,7 +4,7 @@
 import React from 'react';
 import { Badge, Card } from 'react-bootstrap';
 
-function DeclineTable(props) {
+function ApprovedTable(props) {
     return (
         <Card className="mt-5">
             <div className="table-responsive p-4">
@@ -25,7 +25,7 @@ function DeclineTable(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {props.data?.reverse()?.map((leave, key) => (
+                        {props.data?.map((leave, key) => (
                             <tr key={"_tr_" + key}>
                                 <td>
                                     <div className="form-check font-size-16">
@@ -37,7 +37,7 @@ function DeclineTable(props) {
                                 <td>{leave.leaveStartDate}</td>
                                 <td>{leave.leaveEndDate}</td>
                                 <td>{leave.leaveType}</td>
-                                <td><Badge className={"bg-danger font-size-11 badge-soft-" + leave.badgeClass} color={leave.badgeClass} pill>{leave.status}</Badge> </td>
+                                <td><Badge className={"bg-success font-size-11 badge-soft-" + leave.badgeClass} color={leave.badgeClass} pill>{leave.status}</Badge> </td>
                             </tr>
                         ))}
                     </tbody>
@@ -47,4 +47,4 @@ function DeclineTable(props) {
     )
 }
 
-export default DeclineTable
+export default ApprovedTable

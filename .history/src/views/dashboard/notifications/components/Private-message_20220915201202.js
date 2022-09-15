@@ -1,16 +1,14 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
-import { Row, Col, Card, Spinner, Badge } from 'react-bootstrap';
+import { Row, Col, Card, Spinner } from 'react-bootstrap';
 // import { IoIosArrowDroprightCircle } from 'react-icons/io';
 
 function PrivateMessage() {
-    const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
     const [message, setMessage] = useState();
-    const todayDate = new Date().getDate();
-    const monthDate = new Date().getMonth();
+    const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
 
     const getNotification = async () => {
         const myHeaders = new Headers();
@@ -51,10 +49,6 @@ function PrivateMessage() {
         <div>
             {
                 message?.reverse()?.map((details, i) => {
-
-                    const getDate = new Date(details?.date).getDate()
-                    const getMonth = new Date(details?.date).getMonth()
-
                     return (
                         <Card className="mb-3 p-4" key={i}>
                             <Row>
@@ -68,19 +62,18 @@ function PrivateMessage() {
                                             </div>
                                         </Col>
                                         <Col md={10}>
-                                            <h5>  <b className="text-primary"> Category : </b> {details?.category}    </h5>
-                                            <h6> <span className="text-danger"> Author : </span>  {details?.admin?.firstName}     </h6>
+                                            <h5>  <b className="text-primary"> Category : </b> {details.category}    </h5>
+                                            <h6> <span className="text-danger"> Author : </span>  {details.admin.firstName}     </h6>
                                             <div className="notifications">
-                                                <p>  {details?.message} </p>
+                                                <p>  {details.message} </p>
                                             </div>
-                                            <h5>    Type :  {details?.types}  </h5>
+                                            <h5>    Type :  {details.types}  </h5>
                                         </Col>
                                     </Row>
                                 </Col>
 
                                 <Col md={2}>
-                                    <p> {getDate === todayDate && getMonth === monthDate ? <Badge>New</Badge> : null} </p>
-                                    <b> {details?.date} </b>
+                                    <b> {details.date} </b>
                                 </Col>
                             </Row>
                         </Card>

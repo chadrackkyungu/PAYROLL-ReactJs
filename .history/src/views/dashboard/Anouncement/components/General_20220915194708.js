@@ -15,6 +15,9 @@ function General({ announcement }) {
     const [MessageId, setMessageId] = useState();
     const todayDate = new Date().getDate();
     const monthDate = new Date().getMonth();
+    console.log('====================================');
+    console.log(todayDate);
+    console.log('====================================');
 
     const deleteMessage = () => {
         const myHeaders = new Headers();
@@ -54,10 +57,9 @@ function General({ announcement }) {
             <Link to="/admin/send-announcement" className="btn btn-primary  my-5"> + Send a new announcement </Link>
 
             {
-                announcement?.reverse()?.map((details, i) => {
+                announcement?.map((details, i) => {
 
-                    const getDate = new Date(details?.date).getDate()
-                    const getMonth = new Date(details?.date).getMonth()
+                    console.log(details)
 
                     return (
                         <Card className="mb-3 p-4" key={i}>
@@ -83,7 +85,6 @@ function General({ announcement }) {
                                 </Col>
 
                                 <Col md={2}>
-                                    <p> {getDate === todayDate && getMonth === monthDate ? <Badge>New</Badge> : null} </p>
                                     <b> {details?.date} </b>
                                 </Col>
                             </Row>

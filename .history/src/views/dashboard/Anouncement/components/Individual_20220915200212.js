@@ -2,12 +2,13 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { Row, Col, Card, Badge, Button, Modal, Spinner } from 'react-bootstrap';
+import { Row, Col, Card, Badge, Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { successMessage } from "../../../../components/Notifications/Notifications";
 
-function General({ announcement }) {
+function Individual({ announcement }) {
     const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
+
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
 
@@ -46,15 +47,12 @@ function General({ announcement }) {
         successMessage(`You have successful deleted this announcement`)
     }
 
-
-
-
     return (
         <div>
             <Link to="/admin/send-announcement" className="btn btn-primary  my-5"> + Send a new announcement </Link>
 
             {
-                announcement?.reverse()?.map((details, i) => {
+                announcement?.map((details, i) => {
 
                     const getDate = new Date(details?.date).getDate()
                     const getMonth = new Date(details?.date).getMonth()
@@ -87,6 +85,15 @@ function General({ announcement }) {
                                     <b> {details?.date} </b>
                                 </Col>
                             </Row>
+
+                            <div className="mt-5 d-flex">
+                                <div className="sw-10 me-1 mb-1 d-inline-block">
+                                    <img src={`${urlUser}${details?.user?.photo}`} className="img-fluid rounded-md" alt="" />
+                                </div>
+                                <h6> <span className="text-danger m-3"> To Employee : </span> {details?.user?.firstName}   {details?.user?.lastName}  </h6>
+                            </div>
+
+
                             <div className="d-flex justify-content-end">
                                 {/* <Badge bg="outline-primary" className="me-3 cursor-pointer">Edit</Badge> */}
                                 <Badge bg="outline-danger" className="cursor-pointer"
@@ -100,7 +107,6 @@ function General({ announcement }) {
                     )
                 }
                 )
-
             }
 
             <Modal show={smExample} onHide={() => setSmExample(false)} size="sm">
@@ -116,4 +122,4 @@ function General({ announcement }) {
     )
 }
 
-export default General
+export default Individual

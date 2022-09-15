@@ -1,56 +1,60 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { Row, Col, Card, Spinner, Badge } from 'react-bootstrap';
-// import { IoIosArrowDroprightCircle } from 'react-icons/io';
+import { Row, Col, Card, Badge, Button, Modal, Spinner } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { successMessage } from "../../../../components/Notifications/Notifications";
 
-function PrivateMessage() {
+function General({ announcement }) {
     const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
-    const [message, setMessage] = useState();
+
+    const [smExample, setSmExample] = useState(false);
+    const [MessageId, setMessageId] = useState();
     const todayDate = new Date().getDate();
     const monthDate = new Date().getMonth();
 
-    const getNotification = async () => {
+    const deleteMessage = () => {
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
+        myHeaders.append("Content-Type", "application/json");
+
+        const raw = ""
 
         const requestOptions = {
-            method: 'GET',
+            method: 'DELETE',
             headers: myHeaders,
+            body: raw,
             redirect: 'follow'
         };
 
-        fetch("https://polar-basin-47052.herokuapp.com/api/v1/announcements/me", requestOptions)
+        fetch(`https://polar-basin-47052.herokuapp.com/api/v1/announcements/${MessageId}`, requestOptions)
             .then(response => response.json())
-            .then(result => setMessage(result.data.leaves))
-            .catch(error => console.log('error', error));
-    }
-    useEffect(() => {
-        getNotification();
-    }, []);
+            .then(result => {
+                if (result.status === 'success') {
+                    successMessage(`You have successful deleted this announcement`)
+                }
+                if (result.status === 'fail') {
+                    successMessage(`You have successful deleted this announcement`)
+                }
+            })
+            .catch(err => console.log(` 🤒 ${err.response}`))
 
-    if (message === undefined) {
-        return (
-            <div className="d-flex justify-content-center">
-                <Spinner animation="border" variant="primary" />
-            </div>
-        )
+        setSmExample(false)
+        successMessage(`You have successful deleted this announcement`)
     }
 
-    if (message.length === 0) {
-        return (
-            <div className="d-flex justify-content-center">
-                <h1 className="text-danger"> You do not have any notifications </h1>
-            </div>
-        )
-    }
+
+
 
     return (
         <div>
+            <Link to="/admin/send-announcement" className="btn btn-primary  my-5"> + Send a new announcement </Link>
+
             {
-                message?.reverse()?.map((details, i) => {
+                announcement?.map((details, i) => {
 
                     const getDate = new Date(details?.date).getDate()
                     const getMonth = new Date(details?.date).getMonth()
@@ -83,14 +87,33 @@ function PrivateMessage() {
                                     <b> {details?.date} </b>
                                 </Col>
                             </Row>
+                            <div className="d-flex justify-content-end">
+                                {/* <Badge bg="outline-primary" className="me-3 cursor-pointer">Edit</Badge> */}
+                                <Badge bg="outline-danger" className="cursor-pointer"
+                                    onClick={() => {
+                                        setSmExample(true)
+                                        setMessageId(details?._id)
+                                    }}>
+                                    Delete</Badge>
+                            </div>
                         </Card>
                     )
                 }
                 )
+
             }
+
+            <Modal show={smExample} onHide={() => setSmExample(false)} size="sm">
+                <Modal.Body className="text-warning"> Are you sure you want to delete this message ? </Modal.Body>
+
+                <Modal.Footer>
+                    <Button variant="primary" onClick={() => setSmExample(false)}>No</Button>
+                    <Button variant="danger" onClick={deleteMessage} >Yes</Button>
+                </Modal.Footer>
+            </Modal>
 
         </div>
     )
 }
 
-export default PrivateMessage
+export default General

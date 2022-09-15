@@ -25,7 +25,7 @@ function ApprovedTable(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {props.data?.map((leave, key) => (
+                        {props.data?.reverse()?.map((leave, key) => (
                             <tr key={"_tr_" + key}>
                                 <td>
                                     <div className="form-check font-size-16">

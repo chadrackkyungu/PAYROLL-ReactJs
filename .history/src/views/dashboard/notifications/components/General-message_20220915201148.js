@@ -1,16 +1,14 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
-import { Row, Col, Card, Spinner, Badge } from 'react-bootstrap';
+import { Row, Col, Card, Spinner } from 'react-bootstrap';
 // import { IoIosArrowDroprightCircle } from 'react-icons/io';
 
-function PrivateMessage() {
+function GeneralMessage() {
     const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
     const [message, setMessage] = useState();
-    const todayDate = new Date().getDate();
-    const monthDate = new Date().getMonth();
 
     const getNotification = async () => {
         const myHeaders = new Headers();
@@ -22,9 +20,9 @@ function PrivateMessage() {
             redirect: 'follow'
         };
 
-        fetch("https://polar-basin-47052.herokuapp.com/api/v1/announcements/me", requestOptions)
+        fetch("https://polar-basin-47052.herokuapp.com/api/v1/announcements/me/general", requestOptions)
             .then(response => response.json())
-            .then(result => setMessage(result.data.leaves))
+            .then(result => setMessage(result.data.announce))
             .catch(error => console.log('error', error));
     }
     useEffect(() => {
@@ -51,10 +49,6 @@ function PrivateMessage() {
         <div>
             {
                 message?.reverse()?.map((details, i) => {
-
-                    const getDate = new Date(details?.date).getDate()
-                    const getMonth = new Date(details?.date).getMonth()
-
                     return (
                         <Card className="mb-3 p-4" key={i}>
                             <Row>
@@ -79,8 +73,8 @@ function PrivateMessage() {
                                 </Col>
 
                                 <Col md={2}>
-                                    <p> {getDate === todayDate && getMonth === monthDate ? <Badge>New</Badge> : null} </p>
                                     <b> {details?.date} </b>
+                                    {/* <p className="mt-4"> <Link to="#/"> <IoIosArrowDroprightCircle size={24} />  </Link> </p> */}
                                 </Col>
                             </Row>
                         </Card>
@@ -93,4 +87,4 @@ function PrivateMessage() {
     )
 }
 
-export default PrivateMessage
+export default GeneralMessage
