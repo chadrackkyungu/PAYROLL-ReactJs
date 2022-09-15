@@ -44,6 +44,6 @@ export const MENU_BEHAVIOUR = {
 
 export const USER_ROLE = {
   // Admin: 'admin',
-  Admin: 'admin',
+  Admin: '',
   Editor: 'editor',
 };
