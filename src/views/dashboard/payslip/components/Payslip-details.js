@@ -1,8 +1,11 @@
+/* eslint-disable react/jsx-curly-brace-presence */
+/* eslint-disable react/button-has-type */
 /* eslint-disable one-var */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
+import { CSVLink } from "react-csv";
 import CompanyLogo from "../../../../components/Logo/company-logo";
 
 const PayslipDetails = (props) => {
@@ -13,7 +16,6 @@ const PayslipDetails = (props) => {
         <div>
             {
                 paySlipDetail?.map((payslip, i) => {
-                    console.log("Payslip details", payslip);
                     return (
                         <div key={i}>
                             <CompanyLogo />
@@ -95,8 +97,10 @@ const PayslipDetails = (props) => {
                                         <b> Authorized Signature </b>
                                     </Col>
                                 </Row>
-
                             </div>
+
+                            <button className='my-4 btn-primary p-1'> <CSVLink data={paySlipDetail} separator={";"} className="text-white"> Download in Excel </CSVLink> </button>
+
                             <hr className="mt-5 text-danger " />
                         </div>
                     )

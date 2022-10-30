@@ -49,6 +49,7 @@ const Dashboard = () => {
         fetch(userRole === "admin" ? adminAPI : userAPI, requestOptions)
             .then(response => response.json())
             .then(result => {
+                console.log("Result : ", result)
                 setPayment(userRole === "admin" ? result?.data?.data : result?.data?.leaves)
             })
             .catch(error => console.log('error', error));

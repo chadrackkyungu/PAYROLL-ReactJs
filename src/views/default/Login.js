@@ -2,10 +2,11 @@
 /* eslint-disable import/no-useless-path-segments */
 /* eslint-disable func-names */
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, { useState } from 'react';
+import "./Style.scss";
 import axios from 'axios';
 import { NavLink, useHistory } from 'react-router-dom';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Spinner } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import LayoutFullpage from 'layout/LayoutFullpage';
@@ -20,6 +21,7 @@ const Login = () => {
   const history = useHistory()
   const title = 'Login';
   const description = 'Login Page';
+  const [btnLoad, setBtnLoad] = useState(false)
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email().required('Email is required'),
@@ -29,6 +31,9 @@ const Login = () => {
   const initialValues = { email: '', password: '' };
 
   const onSubmit = async (values) => {
+
+    setBtnLoad(true)
+
     const { email, password } = values;
     try {
       const res = await axios({
@@ -44,9 +49,13 @@ const Login = () => {
           history.push('/');
         }, 3000);
 
+        setBtnLoad(false)
       }
     } catch (err) {
-      warningMessage(` 🤒 ${err.response.data.message}`);
+      if (err.response.status === 401) {
+        setBtnLoad(false)
+        warningMessage(` 🤒 Password or email incorrect try again`);
+      };
     }
   }
 
@@ -65,8 +74,10 @@ const Login = () => {
   const rightSide = (
     <div className="sw-lg-70 min-h-100 bg-foreground d-flex justify-content-center align-items-center shadow-deep py-5 full-page-content-right-border">
       <div className="sw-lg-50 px-5">
-        <div className="d-flex justify-content-end">
-          <img src="/img/logo/logo-blue-light.svg" alt="logo" />
+        {/* <div className="d-flex justify-content-end logo_container"> */}
+        <div className="d-flex logo_container">
+          {/* <img src="/img/logo/logo-blue-light.svg" alt="logo" /> */}
+          <img src="/img/logo/Logo.jpeg" alt="logo" />
         </div>
         <div className="mb-5">
           <h2 className="cta-1 mb-0 text-primary">Welcome,</h2>
@@ -88,7 +99,9 @@ const Login = () => {
               {errors.password && touched.password && <div className="d-block invalid-tooltip">{errors.password}</div>}
             </div>
             <Button size="lg" type="submit">
-              Login
+              {
+                !btnLoad ? <span> <CsLineIcons icon="login" /> <span className="me-2">Login </span> </span> : <span>  <Spinner as="span" animation="border" size="sm" /> Loading...</span>
+              }
             </Button>
           </form>
         </div>

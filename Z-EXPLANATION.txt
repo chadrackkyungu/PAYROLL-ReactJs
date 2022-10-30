@@ -63,3 +63,25 @@ const data = {
     columns: column,
     rows: dataDb,
 }
+
+
+
+
+::-webkit-input-placeholder {
+    color: #dbdbdb !important;
+}
+
+:-ms-input-placeholder {
+    color: #dbdbdb !important;
+}
+
+::placeholder {
+    color: #dbdbdb !important;
+}
+
+.form-control {
+    background: #f3f3f3a2 !important;
+    border: none;
+    padding: 0.8em;
+    color: #124BCD !important;
+}
