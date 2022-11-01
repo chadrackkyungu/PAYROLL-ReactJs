@@ -3,7 +3,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Row, Col, Card, Spinner, Button } from 'react-bootstrap';
+import { Row, Col, Card, Spinner } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
@@ -140,7 +140,7 @@ const Dashboard = () => {
                         <div className="page-title-container">
                             <BreadcrumbList items={breadcrumbs} />
                         </div>
-                        <Button className='btn btn-primary mb-3'> <a href="https://www.sarsefiling.co.za/" className='text-white'>  GO TO SARS  </a> </Button>
+                        <Link to="/" className='btn btn-primary mb-3'> SARS  </Link>
                         {
                             userRole === 'user' ? (
                                 <>

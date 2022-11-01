@@ -3,17 +3,17 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Row, Col, Card, Spinner, Button } from 'react-bootstrap';
+import { Row, Col, Card, Spinner } from 'react-bootstrap';
 import HtmlHead from 'components/html-head/HtmlHead';
 import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
 import useCustomLayout from 'hooks/useCustomLayout';
 import { MENU_PLACEMENT, LAYOUT } from 'constants.js';
-import { Link } from 'react-router-dom';
 import Chart from "./Home/Chart";
 import Cards from './Home/Cards';
 import AdminCard from './Home/Admin-card';
 import { getCurrentMonth, getJanuary, getFebuary, getMarch, getMay } from './Home/AllTotalMonthlySal';
 import PieChart from "./Home/AllCahrt";
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
 
@@ -140,7 +140,7 @@ const Dashboard = () => {
                         <div className="page-title-container">
                             <BreadcrumbList items={breadcrumbs} />
                         </div>
-                        <Button className='btn btn-primary mb-3'> <a href="https://www.sarsefiling.co.za/" className='text-white'>  GO TO SARS  </a> </Button>
+                        <Link to="/"> SARS  </Link>
                         {
                             userRole === 'user' ? (
                                 <>

@@ -140,7 +140,7 @@ const Dashboard = () => {
                         <div className="page-title-container">
                             <BreadcrumbList items={breadcrumbs} />
                         </div>
-                        <Button className='btn btn-primary mb-3'> <a href="https://www.sarsefiling.co.za/" className='text-white'>  GO TO SARS  </a> </Button>
+                        <Button className='btn btn-primary mb-3'> GO TO SARS  </Button>
                         {
                             userRole === 'user' ? (
                                 <>
