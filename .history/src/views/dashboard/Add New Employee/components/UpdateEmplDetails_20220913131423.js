@@ -15,8 +15,8 @@ import { warningMessage, successSubmitLeave } from "../../../../components/Notif
 
 const UpdateUserDetails = ({ details }) => {
 
-    const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
-    const urlDoc = "https://polar-basin-47052.herokuapp.com/img/docs/"
+    const urlUser = "https://payroll.up.railway.app/img/users/"
+    const urlDoc = "https://payroll.up.railway.app/img/docs/"
 
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;

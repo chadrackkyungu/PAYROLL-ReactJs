@@ -5,7 +5,7 @@ import React from 'react'
 import { Row, Col, Card, Spinner } from 'react-bootstrap';
 
 function PayEmployee({ employeeDetails }) {
-    const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/";
+    const urlUser = "https://payroll.up.railway.app/img/users/";
 
     if (employeeDetails === undefined) {
         return (

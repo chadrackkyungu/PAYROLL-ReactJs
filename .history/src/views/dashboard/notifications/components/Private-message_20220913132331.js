@@ -8,7 +8,7 @@ function PrivateMessage() {
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
     const [message, setMessage] = useState();
-    const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
+    const urlUser = "https://payroll.up.railway.app/img/users/"
 
     const getNotification = async () => {
         const myHeaders = new Headers();
@@ -20,7 +20,7 @@ function PrivateMessage() {
             redirect: 'follow'
         };
 
-        fetch("https://polar-basin-47052.herokuapp.com/api/v1/announcements/me", requestOptions)
+        fetch("https://payroll.up.railway.app/api/v1/announcements/me", requestOptions)
             .then(response => response.json())
             .then(result => setMessage(result.data.leaves))
             .catch(error => console.log('error', error));

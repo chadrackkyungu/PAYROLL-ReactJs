@@ -5,7 +5,7 @@ import { Row, Col, Card, Spinner, Badge } from 'react-bootstrap';
 // import { IoIosArrowDroprightCircle } from 'react-icons/io';
 
 function PrivateMessage() {
-    const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
+    const urlUser = "https://payroll.up.railway.app/img/users/"
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
     const [message, setMessage] = useState();
@@ -22,7 +22,7 @@ function PrivateMessage() {
             redirect: 'follow'
         };
 
-        fetch("https://polar-basin-47052.herokuapp.com/api/v1/announcements/me", requestOptions)
+        fetch("https://payroll.up.railway.app/api/v1/announcements/me", requestOptions)
             .then(response => response.json())
             .then(result => setMessage(result.data.leaves))
             .catch(error => console.log('error', error));

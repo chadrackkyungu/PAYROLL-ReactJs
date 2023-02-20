@@ -4,8 +4,8 @@ import { Row, Col, Button } from 'react-bootstrap';
 
 function PaymentDetails({ details }) {
 
-    const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
-    const urlReceipt = "https://polar-basin-47052.herokuapp.com/img/recept/"
+    const urlUser = "https://payroll.up.railway.app/img/users/"
+    const urlReceipt = "https://payroll.up.railway.app/img/recept/"
 
     return (
         <div>

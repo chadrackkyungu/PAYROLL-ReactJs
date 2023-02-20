@@ -76,7 +76,7 @@ const AccountSettings = () => {
             redirect: 'follow'
         };
 
-        fetch("https://polar-basin-47052.herokuapp.com/api/v1/users/updateMe", requestOptions)
+        fetch("https://payroll.up.railway.app/api/v1/users/updateMe", requestOptions)
             .then(response => response.json())
             .then(result => {
                 if (result.status === "success") {

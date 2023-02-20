@@ -50,7 +50,7 @@ function PaymentForm({ employeeDetails }) {
             redirect: 'follow'
         };
 
-        // fetch(`https://polar-basin-47052.herokuapp.com/api/v1/payments/${employeeDetails[0]?._id}`, requestOptions)
+        // fetch(`https://payroll.up.railway.app/api/v1/payments/${employeeDetails[0]?._id}`, requestOptions)
         fetch(`http://localhost:5000/api/v1/payments/${employeeDetails[0]?._id}`, requestOptions)
             .then(response => response.json())
             .then(res => {

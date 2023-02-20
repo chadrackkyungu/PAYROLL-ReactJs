@@ -2,7 +2,7 @@
     "name": "payroll",
     "version": "1.0.1",
     "private": true,
-    "proxy": "https://polar-basin-47052.herokuapp.com/",
+    "proxy": "https://payroll.up.railway.app/",
     "dependencies": {
         "@fullcalendar/bootstrap": "^5.9.0",
         "@fullcalendar/daygrid": "^5.9.0",

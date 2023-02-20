@@ -50,7 +50,7 @@ const MyLeaves = () => {
 
     useEffect(() => {
         const approved = () => {
-            fetch(`https://polar-basin-47052.herokuapp.com/api/v1/leaves/me`, requestOptions)
+            fetch(`https://payroll.up.railway.app/api/v1/leaves/me`, requestOptions)
                 .then(response => response.json())
                 .then(result => setMyLeave(result.data.leaves))
                 .catch(error => console.log('error', error));

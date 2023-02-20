@@ -13,8 +13,8 @@ import { warningMessage, successMessage } from "../../../../components/Notificat
 import { Logout } from "../../../../auth/authSlice"
 
 const AccountSettings = () => {
-    const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
-    const urlDoc = "https://polar-basin-47052.herokuapp.com/img/docs/"
+    const urlUser = "https://payroll.up.railway.app/img/users/"
+    const urlDoc = "https://payroll.up.railway.app/img/docs/"
     const dispatch = useDispatch();
     const history = useHistory()
     const { currentUser } = useSelector((state) => state.auth);
@@ -76,7 +76,7 @@ const AccountSettings = () => {
             redirect: 'follow'
         };
 
-        fetch("https://polar-basin-47052.herokuapp.com/api/v1/users/updateMe", requestOptions)
+        fetch("https://payroll.up.railway.app/api/v1/users/updateMe", requestOptions)
             .then(response => response.json())
             .then(result => {
                 if (result.status === "success") {

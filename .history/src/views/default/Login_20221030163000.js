@@ -38,7 +38,7 @@ const Login = () => {
     try {
       const res = await axios({
         method: 'POST',
-        url: 'https://polar-basin-47052.herokuapp.com/api/v1/users/login',
+        url: 'https://payroll.up.railway.app/api/v1/users/login',
         data: { email, password },
       });
       if (res.data.status === 'success') {

@@ -33,7 +33,7 @@ function PendingTable(props) {
             redirect: 'follow'
         };
 
-        fetch(`https://polar-basin-47052.herokuapp.com/api/v1/leaves/${leaveId}/status`, requestUpdateStatus)
+        fetch(`https://payroll.up.railway.app/api/v1/leaves/${leaveId}/status`, requestUpdateStatus)
             .then(response => response.json())
             .then(result => {
                 if (result.status === "success") {

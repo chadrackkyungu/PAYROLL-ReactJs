@@ -7,8 +7,8 @@ import 'react-image-lightbox/style.css';
 
 function EmployeesDetails({ details }) {
 
-    const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
-    const urlDoc = "https://polar-basin-47052.herokuapp.com/img/docs/"
+    const urlUser = "https://payroll.up.railway.app/img/users/"
+    const urlDoc = "https://payroll.up.railway.app/img/docs/"
 
     return (
         <div>

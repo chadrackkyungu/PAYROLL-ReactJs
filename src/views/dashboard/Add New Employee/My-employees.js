@@ -26,7 +26,7 @@ import { warningMessage, successSubmitLeave } from "../../../components/Notifica
 
 const Employees = () => {
     const { currentUser } = useSelector((state) => state.auth);
-    const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
+    const urlUser = "https://payroll.up.railway.app/img/users/"
     const title = 'My Employees';
     const description = 'List of all my employees';
     const breadcrumbs = [{ to: '', text: 'My Employees' }];
@@ -51,7 +51,7 @@ const Employees = () => {
 
     useEffect(() => {
         const approved = () => {
-            fetch(`https://polar-basin-47052.herokuapp.com/api/v1/users`, requestOptions)
+            fetch(`https://payroll.up.railway.app/api/v1/users`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     // Do not return the current user details
@@ -80,7 +80,7 @@ const Employees = () => {
             body: raw,
             redirect: 'follow'
         };
-        fetch(`https://polar-basin-47052.herokuapp.com/api/v1/users/${employeeDet[0]._id}`, deleteRequest)
+        fetch(`https://payroll.up.railway.app/api/v1/users/${employeeDet[0]._id}`, deleteRequest)
             .then(response => response.json())
             .then(result => {
                 if (result.status === "fail") {

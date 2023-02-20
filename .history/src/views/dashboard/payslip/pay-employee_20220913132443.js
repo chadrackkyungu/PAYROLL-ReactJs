@@ -35,7 +35,7 @@ const Payslip = () => {
 
     useEffect(() => {
         const approved = () => {
-            fetch(`https://polar-basin-47052.herokuapp.com/api/v1/users`, requestOptions)
+            fetch(`https://payroll.up.railway.app/api/v1/users`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     // Do not return the current user details

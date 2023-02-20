@@ -34,7 +34,7 @@ const Payslip = () => {
             redirect: 'follow'
         };
 
-        fetch("https://polar-basin-47052.herokuapp.com/api/v1/payments/me", requestOptions)
+        fetch("https://payroll.up.railway.app/api/v1/payments/me", requestOptions)
             .then(response => response.json())
             .then(result => setPayslip(result.data.leaves))
             .catch(error => console.log('error', error));

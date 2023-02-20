@@ -42,7 +42,7 @@ const UpdateUserPassword = () => {
             redirect: 'follow'
         };
 
-        fetch(`https://polar-basin-47052.herokuapp.com/api/v1/users/resetPassword/${token}`, requestOptions)
+        fetch(`https://payroll.up.railway.app/api/v1/users/resetPassword/${token}`, requestOptions)
             .then(response => response.json())
             .then(result => {
                 if (result.status === "success") {

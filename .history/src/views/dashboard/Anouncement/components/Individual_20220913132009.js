@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { warningMessage, successMessage } from "../../../../components/Notifications/Notifications";
 
 function Individual({ announcement }) {
-    const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
+    const urlUser = "https://payroll.up.railway.app/img/users/"
 
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
@@ -29,7 +29,7 @@ function Individual({ announcement }) {
             redirect: 'follow'
         };
 
-        fetch(`https://polar-basin-47052.herokuapp.com/api/v1/announcements/${MessageId}`, requestOptions)
+        fetch(`https://payroll.up.railway.app/api/v1/announcements/${MessageId}`, requestOptions)
             .then(response => response.json())
             .then(result => {
                 if (result.status === 'success') {

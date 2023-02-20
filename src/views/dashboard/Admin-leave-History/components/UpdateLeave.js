@@ -49,7 +49,7 @@ function UpdateLeave(props) {
             redirect: 'follow'
         };
 
-        fetch(`https://polar-basin-47052.herokuapp.com/api/v1/leaves/${id}`, requestOptions)
+        fetch(`https://payroll.up.railway.app/api/v1/leaves/${id}`, requestOptions)
             .then(response => response.json())
             .then(res => {
                 if (res.status === 'success') {

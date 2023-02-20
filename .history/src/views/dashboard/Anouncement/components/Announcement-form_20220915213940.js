@@ -29,7 +29,7 @@ function UpdatePaymentForm() {
             headers: myHeaders,
             redirect: 'follow'
         };
-        fetch("https://polar-basin-47052.herokuapp.com/api/v1/users", requestOptions)
+        fetch("https://payroll.up.railway.app/api/v1/users", requestOptions)
             .then(response => response.json())
             .then(result => {
                 const userDet = result?.data?.data?.filter(user => {
@@ -65,8 +65,8 @@ function UpdatePaymentForm() {
     };
     //* End
 
-    const generalAPI = "https://polar-basin-47052.herokuapp.com/api/v1/announcements/";
-    const individualAPI = `https://polar-basin-47052.herokuapp.com/api/v1/announcements/${employeeValue?.value}`
+    const generalAPI = "https://payroll.up.railway.app/api/v1/announcements/";
+    const individualAPI = `https://payroll.up.railway.app/api/v1/announcements/${employeeValue?.value}`
 
     const onSubmit = async (values) => {
 

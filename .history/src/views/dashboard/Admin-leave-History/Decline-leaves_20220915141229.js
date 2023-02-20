@@ -44,7 +44,7 @@ const Declined = () => {
 
     useEffect(() => {
         const approved = () => {
-            fetch(`https://polar-basin-47052.herokuapp.com/api/v1/leaves/status/decline`, requestOptions)
+            fetch(`https://payroll.up.railway.app/api/v1/leaves/status/decline`, requestOptions)
                 .then(response => response.json())
                 .then(result => setDeclineLeave(result.data.leaves))
                 .catch(error => console.log('error', error));

@@ -12,7 +12,7 @@ import CsLineIcons from 'cs-line-icons/CsLineIcons';
 import { warningMessage, successMessage } from "../../../../components/Notifications/Notifications";
 
 function UpdatePaymentForm({ details }) {
-    const urlReceipt = "https://polar-basin-47052.herokuapp.com/img/recept/";
+    const urlReceipt = "https://payroll.up.railway.app/img/recept/";
 
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;

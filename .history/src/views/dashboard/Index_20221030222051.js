@@ -33,8 +33,8 @@ const Dashboard = () => {
     const userRole = currentUser?.data?.user?.role;
     const [payment, setPayment] = useState();
     // const todayDate = new Date().getMonth() + 1;
-    const userAPI = "https://polar-basin-47052.herokuapp.com/api/v1/payments/me";
-    const adminAPI = "https://polar-basin-47052.herokuapp.com/api/v1/payments";
+    const userAPI = "https://payroll.up.railway.app/api/v1/payments/me";
+    const adminAPI = "https://payroll.up.railway.app/api/v1/payments";
 
     const getPayslip = async () => {
         const myHeaders = new Headers();

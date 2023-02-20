@@ -14,7 +14,7 @@ import { warningMessage, successMessage } from "../../../../components/Notificat
 
 function UpdatePaymentForm({ details }) {
     const history = useHistory()
-    const urlReceipt = "https://polar-basin-47052.herokuapp.com/img/recept/";
+    const urlReceipt = "https://payroll.up.railway.app/img/recept/";
 
     const { currentUser } = useSelector((state) => state.auth);
     const token = currentUser?.token;
@@ -57,7 +57,7 @@ function UpdatePaymentForm({ details }) {
             redirect: 'follow'
         };
 
-        fetch(`https://polar-basin-47052.herokuapp.com/api/v1/payments/${details[0]?._id}`, requestOptions)
+        fetch(`https://payroll.up.railway.app/api/v1/payments/${details[0]?._id}`, requestOptions)
             .then(response => response.json())
             .then(res => {
                 if (res.status === 'success') {

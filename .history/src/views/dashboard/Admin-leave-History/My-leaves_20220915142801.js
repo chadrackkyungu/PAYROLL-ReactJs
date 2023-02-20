@@ -49,7 +49,7 @@ const MyLeaves = () => {
 
     useEffect(() => {
         const approved = () => {
-            fetch(`https://polar-basin-47052.herokuapp.com/api/v1/leaves`, requestOptions)
+            fetch(`https://payroll.up.railway.app/api/v1/leaves`, requestOptions)
                 .then(response => response.json())
                 .then(result => setMyLeave(result.data.data))
                 .catch(error => console.log('error', error));
@@ -66,7 +66,7 @@ const MyLeaves = () => {
             redirect: 'follow'
         };
 
-        fetch(`https://polar-basin-47052.herokuapp.com/api/v1/leaves/${leaveId}`, requestOptionsDelete)
+        fetch(`https://payroll.up.railway.app/api/v1/leaves/${leaveId}`, requestOptionsDelete)
             .then(response => response.json())
             .then(result => {
                 if (result.status === "success") {

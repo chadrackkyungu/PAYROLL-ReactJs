@@ -45,7 +45,7 @@ const Approved = () => {
 
     useEffect(() => {
         const approved = () => {
-            fetch(`https://polar-basin-47052.herokuapp.com/api/v1/leaves/status/approve`, requestOptions)
+            fetch(`https://payroll.up.railway.app/api/v1/leaves/status/approve`, requestOptions)
                 .then(response => response.json())
                 .then(result => setApprovedLeave(result.data.leaves))
                 .catch(error => console.log('error', error));

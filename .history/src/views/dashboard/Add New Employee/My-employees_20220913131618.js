@@ -26,7 +26,7 @@ import { warningMessage, successSubmitLeave } from "../../../components/Notifica
 
 const Employees = () => {
     const { currentUser } = useSelector((state) => state.auth);
-    const urlUser = "https://polar-basin-47052.herokuapp.com/img/users/"
+    const urlUser = "https://payroll.up.railway.app/img/users/"
     const title = 'My Employees';
     const description = 'List of all my employees';
     const breadcrumbs = [{ to: '', text: 'My Employees' }];
